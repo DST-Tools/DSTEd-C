@@ -38,6 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,11 +52,16 @@
   <PropertyGroup>
     <StartupObject>DSTEd.Boot</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\Steam\Account.cs" />
+    <Compile Include="Core\Servers.cs" />
     <Compile Include="Core\Steam\Steam.cs" />
+    <None Include="Core\Steam\steam_api_interop.cs" />
     <Compile Include="Core\Steam\Workshop.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +86,7 @@
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Klei\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

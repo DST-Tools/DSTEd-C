@@ -23,7 +23,7 @@ namespace DSTEd.Core {
             this.ide            = new IDE();
             this.steam          = new Steam.Steam();
             this.steam_account  = new Steam.Account();
-            this.steam_workshop = new Steam.Workshop();
+            this.steam_workshop = new Steam.Workshop();//try use ISteamRemoteStorage?
 
             this.loading.OnSuccess(delegate () {
                 this.loading.Close();
