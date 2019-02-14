@@ -1,10 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using DSTEd.Core;
 
 namespace DSTEd.Core {
     class Workspace {
+        private UI.Workspace window;
+
+        public Workspace() {
+            this.window = new UI.Workspace();
+        }
+
+        public void Show() {
+            this.window.Show();
+        }
+
+        public void SetPath(string path) {
+
+        }
     }
 }

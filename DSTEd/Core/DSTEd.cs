@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Threading;
 using System.Windows;
+using System.Windows.Media;
+using DSTEd.Core.Klei.Games;
 using DSTEd.UI;
+using MLib.Interfaces;
 
 namespace DSTEd.Core {
     class DSTEd : Application {
@@ -11,8 +13,6 @@ namespace DSTEd.Core {
         private Workspace workspace = null;
         private Loading loading = null;
         private Steam.Steam steam = null;
-        private Steam.Account steam_account = null;
-        private Steam.Workshop steam_workshop = null;
 
         public DSTEd() {
             Logger.Info("Start DSTEd v" + GetVersion());
@@ -22,8 +22,6 @@ namespace DSTEd.Core {
             this.loading        = new Loading();
             this.ide            = new IDE();
             this.steam          = new Steam.Steam();
-            this.steam_account  = new Steam.Account();
-            this.steam_workshop = new Steam.Workshop();
 
             this.loading.OnSuccess(delegate () {
                 this.loading.Close();
@@ -33,18 +31,29 @@ namespace DSTEd.Core {
 
             // Adding workers to the loader...
             this.loading.Run("STEAM_PATH", delegate () {
-                Logger.Info("Get Steam path...");
-                Thread.Sleep(100);
+                /*if (this.steam.IsInstalled()) {
+                    Logger.Info("Steam is not installed? Ask for Workspace...");
+                    this.workspace.Show();
+                    this.loading.Wait();
+                    return true;
+                }*/
+
+                this.workspace.SetPath(this.steam.GetPath());
+                Logger.Info("Steam-Path: " + this.steam.GetPath());
+                Logger.Info("Installed: " + (this.steam.IsInstalled() ? "Yes" : "No"));
+                return true;
             });
 
-            this.loading.Run("KLEI_GAME", delegate () {
-                Logger.Info("Get Klei path...");
-                Thread.Sleep(100);
+            this.loading.Run("KLEI_GAMES", delegate () {
+                this.steam.LoadGame(new DSTC());
+                this.steam.LoadGame(new DSTS());
+                this.steam.LoadGame(new DSTM());
+                return true;
             });
 
             this.loading.Run("KLEI_MODS", delegate () {
                 Logger.Info("Load mods...");
-                Thread.Sleep(100);
+                return true;
             });
 
             this.loading.Start();
