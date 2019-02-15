@@ -35,6 +35,14 @@ namespace DSTEd.Core.Steam {
             return software.InstallDir;
         }
 
+        public Account GetAccount() {
+            return this.account;
+        }
+
+        public Workshop GetWorkShop() {
+            return this.workshop;
+        }
+
         public void GetNews() {
             using(dynamic steamNews = WebAPI.GetInterface("ISteamNews")) {
                 KeyValue kvNews = steamNews.GetNewsForApp(appid: 322330);

@@ -6,6 +6,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 namespace DSTEd.UI {
     public partial class Workspace : Window {
         private Action<CancelEventArgs> callback_close = null;
+        private Action<string, Boolean> callback_select = null;
 
         public Workspace() {
             InitializeComponent();
@@ -25,20 +26,24 @@ namespace DSTEd.UI {
             var dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
             dialog.Title = "DST Location";
-            dialog.EnsureReadOnly = true;
+            //dialog.EnsureReadOnly = true;
             dialog.IsFolderPicker = true;
             dialog.AllowNonFileSystemItems = false;
             dialog.Multiselect = false;
-            //dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dialog.InitialDirectory = "D:/Software/Steam/SteamApps/common/";
+
             CommonFileDialogResult result = dialog.ShowDialog();
 
             if (result == CommonFileDialogResult.Ok) {
                 this.path.Text = dialog.FileName;
             }
         }
+        public void OnSelect(Action<string, Boolean> callback) {
+            this.callback_select = callback;
+        }
 
         private void OnSave(object sender, RoutedEventArgs e) {
-
+            this.callback_select?.Invoke(this.path.Text, (Boolean) this.save.IsChecked);
         }
     }
 }

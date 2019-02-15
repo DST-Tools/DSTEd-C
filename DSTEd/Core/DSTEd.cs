@@ -25,6 +25,10 @@ namespace DSTEd.Core {
             this.ide            = new IDE();
             this.steam          = new Steam.Steam();
 
+            this.workspace.OnSelect(delegate (string path, Boolean save) {
+                Logger.Info("Selected Workspace: " + path + ", Save: " + (save ? "YES" : "NO"));
+            });
+
             this.workspace.OnClose(delegate (CancelEventArgs e) {
                 Dialog.Open("You must set the workspace path! If you cancel these, DSTEd will be closed.", "Problem", Dialog.Buttons.RetryCancel, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                     if (result == Dialog.Result.Cancel) {

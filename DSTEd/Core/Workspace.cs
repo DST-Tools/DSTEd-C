@@ -20,6 +20,10 @@ namespace DSTEd.Core {
             this.window.OnClose(callback);
         }
 
+        public void OnSelect(Action<string, Boolean> callback) {
+            this.window.OnSelect(callback);
+        }
+
         public void SetPath(string path) {
 
         }
