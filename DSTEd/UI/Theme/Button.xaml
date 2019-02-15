@@ -6,84 +6,64 @@
 		<Setter Property="Control.Template">
 			<Setter.Value>
 				<ControlTemplate>
-					<Rectangle SnapsToDevicePixels="true" Stroke="Black" StrokeDashArray="1 2" StrokeThickness="1" Margin="2"/>
+					<Rectangle SnapsToDevicePixels="true" Stroke="{StaticResource Foreground}" StrokeDashArray="1 2" StrokeThickness="1" Margin="2"/>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
-	
-	
-	<LinearGradientBrush x:Key="NormalBackground" EndPoint="0,1" StartPoint="0,0">
-		<GradientStop Color="#727272" Offset="0"/>
-		<GradientStop Color="#4c4c4c" Offset="1"/>
-	</LinearGradientBrush>
-	
-	<LinearGradientBrush x:Key="OverBackground" EndPoint="0,1" StartPoint="0,0">
-		<GradientStop Color="#da5e69" Offset="0"/>
-		<GradientStop Color="#d12e27" Offset="1"/>
-	</LinearGradientBrush>
-	
-	<LinearGradientBrush x:Key="ClickBackground" EndPoint="0,1" StartPoint="0,0">
-		<GradientStop Color="#d22828" Offset="1"/>
-		<GradientStop Color="#b00000" Offset="0"/>
-	</LinearGradientBrush>
-	
-	<SolidColorBrush x:Key="NormalOuterBorder" Color="#7a7a7a"/>
-	<SolidColorBrush x:Key="NormalInnerBorder" Color="#454545"/>
-	
-	<LinearGradientBrush x:Key="GlassBrush" EndPoint="0,1" StartPoint="0,0">
-		<GradientStop Color="#96FFFFFF" Offset="0"/>
-		<GradientStop Color="#28FFFFFF" Offset="0.5"/>
-		<GradientStop Color="#00FFFFFF" Offset="0.5"/>
-	</LinearGradientBrush>
-	
-	<LinearGradientBrush x:Key="DisabledBackground" EndPoint="0,1" StartPoint="0,0">
-		<GradientStop Color="#f4f4f4" Offset="0"/>
-		<GradientStop Color="#d7d7d7" Offset="0.7"/>
-		<GradientStop Color="#c2c2c2" Offset="1"/>
-	</LinearGradientBrush>
-	
-	<SolidColorBrush x:Key="OuterBorderDisabled" Color="#cfcfcf"/>
-	<SolidColorBrush x:Key="InnerBorderDisabled" Color="#b8b8b8"/>
+
+    <SolidColorBrush x:Key="Foreground" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="NormalBackground" Color="#252526" />
+    <SolidColorBrush x:Key="OverBackground" Color="#be4a24" />
+    <SolidColorBrush x:Key="ClickBackground" Color="#be4a24" />
+    <SolidColorBrush x:Key="NormalOuterBorder" Color="#191919"/>
+    <SolidColorBrush x:Key="NormalInnerBorder" Color="#535353"/>
+    <SolidColorBrush x:Key="GlassBrush" Color="#252526"/>
+    <SolidColorBrush x:Key="DisabledBackground" Color="#252526"/>
+    <SolidColorBrush x:Key="OuterBorderDisabled" Color="#191919"/>
+    <SolidColorBrush x:Key="InnerBorderDisabled" Color="#191919"/>
 	
 	<Style TargetType="{x:Type Button}">
-		<Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+<!--		<Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>-->
 		<Setter Property="Background" Value="{StaticResource NormalBackground}"/>
 		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 		<Setter Property="VerticalContentAlignment" Value="Center"/>
-		<Setter Property="Padding" Value="1"/>
-		<Setter Property="Margin" Value="5"/>
-		<Setter Property="Height" Value="23"/>
+		<Setter Property="Padding" Value="15,10,15,10"/>
+		<Setter Property="Margin" Value="0,0,0,0"/>
+		<Setter Property="Width" Value="Auto"/>
+		<Setter Property="Height" Value="25"/>
 		
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type Button}">
 					<Grid>
-						<Border x:Name="OuterBd" CornerRadius="3" BorderBrush="{StaticResource NormalOuterBorder}" BorderThickness="1" Background="{StaticResource NormalBackground}">
-							<Border x:Name="InnerBd" CornerRadius="2" BorderBrush="{StaticResource NormalInnerBorder}" BorderThickness="1">
-								<ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+						<Border x:Name="OuterBd" CornerRadius="0" BorderBrush="{StaticResource NormalOuterBorder}" BorderThickness="1" Background="{StaticResource NormalBackground}">
+							<Border x:Name="InnerBd" CornerRadius="0" BorderBrush="{StaticResource NormalInnerBorder}" BorderThickness="1">
+								<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
 							</Border>
 						</Border>
-						<Border x:Name="Glass" Margin="2" Background="{StaticResource GlassBrush}" CornerRadius="2"/>
-						
+						<Border x:Name="Glass" Margin="2" Background="{StaticResource GlassBrush}" CornerRadius="0"/>
 					</Grid>
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsMouseOver" Value="true">
-							<Setter TargetName="OuterBd" Property="Background" Value="{StaticResource OverBackground}"/>
-						</Trigger>
+                            <Setter TargetName="OuterBd" Property="Background" Value="{StaticResource OverBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                        </Trigger>
 						<Trigger Property="IsPressed" Value="true">
-							<Setter TargetName="OuterBd" Property="Background" Value="{StaticResource ClickBackground}"/>
-						</Trigger>
+                            <Setter TargetName="OuterBd" Property="Background" Value="{StaticResource ClickBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                        </Trigger>
 						<Trigger Property="IsKeyboardFocused" Value="true">
-							<Setter TargetName="InnerBd" Property="BorderBrush" Value="#d12e27"/>
-						</Trigger>
+                            <Setter TargetName="InnerBd" Property="BorderBrush" Value="{StaticResource OverBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                        </Trigger>
 						<Trigger Property="IsEnabled" Value="false">
 							<Setter TargetName="InnerBd" Property="BorderBrush" Value="{StaticResource InnerBorderDisabled}"/>
 							<Setter TargetName="OuterBd" Property="BorderBrush" Value="{StaticResource OuterBorderDisabled}"/>
 							<Setter TargetName="OuterBd" Property="Background" Value="{StaticResource DisabledBackground}"/>
-							<Setter Property="Foreground" Value="{StaticResource InnerBorderDisabled}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
