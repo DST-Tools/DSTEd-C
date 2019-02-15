@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using DSTEd.Core.Klei.Games;
@@ -6,7 +7,7 @@ using DSTEd.UI;
 using MLib.Interfaces;
 
 namespace DSTEd.Core {
-    class DSTEd : Application {
+    class DSTEd : System.Windows.Application {
         private String version = "2.0.0";
         private String language = "en_US";
         private IDE ide = null;
@@ -26,17 +27,21 @@ namespace DSTEd.Core {
             this.loading.OnSuccess(delegate () {
                 this.loading.Close();
                 this.ide.Show();
-                this.Run();
             });
 
             // Adding workers to the loader...
             this.loading.Run("STEAM_PATH", delegate () {
-                /*if (this.steam.IsInstalled()) {
+                Thread.Sleep(1000);
+
+                if (this.steam.IsInstalled()) {
                     Logger.Info("Steam is not installed? Ask for Workspace...");
-                    this.workspace.Show();
-                    this.loading.Wait();
-                    return true;
-                }*/
+
+                    Dialog.Open("We can not find the path to STEAM. Please check the workspace settings.", "Problem: Steam", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate(Dialog.Result result) {
+                        this.workspace.Show();
+                    });
+                    
+                    return false;
+                }
 
                 this.workspace.SetPath(this.steam.GetPath());
                 Logger.Info("Steam-Path: " + this.steam.GetPath());
@@ -57,6 +62,7 @@ namespace DSTEd.Core {
             });
 
             this.loading.Start();
+            this.Run();
         }
 
         public String GetVersion() {

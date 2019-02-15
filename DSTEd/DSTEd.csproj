@@ -67,6 +67,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="UI\Components\Container.cs" />
+    <Compile Include="UI\Dialog.xaml.cs">
+      <DependentUpon>Dialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Theme\Avalon\Menu\MenuKeys.cs" />
     <Compile Include="UI\Theme\Avalon\ResourceKeys.cs" />
     <Compile Include="UI\Theme\Dark.cs" />
@@ -176,6 +180,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\IDE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -262,44 +270,52 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Assets\Theme\Dark\DockAnchorableBottom.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockAnchorableLeft.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockAnchorableRight.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockAnchorableTop.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentAsAnchorableBottom.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentAsAnchorableLeft.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentAsAnchorableRight.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentAsAnchorableTop.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentBottom.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentInside.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentLeft.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentRight.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockDocumentTop.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockPaneEmpty.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\DockPaneLargeEmpty.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\HTabGroup.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\Locked.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinAutoHide.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinAutoHide_Black.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinAutoHide_Dark.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinAutoHide_White.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinClose.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinClose_Black.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinClose_Dark.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinClose_White.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinDocMenu.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinDocMenu_Black.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinMaximize.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinMaximize_Black.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinMaximize_Dark.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinMenu.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinMenu_Black.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinMenu_Dark.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinMenu_White.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinRestore.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinRestore_Black.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\PinRestore_Dark.png" />
-    <EmbeddedResource Include="Assets\Theme\Dark\VTabGroup.png" />
+    <Resource Include="Assets\Theme\Dark\DockAnchorableBottom.png" />
+    <Resource Include="Assets\Theme\Dark\DockAnchorableLeft.png" />
+    <Resource Include="Assets\Theme\Dark\DockAnchorableRight.png" />
+    <Resource Include="Assets\Theme\Dark\DockAnchorableTop.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableBottom.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableLeft.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableRight.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableTop.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentBottom.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentInside.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentLeft.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentRight.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentTop.png" />
+    <Resource Include="Assets\Theme\Dark\DockPaneEmpty.png" />
+    <Resource Include="Assets\Theme\Dark\DockPaneLargeEmpty.png" />
+    <Resource Include="Assets\Theme\Dark\HTabGroup.png" />
+    <Resource Include="Assets\Theme\Dark\Locked.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide_White.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose_White.png" />
+    <Resource Include="Assets\Theme\Dark\PinDocMenu.png" />
+    <Resource Include="Assets\Theme\Dark\PinDocMenu_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinMaximize.png" />
+    <Resource Include="Assets\Theme\Dark\PinMaximize_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinMaximize_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu_White.png" />
+    <Resource Include="Assets\Theme\Dark\PinRestore.png" />
+    <Resource Include="Assets\Theme\Dark\PinRestore_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinRestore_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\VTabGroup.png" />
+    <Resource Include="Assets\Dialog\Exclamation.png" />
+    <Resource Include="Assets\Dialog\Asterisk.png" />
+    <Resource Include="Assets\Dialog\Error.png" />
+    <Resource Include="Assets\Dialog\Hand.png" />
+    <Resource Include="Assets\Dialog\Information.png" />
+    <Resource Include="Assets\Dialog\Question.png" />
+    <Resource Include="Assets\Dialog\Stop.png" />
+    <Resource Include="Assets\Dialog\Warning.png" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <ItemGroup>
