@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:DSTEd.UI"
         xmlns:winformsIntegration="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         mc:Ignorable="d"
-        Title="DSTEd" Background="#FF2D2D30" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" WindowStartupLocation="CenterScreen" Height="600" Width="800" MinWidth="200" MinHeight="200" SizeToContent="WidthAndHeight">
+        Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" WindowStartupLocation="CenterScreen" Height="600" Width="800" MinWidth="200" MinHeight="200" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

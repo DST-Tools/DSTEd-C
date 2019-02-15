@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DSTEd.UI"
         mc:Ignorable="d"
-        Title="Workspace" Height="300" Width="500" Background="#FF2D2D30" MinWidth="500" MinHeight="300" VerticalAlignment="Center" HorizontalAlignment="Center" WindowStyle="ToolWindow" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        Title="Workspace" Height="300" Width="500" Background="#FF2D2D30" MinWidth="500" MinHeight="300" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Disabled" Icon="/DSTEd;component/Assets/Logo.ico" WindowStyle="ThreeDBorderWindow">
     <Grid Width="Auto" Height="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30*" />

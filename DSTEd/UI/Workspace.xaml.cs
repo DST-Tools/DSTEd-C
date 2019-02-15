@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace DSTEd.UI
-{
-    /// <summary>
-    /// Interaktionslogik für Workspace.xaml
-    /// </summary>
-    public partial class Workspace : Window
-    {
-        public Workspace()
-        {
+namespace DSTEd.UI {
+    public partial class Workspace : Window {
+        private Action<CancelEventArgs> callback_close = null;
+
+        public Workspace() {
             InitializeComponent();
+            Closing += OnWindowClosing;
+        }
+
+        public void OnClose(Action<CancelEventArgs> callback) {
+            this.callback_close = callback;
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e) {
+            callback_close?.Invoke(e);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
@@ -24,6 +25,18 @@ namespace DSTEd.Core {
             this.ide            = new IDE();
             this.steam          = new Steam.Steam();
 
+            this.workspace.OnClose(delegate (CancelEventArgs e) {
+                Dialog.Open("You must set the workspace path! If you cancel these, DSTEd will be closed.", "Problem", Dialog.Buttons.RetryCancel, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                    if (result == Dialog.Result.Cancel) {
+                        Environment.Exit(0);
+                        return true;
+                    }
+
+                    e.Cancel = true;
+                    return true;
+                });
+            });
+
             this.loading.OnSuccess(delegate () {
                 this.loading.Close();
                 this.ide.Show();
@@ -38,6 +51,7 @@ namespace DSTEd.Core {
 
                     Dialog.Open("We can not find the path to STEAM. Please check the workspace settings.", "Problem: Steam", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate(Dialog.Result result) {
                         this.workspace.Show();
+                        return true;
                     });
                     
                     return false;

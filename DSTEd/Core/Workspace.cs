@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using DSTEd.Core;
 
@@ -13,6 +14,10 @@ namespace DSTEd.Core {
 
         public void Show() {
             this.window.Show();
+        }
+
+        public void OnClose(Action<CancelEventArgs> callback) {
+            this.window.OnClose(callback);
         }
 
         public void SetPath(string path) {

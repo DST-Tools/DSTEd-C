@@ -1,16 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Reflection;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using DSTEd.Core;
 
 namespace DSTEd.UI {
-    public partial class Dialog : Window {
-        static Result result;
-        static Dialog dialog;
-        static Action<Result> callback_result = null;
-
+    public partial class Dialog {
         public enum Buttons {
             None,
             AbortRetryIgnore,
@@ -44,178 +38,194 @@ namespace DSTEd.UI {
             Yes
         };
 
-        public Dialog() {
+        public static void Open(string message) {
+            Open(message, null);
+        }
+
+        public static void Open(string message, string title) {
+            Open(message, title, Dialog.Buttons.None);
+        }
+
+        public static void Open(string message, string title, Dialog.Buttons buttons) {
+            Open(message, title, buttons, Dialog.Icon.None);
+        }
+
+        public static void Open(string message, string title, Dialog.Buttons buttons, Dialog.Icon icon) {
+            Open(message, title, buttons, icon, null);
+        }
+
+        public static void Open(string message, string title, Dialog.Buttons buttons, Dialog.Icon icon, Func<Result, Boolean> result) {
+            DialogFactory window = new DialogFactory();
+            window.Open(message, title, buttons, icon, result);
+        }
+    }
+
+    public partial class DialogFactory : Window {
+        private Dialog.Result result;
+        private Func<Dialog.Result, Boolean> callback_result = null;
+
+        public DialogFactory() {
             InitializeComponent();
         }
 
-        private static void onAbort(object sender, RoutedEventArgs e) {
-            result = Result.Abort;
-            dialog.Close();
+        private void OnAbort(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.Abort;
+            this.Close();
         }
 
-        private static void onCancel(object sender, RoutedEventArgs e) {
-            result = Result.Cancel;
-            dialog.Close();
+        private void OnCancel(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.Cancel;
+            this.Close();
         }
 
-        private static void onIgnore(object sender, RoutedEventArgs e) {
-            result = Result.Ignore;
-            dialog.Close();
+        private void OnIgnore(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.Ignore;
+            this.Close();
         }
 
-        private static void onNo(object sender, RoutedEventArgs e) {
-            result = Result.No;
-            dialog.Close();
+        private void OnNo(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.No;
+            this.Close();
         }
 
-        private static void onNone(object sender, RoutedEventArgs e) {
-            result = Result.None;
-            dialog.Close();
+        private void OnNone(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.None;
+            this.Close();
         }
 
-        private static void onOK(object sender, RoutedEventArgs e) {
-            result = Result.OK;
-            dialog.Close();
+        private void OnOK(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.OK;
+            this.Close();
         }
 
-        private static void onRetry(object sender, RoutedEventArgs e) {
-            result = Result.Retry;
-            dialog.Close();
+        private void OnRetry(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.Retry;
+            this.Close();
         }
 
-        private static void onYes(object sender, RoutedEventArgs e) {
-            result = Result.Yes;
-            dialog.Close();
+        private void OnYes(object sender, RoutedEventArgs e) {
+            this.result = Dialog.Result.Yes;
+            this.Close();
         }
 
-        private static void RemoveClickEvent(System.Windows.Controls.Button b) {
-            try {
-                FieldInfo field = typeof(Control).GetField("EventClick", BindingFlags.Static | BindingFlags.NonPublic);
-                object value = field.GetValue(b);
-                PropertyInfo property = b.GetType().GetProperty("Events", BindingFlags.NonPublic | BindingFlags.Instance);
-                EventHandlerList list = (EventHandlerList) property.GetValue(b, null);
-                list.RemoveHandler(value, list[value]);
-            } catch (Exception e) {
-                /* Do Nothing */
-            }
+        private void RemoveClickEvent(System.Windows.Controls.Button button) {
+            button.Click -= this.OnAbort;
+            button.Click -= this.OnCancel;
+            button.Click -= this.OnIgnore;
+            button.Click -= this.OnNone;
+            button.Click -= this.OnOK;
+            button.Click -= this.OnRetry;
+            button.Click -= this.OnYes;
         }
 
-        private static void UpdateButton(System.Windows.Controls.Button button, string text, Boolean visibility, RoutedEventHandler callback) {
-            RemoveClickEvent(button);
-            button.Content = (text == null ? "" : text);
+        private void UpdateButton(System.Windows.Controls.Button button, string text, Boolean visibility, RoutedEventHandler callback) {
+            this.RemoveClickEvent(button);
+            button.Content = (text ?? "");
             button.Visibility = (visibility ? Visibility.Visible : Visibility.Collapsed);
 
             if (callback != null) {
-                dialog.button_left.Click += new RoutedEventHandler(callback);
+                button.Click += new RoutedEventHandler(callback);
             }
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            e.Cancel = true;
-            this.Hide();
+        private void DialogFactory_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            this.result = Dialog.Result.Cancel;
+            this.Close();
         }
 
         public new void Close() {
-            result = Result.OK;
-
-            this.Closing -= Window_Closing;
-            base.Close();
-            callback_result?.Invoke(result);
+            if (this.callback_result != null) {
+                if (this.callback_result(result)) {
+                    this.Closing -= this.DialogFactory_Closing;
+                    base.Close();
+                }
+            }
         }
 
-        public static void Open(string message, Action<Result> result) {
-            Open(message, null, Buttons.None, Icon.None, result);
-        }
-
-        public static void Open(string message, string title, Action<Result> result) {
-            Open(message, title, Buttons.None, Icon.None, result);
-        }
-
-        public static void Open(string message, string title, Dialog.Buttons buttons, Action<Result> result) {
-            Open(message, title, buttons, Icon.None, result);
-        }
-
-        public static void Open(string message, string title, Dialog.Buttons buttons, Dialog.Icon icon, Action<Result> result) {
-            callback_result = result;
-            dialog = new Dialog();
+        public void Open(string message, string title, Dialog.Buttons buttons, Dialog.Icon icon, Func<Dialog.Result, Boolean> result) {
+            this.callback_result = result;
 
             if (title != null) {
-                dialog.title.Content = title;
+                this.title.Content = title;
             }
 
             if (message != null) {
-                dialog.message.Content = message;
+                this.message.Content = message;
             }
 
             switch (icon) {
-                case Icon.Asterisk:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Asterisk.png", UriKind.Relative));
-                break;
-                case Icon.Error:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Error.png", UriKind.Relative));
-                break;
-                case Icon.Exclamation:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Exclamation.png", UriKind.Relative));
-                break;
-                case Icon.Hand:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Hand.png", UriKind.Relative));
-                break;
-                case Icon.Information:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Information.png", UriKind.Relative));
-                break;
-                case Icon.None:
-                dialog.icon.Source = null;
-                break;
-                case Icon.Question:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Question.png", UriKind.Relative));
-                break;
-                case Icon.Stop:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Stop.png", UriKind.Relative));
-                break;
-                case Icon.Warning:
-                dialog.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Warning.png", UriKind.Relative));
-                break;
+                case Dialog.Icon.Asterisk:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Asterisk.png", UriKind.Relative));
+                    break;
+                case Dialog.Icon.Error:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Error.png", UriKind.Relative));
+                    break;
+                case Dialog.Icon.Exclamation:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Exclamation.png", UriKind.Relative));
+                    break;
+                case Dialog.Icon.Hand:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Hand.png", UriKind.Relative));
+                    break;
+                case Dialog.Icon.Information:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Information.png", UriKind.Relative));
+                    break;
+                case Dialog.Icon.None:
+                    this.icon.Source = null;
+                    break;
+                case Dialog.Icon.Question:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Question.png", UriKind.Relative));
+                    break;
+                case Dialog.Icon.Stop:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Stop.png", UriKind.Relative));
+                    break;
+                case Dialog.Icon.Warning:
+                    this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Warning.png", UriKind.Relative));
+                    break;
             }
 
             switch (buttons) {
-                case Buttons.None:
-                UpdateButton(dialog.button_left, "OK", true, onOK);
-                UpdateButton(dialog.button_middle, null, false, null);
-                UpdateButton(dialog.button_right, null, false, null);
-                break;
-                case Buttons.AbortRetryIgnore:
-                UpdateButton(dialog.button_left, "Abort", true, onOK);
-                UpdateButton(dialog.button_middle, "Retry", true, onRetry);
-                UpdateButton(dialog.button_right, "Ignore", true, onIgnore);
-                break;
-                case Buttons.OK:
-                UpdateButton(dialog.button_left, "OK", true, onOK);
-                UpdateButton(dialog.button_middle, null, false, null);
-                UpdateButton(dialog.button_right, null, false, null);
-                break;
-                case Buttons.OKCancel:
-                UpdateButton(dialog.button_left, "OK", true, onOK);
-                UpdateButton(dialog.button_middle, "Cancel", true, onCancel);
-                UpdateButton(dialog.button_right, null, false, null);
-                break;
-                case Buttons.RetryCancel:
-                UpdateButton(dialog.button_left, "Retry", true, onRetry);
-                UpdateButton(dialog.button_middle, "Cancel", true, onCancel);
-                UpdateButton(dialog.button_right, null, false, null);
-                break;
-                case Buttons.YesNo:
-                UpdateButton(dialog.button_left, "Yes", true, onYes);
-                UpdateButton(dialog.button_middle, "No", true, onNo);
-                UpdateButton(dialog.button_right, null, false, null);
-                break;
-                case Buttons.YesNoCancel:
-                UpdateButton(dialog.button_left, "Yes", true, onYes);
-                UpdateButton(dialog.button_middle, "No", true, onNo);
-                UpdateButton(dialog.button_right, "Cancel", true, onCancel);
-                break;
+                case Dialog.Buttons.None:
+                    this.UpdateButton(this.button_left, "OK", true, this.OnOK);
+                    this.UpdateButton(this.button_middle, null, false, null);
+                    this.UpdateButton(this.button_right, null, false, null);
+                    break;
+                case Dialog.Buttons.AbortRetryIgnore:
+                    this.UpdateButton(this.button_left, "Abort", true, this.OnOK);
+                    this.UpdateButton(this.button_middle, "Retry", true, this.OnRetry);
+                    this.UpdateButton(this.button_right, "Ignore", true, this.OnIgnore);
+                    break;
+                case Dialog.Buttons.OK:
+                    this.UpdateButton(this.button_left, "OK", true, this.OnOK);
+                    this.UpdateButton(this.button_middle, null, false, null);
+                    this.UpdateButton(this.button_right, null, false, null);
+                    break;
+                case Dialog.Buttons.OKCancel:
+                    this.UpdateButton(this.button_left, "OK", true, this.OnOK);
+                    this.UpdateButton(this.button_middle, "Cancel", true, this.OnCancel);
+                    this.UpdateButton(this.button_right, null, false, null);
+                    break;
+                case Dialog.Buttons.RetryCancel:
+                    this.UpdateButton(this.button_left, "Retry", true, this.OnRetry);
+                    this.UpdateButton(this.button_middle, "Cancel", true, this.OnCancel);
+                    this.UpdateButton(this.button_right, null, false, null);
+                    break;
+                case Dialog.Buttons.YesNo:
+                    this.UpdateButton(this.button_left, "Yes", true, this.OnYes);
+                    this.UpdateButton(this.button_middle, "No", true, this.OnNo);
+                    this.UpdateButton(this.button_right, null, false, null);
+                    break;
+                case Dialog.Buttons.YesNoCancel:
+                    this.UpdateButton(this.button_left, "Yes", true, this.OnYes);
+                    this.UpdateButton(this.button_middle, "No", true, this.OnNo);
+                    this.UpdateButton(this.button_right, "Cancel", true, this.OnCancel);
+                    break;
             }
 
-            dialog.ShowDialog();
+            this.Closing += this.DialogFactory_Closing;
+
+            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
+                this.ShowDialog();
+            }));
         }
     }
 }

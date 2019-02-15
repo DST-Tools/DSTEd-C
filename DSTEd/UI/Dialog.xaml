@@ -1,4 +1,4 @@
-﻿<Window x:Class="DSTEd.UI.Dialog"
+﻿<Window x:Class="DSTEd.UI.DialogFactory"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DSTEd.UI"
         xmlns:Component="clr-namespace:DSTEd.UI.Components"
         mc:Ignorable="d"
-        Title="Dialog" Height="200" Width="400" Background="#FF303030" BorderBrush="#FFF15F1B" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Dialog" Icon="/DSTEd;component/Assets/Logo.ico" Height="200" Width="400" Background="#FF303030" BorderBrush="#FFF15F1B" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
