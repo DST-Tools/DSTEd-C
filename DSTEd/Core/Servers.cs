@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 using DSTEd.Core;
-
+using ktexlibwrap;
 namespace DSTEd.Core.Servers
 {
+    
     //i will create a default arg at Server construct.
     struct SV_args
     {
@@ -21,9 +22,10 @@ namespace DSTEd.Core.Servers
         public string maxplayers;
         public bool offline;
     }
-
+    
     class Servers
     {
+        
         public Servers()//default construct
         {
             sv_arg.cluster = "Cluster_1";

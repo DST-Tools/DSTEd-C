@@ -118,5 +118,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ktexlib_wrap\ktexlib_wrap.vcxproj">
+      <Project>{76ea486e-d8af-487f-8ee2-2878a46b2097}</Project>
+      <Name>ktexlib_wrap</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
