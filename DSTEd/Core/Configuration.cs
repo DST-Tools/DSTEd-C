@@ -32,7 +32,7 @@ namespace DSTEd.Core {
 
         public void Save() {
             try {
-                File.WriteAllText(this.GetFullPath(), JsonConvert.SerializeObject(this.data));
+                File.WriteAllText(this.GetFullPath(), JsonConvert.SerializeObject(this.data, Formatting.Indented));
             } catch (IOException e) {
                 Logger.Warn("Configuration can't be write!", this.GetFullPath());
             }
