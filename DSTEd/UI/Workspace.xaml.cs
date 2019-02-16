@@ -8,10 +8,11 @@ namespace DSTEd.UI {
         private Action<CancelEventArgs> callback_close = null;
         private Action<string, Boolean> callback_select = null;
         private Boolean ignore_callback = false;
+        private string selected_path = "C:\\Program Files\\";
 
         public Workspace() {
             InitializeComponent();
-            this.path.Text = "C:\\Program Files\\";
+            this.SetPath(this.selected_path);
             Closing += OnWindowClosing;
         }
 
@@ -39,7 +40,7 @@ namespace DSTEd.UI {
             dialog.AllowNonFileSystemItems = false;
             dialog.Multiselect = false;
             dialog.RestoreDirectory = false;
-            dialog.InitialDirectory = "C:\\Program Files\\";
+            dialog.InitialDirectory = this.selected_path;
 
             CommonFileDialogResult result = dialog.ShowDialog();
 
@@ -47,12 +48,18 @@ namespace DSTEd.UI {
                 this.path.Text = dialog.FileName;
             }
         }
+
         public void OnSelect(Action<string, Boolean> callback) {
             this.callback_select = callback;
         }
 
         private void OnSave(object sender, RoutedEventArgs e) {
             this.callback_select?.Invoke(this.path.Text, (Boolean) this.save.IsChecked);
+        }
+
+        public void SetPath(string path) {
+            this.selected_path = path;
+            this.path.Text = this.selected_path;
         }
     }
 }

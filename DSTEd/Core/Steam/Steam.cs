@@ -43,10 +43,14 @@ namespace DSTEd.Core.Steam {
 
         public void SetPath(string path) {
             this.path = path;
+
+            if (this.ValidatePath(this.path) || this.path == null) {
+                this.path = software.InstallDir;
+            }
         }
 
         public String GetPath() {
-            return this.path; //software.InstallDir;
+            return this.path;
         }
 
         public Account GetAccount() {

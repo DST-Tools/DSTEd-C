@@ -35,6 +35,7 @@ namespace DSTEd.Core {
 
         public void SetPath(string path) {
             this.path = path;
+            this.window.SetPath(this.path);
         }
 
         public string GetPath() {

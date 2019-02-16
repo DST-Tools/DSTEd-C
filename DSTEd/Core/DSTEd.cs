@@ -25,6 +25,7 @@ namespace DSTEd.Core {
 
             // Set the steam path by configuration
             this.steam.SetPath(this.configuration.Get("STEAM_PATH", null));
+            this.workspace.SetPath(this.steam.GetPath());
 
             this.workspace.OnSelect(delegate (string path, Boolean save) {
                 if (!this.steam.ValidatePath(path)) {
