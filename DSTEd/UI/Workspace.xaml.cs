@@ -11,6 +11,7 @@ namespace DSTEd.UI {
 
         public Workspace() {
             InitializeComponent();
+            this.path.Text = "C:\\Program Files\\";
             Closing += OnWindowClosing;
         }
 
@@ -34,11 +35,11 @@ namespace DSTEd.UI {
             var dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
             dialog.Title = "DST Location";
-            //dialog.EnsureReadOnly = true;
             dialog.IsFolderPicker = true;
             dialog.AllowNonFileSystemItems = false;
             dialog.Multiselect = false;
-            dialog.InitialDirectory = "D:/Software/Steam/SteamApps/common/";
+            dialog.RestoreDirectory = false;
+            dialog.InitialDirectory = "C:\\Program Files\\";
 
             CommonFileDialogResult result = dialog.ShowDialog();
 

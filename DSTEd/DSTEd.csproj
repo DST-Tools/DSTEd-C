@@ -52,6 +52,7 @@
     <StartupObject>DSTEd.Boot</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\Configuration.cs" />
     <Compile Include="Core\Klei\Games\DSTC.cs" />
     <Compile Include="Core\Klei\Games\DSTM.cs" />
     <Compile Include="Core\Klei\Games\DSTS.cs" />

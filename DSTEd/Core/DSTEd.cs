@@ -1,12 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using DSTEd.Core.Klei.Games;
 using DSTEd.UI;
-using MLib.Interfaces;
 
 namespace DSTEd.Core {
     class DSTEd : System.Windows.Application {
@@ -16,22 +11,25 @@ namespace DSTEd.Core {
         private Workspace workspace = null;
         private Loading loading = null;
         private Steam.Steam steam = null;
+        private Configuration configuration = null;
 
         public DSTEd() {
             Logger.Info("Start DSTEd v" + GetVersion());
 
             // Init classes
-            this.workspace      = new Workspace();
-            this.loading        = new Loading();
-            this.ide            = new IDE();
-            this.steam          = new Steam.Steam();
+            this.configuration = new Configuration();
+            this.workspace = new Workspace();
+            this.loading = new Loading();
+            this.ide = new IDE();
+            this.steam = new Steam.Steam();
 
             this.workspace.OnSelect(delegate (string path, Boolean save) {
-                Logger.Info("Selected Workspace: " + path + ", Save: " + (save ? "YES" : "NO"));
+                // @ToDo validate steam path!
                 this.workspace.SetPath(path);
 
                 if (save) {
-                    // Save to config file
+                    this.configuration.Set("STEAM_PATH", path);
+                    this.configuration.Save();
                 }
 
                 this.workspace.Close(true);
@@ -60,17 +58,16 @@ namespace DSTEd.Core {
                 if (!this.steam.IsInstalled()) {
                     Logger.Info("Steam is not installed? Ask for Workspace...");
 
-                    Dialog.Open("We can not find the path to STEAM. Please check the workspace settings.", "Problem: Steam", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate(Dialog.Result result) {
+                    Dialog.Open("We can not find the path to STEAM. Please check the workspace settings.", "Problem: Steam", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                         this.workspace.Show();
                         return true;
                     });
-                    
+
                     return false;
                 }
 
-                this.workspace.SetPath(this.steam.GetPath());
-                Logger.Info("Steam-Path: " + this.steam.GetPath());
-                Logger.Info("Installed: " + (this.steam.IsInstalled() ? "Yes" : "No"));
+                this.workspace.SetPath(this.configuration.Get("STEAM_PATH", this.steam.GetPath()));
+                Logger.Info("Steam-Path: " + this.workspace.GetPath());
                 return true;
             });
 
@@ -95,8 +92,7 @@ namespace DSTEd.Core {
         }
 
         public String GetLanguage() {
-            // @ToDo Read from settings, otherwise fallback
-            return this.language;
+            return this.configuration.Get("LANGUAGE", this.language);
         }
     }
 }

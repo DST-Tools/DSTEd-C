@@ -45,7 +45,7 @@
             </TextBlock>
         </WrapPanel>
         <Label Content="Workspace:" Foreground="#FFFFFF" FontSize="9" Grid.Row="2" Grid.Column="1" />
-        <TextBox Text="C:\Program Files (x86)\Steam\SteamApps\common\Don't Starve Together\" Name="path" Grid.Row="2" Grid.Column="2" />
+        <TextBox Text="" Name="path" Grid.Row="2" Grid.Column="2" />
         <Button Content="Browse" Grid.Row="2" Grid.Column="3" Click="OnBrowse" />
         <CheckBox Name="save" Grid.Row="4" Grid.Column="2" Content="Use this as the default and do not ask again." />
         <Button Grid.Row="5" Grid.Column="2" Content="OK" Click="OnSave" HorizontalAlignment="Center" />

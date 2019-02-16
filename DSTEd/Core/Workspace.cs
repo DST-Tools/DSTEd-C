@@ -7,7 +7,7 @@ using DSTEd.Core;
 namespace DSTEd.Core {
     class Workspace {
         private UI.Workspace window;
-        private string path = null;
+        private string path = "C:\\Program Files\\";
 
         public Workspace() {
             this.window = new UI.Workspace();
