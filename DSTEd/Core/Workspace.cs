@@ -7,6 +7,7 @@ using DSTEd.Core;
 namespace DSTEd.Core {
     class Workspace {
         private UI.Workspace window;
+        private string path = null;
 
         public Workspace() {
             this.window = new UI.Workspace();
@@ -14,6 +15,14 @@ namespace DSTEd.Core {
 
         public void Show() {
             this.window.Show();
+        }
+
+        public void Close() {
+            this.window.Close(false);
+        }
+
+        public void Close(Boolean ignore_callback) {
+            this.window.Close(ignore_callback);
         }
 
         public void OnClose(Action<CancelEventArgs> callback) {
@@ -25,7 +34,11 @@ namespace DSTEd.Core {
         }
 
         public void SetPath(string path) {
+            this.path = path;
+        }
 
+        public string GetPath() {
+            return this.path;
         }
     }
 }

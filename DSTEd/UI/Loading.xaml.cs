@@ -17,7 +17,8 @@ namespace DSTEd.UI {
 
         public void SetProgress(int value) {
             Logger.Warn("Percent: ", value);
-            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
+
+            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(delegate () {
                 progress.Value = value;
             }));
         }
@@ -37,7 +38,7 @@ namespace DSTEd.UI {
         public void Run(String name, Func<Boolean> callback) {
             this.workers.Add(new KeyValuePair<String, Func<Boolean>>(name, callback));
         }
-        
+
         public void OnSuccess(Action callback) {
             this.callback_success = callback;
         }
@@ -50,27 +51,36 @@ namespace DSTEd.UI {
             int position = -1;
 
             Task.Run(() => {
-                if (this.IsRunning()) {
-                    ++position;
-                    var entry               = this.workers[position];
-                    String name             = entry.Key;
-                    Func<Boolean> callback  = entry.Value;
+                Logger.Info("[Loading] working... " + position + " / " + complete + " (Run: " + (this.IsRunning() ? "Yes" : "No") + ")");
 
-                    Dispatcher.Invoke(delegate() {
-                        if (!callback()) {
-                            this.Wait();
-                        }
+                while (position + 1 < complete) {
+                    if (this.IsRunning()) {
+                        ++position;
+                        var entry = this.workers[position];
+                        String name = entry.Key;
+                        Func<Boolean> callback = entry.Value;
 
-                        this.SetProgress(position * 100 / complete);
-                    });
-                    
+                        Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(delegate () {
+                            if (!callback()) {
+                                this.Wait();
+                            }
+
+                            this.SetProgress(position * 100 / complete);
+                            Thread.Sleep(1000);
+                        })).Wait();
+
+                        Task.Delay(1000);
+                    }
+
                     if (position >= complete) {
-                        this.SetProgress(100);
-                        this.callback_success();
+                        break;
                     }
                 }
 
-                Task.Delay(5000);
+                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
+                    this.SetProgress(100);
+                    this.callback_success();
+                }));
             });
         }
     }

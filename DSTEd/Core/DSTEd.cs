@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using DSTEd.Core.Klei.Games;
@@ -27,6 +28,14 @@ namespace DSTEd.Core {
 
             this.workspace.OnSelect(delegate (string path, Boolean save) {
                 Logger.Info("Selected Workspace: " + path + ", Save: " + (save ? "YES" : "NO"));
+                this.workspace.SetPath(path);
+
+                if (save) {
+                    // Save to config file
+                }
+
+                this.workspace.Close(true);
+                this.loading.Resume();
             });
 
             this.workspace.OnClose(delegate (CancelEventArgs e) {
@@ -48,9 +57,7 @@ namespace DSTEd.Core {
 
             // Adding workers to the loader...
             this.loading.Run("STEAM_PATH", delegate () {
-                Thread.Sleep(1000);
-
-                if (this.steam.IsInstalled()) {
+                if (!this.steam.IsInstalled()) {
                     Logger.Info("Steam is not installed? Ask for Workspace...");
 
                     Dialog.Open("We can not find the path to STEAM. Please check the workspace settings.", "Problem: Steam", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate(Dialog.Result result) {

@@ -7,6 +7,7 @@ namespace DSTEd.UI {
     public partial class Workspace : Window {
         private Action<CancelEventArgs> callback_close = null;
         private Action<string, Boolean> callback_select = null;
+        private Boolean ignore_callback = false;
 
         public Workspace() {
             InitializeComponent();
@@ -18,7 +19,14 @@ namespace DSTEd.UI {
         }
 
         public void OnWindowClosing(object sender, CancelEventArgs e) {
-            callback_close?.Invoke(e);
+            if (!ignore_callback) {
+                callback_close?.Invoke(e);
+            }
+        }
+
+        public void Close(Boolean ignore_callback) {
+            this.ignore_callback = true;
+            this.Close();
         }
 
         private void OnBrowse(object sender, RoutedEventArgs e) {
