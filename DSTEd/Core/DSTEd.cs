@@ -35,7 +35,6 @@ namespace DSTEd.Core {
                     return;
                 }
 
-                // @ToDo validate steam path!
                 this.steam.SetPath(path);
                 this.workspace.SetPath(path);
 
