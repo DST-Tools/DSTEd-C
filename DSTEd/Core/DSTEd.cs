@@ -12,6 +12,7 @@ namespace DSTEd.Core {
         private Workspace workspace = null;
         private Loading loading = null;
         private Steam.Steam steam = null;
+
         private string[] LangList = { "en_US", "de_DE", "zh_CHS" };//try to read from file?
         private Configuration configuration = null;
 
@@ -36,7 +37,6 @@ namespace DSTEd.Core {
                     });
                     return;
                 }
-
                 // @ToDo validate steam path!
                 this.steam.SetPath(path);
                 this.workspace.SetPath(path);
@@ -70,9 +70,9 @@ namespace DSTEd.Core {
 
             // Adding workers to the loader...
             this.loading.Run("STEAM_PATH", delegate () {
-                Thread.Sleep(1000);
 
-                if (this.steam.IsInstalled()) {
+                if (!this.steam.IsInstalled()) {
+
                     Logger.Info("Steam is not installed? Ask for Workspace...");
 
                     Dialog.Open("We can not find the path to STEAM. Please check the workspace settings.", "Problem: Steam", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
@@ -92,6 +92,7 @@ namespace DSTEd.Core {
                 this.steam.LoadGame(new DSTC());//client->CL?
                 this.steam.LoadGame(new DSTS());//server->SV?
                 this.steam.LoadGame(new DSTM());//mod tools->TOOL?
+
                 return true;
             });
 

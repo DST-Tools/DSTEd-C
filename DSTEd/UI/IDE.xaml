@@ -36,47 +36,48 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="New...">
-                    <MenuItem Header="Project" />
-                    <MenuItem Header="File" />
-                    <MenuItem Header="Asset" />
+                    <MenuItem Name="FILE_NEW_PROJECT" Header="Project" Click="OnMenu" />
+                    <MenuItem Name="FILE_NEW_FILE" Header="File" Click="OnMenu" />
+                    <MenuItem Name="FILE_NEW_ASSET" Header="Asset" Click="OnMenu" />
                 </MenuItem>
-                <MenuItem Header="Open" />
+                <MenuItem Header="Open" Name="FILE_OPEN" Click="OnMenu" />
                 <MenuItem Header="Open Recent">
-                    <MenuItem Header="- No Recent Files -" />
+                    <MenuItem Name="FILE_OPEN_RECENT" Header="- No Recent Files -" Click="OnMenu" />
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Save" />
-                <MenuItem Header="Save All" />
-                <MenuItem Header="Close" />
-                <MenuItem Header="Close All" />
+                <MenuItem Name="FILE_SAVE" Header="Save" Click="OnMenu" />
+                <MenuItem Name="FILE_SAVE_ALL" Header="Save All" Click="OnMenu" />
+                <MenuItem Name="FILE_CLOSE" Header="Close" Click="OnMenu" />
+                <MenuItem Name="FILE_CLOSE_ALL" Header="Close All" Click="OnMenu" />
                 <Separator/>
-                <MenuItem Header="Exit" />
+                <MenuItem Name="FILE_EXIT" Header="Exit" Click="OnMenu" />
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Undo" />
-                <MenuItem Header="Redo" />
+                <MenuItem Name="EDIT_UNDO" Header="Undo" Click="OnMenu" />
+                <MenuItem Name="EDIT_REDO" Header="Redo" Click="OnMenu" />
                 <Separator/>
-                <MenuItem Header="Cut" />
-                <MenuItem Header="Copy" />
-                <MenuItem Header="Paste" />
-                <MenuItem Header="Select All" />
+                <MenuItem Name="EDIT_CUT" Header="Cut" Click="OnMenu" />
+                <MenuItem Name="EDIT_COPY" Header="Copy" Click="OnMenu" />
+                <MenuItem Name="EDIT_PASTE" Header="Paste" Click="OnMenu" />
+                <MenuItem Name="EDIT_SELECT_ALL" Header="Select All" Click="OnMenu" />
             </MenuItem>
             <MenuItem Header="Search">
-                <MenuItem Header="Find..." />
-                <MenuItem Header="Find Next" />
+                <MenuItem Name="SEARCH_FIND" Header="Find..." Click="OnMenu" />
+                <MenuItem Name="SEARCH_FIND_NEXT" Header="Find Next" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="View" />
+            <MenuItem Name="VIEW" Header="View" Click="OnMenu" />
             <MenuItem Header="Debug">
-                <MenuItem Header="Run DST" />
+                <MenuItem Name="DEBUG_RUN_DST" Header="Run DST" Click="OnMenu" />
             </MenuItem>
             <MenuItem Header="Tools">
-                <MenuItem Header="Steam" />
-                <MenuItem Header="Server" />
+                <MenuItem Name="TOOLS_STEAM" Header="Steam" Click="OnMenu" />
+                <MenuItem Name="TOOLS_SERVER" Header="Server" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="Settings" />
+            <MenuItem Name="SETTINGS" Header="Settings" Click="OnMenu" />
             <MenuItem Header="Help">
-                <MenuItem Header="Forum" />
-                <MenuItem Header="About" />
+                <MenuItem Name="HELP_FORUM" Header="Forum" Click="OnMenu" />
+                <MenuItem Name="HELP_FEEDBACK" Header="Feedback / Bug" Click="OnMenu" />
+                <MenuItem Name="HELP_ABOUT" Header="About" Click="OnMenu" />
             </MenuItem>
         </Menu>
 

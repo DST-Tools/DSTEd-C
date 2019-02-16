@@ -331,6 +331,7 @@
     <Resource Include="Assets\Dialog\Stop.png" />
     <Resource Include="Assets\Dialog\Warning.png" />
     <Resource Include="Assets\Logo.ico" />
+
     <Content Include="Librarys\ktexlib_wrap.dll" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />
   </ItemGroup>

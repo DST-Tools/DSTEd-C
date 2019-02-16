@@ -3,21 +3,16 @@ using System.Diagnostics;
 using System.Windows.Controls;
 using DSTEd.UI;
 
-namespace DSTEd.Core
-{
-    public class Menu
-    {
+namespace DSTEd.Core {
+    public class Menu {
         private IDE ide = null;
 
-        public Menu(IDE ide)
-        {
+        public Menu(IDE ide) {
             this.ide = ide;
         }
 
-        public void Handle(string name, MenuItem menu)
-        {
-            switch (name)
-            {
+        public void Handle(string name, MenuItem menu) {
+            switch (name) {
                 //case "FILE_NEW_PROJECT":
                 //case "FILE_NEW_FILE":
                 //case "FILE_NEW_ASSET":
@@ -29,8 +24,7 @@ namespace DSTEd.Core
                 //case "FILE_CLOSE_ALL":
                 case "FILE_EXIT":
                     Dialog.Open("Do you want to exit DSTEd?", "Exit DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
-                        if (result == Dialog.Result.Yes)
-                        {
+                        if (result == Dialog.Result.Yes) {
                             Environment.Exit(0);
                         }
 
@@ -64,3 +58,4 @@ namespace DSTEd.Core
         }
     }
 }
+
