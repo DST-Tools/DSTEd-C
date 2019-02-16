@@ -9,7 +9,9 @@ namespace DSTEd.Core {
             for(int index = 0; index < args.Length; index++) {
                 object value = args[index];
 
-                if (value.GetType() == typeof(int)) {
+                if (value == null) {
+                    parameters[index] = "NULL";
+                } else if (value.GetType() == typeof(int)) {
                     parameters[index] = value.ToString();
                 } else if (value.GetType() == typeof(string)) {
                     parameters[index] = (string) value;
