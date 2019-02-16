@@ -3,12 +3,14 @@ using SteamKit2;
 using Indieteur.SAMAPI;
 using DSTEd.Core.Klei;
 using System.Collections.Generic;
+using System.IO;
 
 namespace DSTEd.Core.Steam {
     class Steam {
-        private SteamAppsManager software;
-        private Account account;
-        private Workshop workshop;
+        private SteamAppsManager software = null;
+        private Account account = null;
+        private Workshop workshop = null;
+        private string path = null;
 
         public Steam() {
             this.software = new SteamAppsManager();
@@ -27,12 +29,24 @@ namespace DSTEd.Core.Steam {
             }
         }
 
-        public Boolean IsInstalled() {
-            return (software.InstallDir.Length > 0);
+        public Boolean ValidatePath(string path) {
+            if (path == null) {
+                return false;
+            }
+
+            return File.Exists(string.Format("{0}{1}Steam.exe", path, Path.DirectorySeparatorChar));
         }
-        
+
+        public Boolean IsInstalled() {
+            return this.ValidatePath(this.path);
+        }
+
+        public void SetPath(string path) {
+            this.path = path;
+        }
+
         public String GetPath() {
-            return software.InstallDir;
+            return this.path; //software.InstallDir;
         }
 
         public Account GetAccount() {

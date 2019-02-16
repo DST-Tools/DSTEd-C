@@ -23,8 +23,19 @@ namespace DSTEd.Core {
             this.ide = new IDE();
             this.steam = new Steam.Steam();
 
+            // Set the steam path by configuration
+            this.steam.SetPath(this.configuration.Get("STEAM_PATH", null));
+
             this.workspace.OnSelect(delegate (string path, Boolean save) {
+                if (!this.steam.ValidatePath(path)) {
+                    Dialog.Open("Bad steam path! Please select the directory of Steam.", "Problem", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                        return true;
+                    });
+                    return;
+                }
+
                 // @ToDo validate steam path!
+                this.steam.SetPath(path);
                 this.workspace.SetPath(path);
 
                 if (save) {
@@ -49,6 +60,7 @@ namespace DSTEd.Core {
             });
 
             this.loading.OnSuccess(delegate () {
+                Logger.Info("Steam path was set on", this.steam.GetPath());
                 this.loading.Close();
                 this.ide.Show();
             });
