@@ -1,38 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using System.ComponentModel;
+using System.Windows;
+using DSTEd.Core;
+
 namespace DSTEd.Core {
-    class Workspace{
-        public string BinPath;
-        public string ModsPath;
-        XmlDocument ConfigXML = new XmlDocument();
-        public Workspace(string workspace)
-        {
-            BinPath = workspace + "\\bin";
-            ModsPath = workspace + "\\mods";
+    class Workspace {
+        private UI.Workspace window;
+        private string path = "C:\\Program Files\\";
+
+        public Workspace() {
+            this.window = new UI.Workspace();
         }
-        public Workspace()
-        {
-            //@TODO: Load From File
-            ConfigXML.Load(".\\config.xml");
-            var Root = ConfigXML.DocumentElement;
-            BinPath = Root.SelectSingleNode("/root/workspace/bin").Value;
-            ModsPath = Root.SelectSingleNode("/root/workspace/mods").Value;
+
+        public void Show() {
+            this.window.Show();
         }
-        public void SaveToFile()
-        {
-            var Root = ConfigXML.DocumentElement;
-            var workspace = Root.SelectSingleNode("/root/workspace");
-            workspace.RemoveAll();
-            var bin = ConfigXML.CreateElement("bin");
-            var mods = ConfigXML.CreateElement("mods");
-            bin.Value = BinPath;
-            mods.Value = ModsPath;
-            workspace.AppendChild(bin);
-            workspace.AppendChild(mods);
+
+        public void Close() {
+            this.window.Close(false);
+        }
+
+        public void Close(Boolean ignore_callback) {
+            this.window.Close(ignore_callback);
+        }
+
+        public void OnClose(Action<CancelEventArgs> callback) {
+            this.window.OnClose(callback);
+        }
+
+        public void OnSelect(Action<string, Boolean> callback) {
+            this.window.OnSelect(callback);
+        }
+
+        public void SetPath(string path) {
+            this.path = path;
+            this.window.SetPath(this.path);
+        }
+
+        public string GetPath() {
+            return this.path;
         }
     }
 }

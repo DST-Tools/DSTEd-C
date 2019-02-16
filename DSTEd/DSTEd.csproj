@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -38,7 +38,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,17 +51,44 @@
   <PropertyGroup>
     <StartupObject>DSTEd.Boot</StartupObject>
   </PropertyGroup>
-  <PropertyGroup>
-    <NoWin32Manifest>true</NoWin32Manifest>
-  </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Klei\Games\DSTC.cs" />
+    <Compile Include="Core\Klei\Games\DSTM.cs" />
+    <Compile Include="Core\Klei\Games\DSTS.cs" />
+    <Compile Include="Core\Klei\KleiGame.cs" />
+    <Compile Include="Core\Klei\KleiTools.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Components\Container.cs" />
+    <Compile Include="UI\Dialog.xaml.cs">
+      <DependentUpon>Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Theme\Avalon\Menu\MenuKeys.cs" />
+    <Compile Include="UI\Theme\Avalon\ResourceKeys.cs" />
+    <Compile Include="UI\Theme\Dark.cs" />
+    <Compile Include="UI\Workspace.xaml.cs">
+      <DependentUpon>Workspace.xaml</DependentUpon>
+    </Compile>
     <None Include="App.config" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\Steam\Account.cs" />
-    <Compile Include="Core\Servers.cs" />
     <Compile Include="Core\Steam\Steam.cs" />
-    <None Include="Core\Steam\steam_api_interop.cs" />
     <Compile Include="Core\Steam\Workshop.cs" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Boot.cs" />
@@ -76,20 +102,100 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Indieteur.SAMAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Indieteur.SteamAppsManAndVDFAPI.1.0.2\lib\Indieteur.SAMAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Indieteur.VDFAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Indieteur.SteamAppsManAndVDFAPI.1.0.2\lib\Indieteur.VDFAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="ktexlib_wrap, Version=1.0.6986.517, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librarys\ktexlib_wrap.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.MWindowLib.1.0.4.2\lib\net452\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.4.4.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.3.3, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft-WindowsAPICodePack-Core.1.1.3.3\lib\net452\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.3.3, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft-WindowsAPICodePack-Shell.1.1.3.3\lib\net452\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="MLib, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.MLib.1.0.10\lib\net4\MLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MsgBox, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.MsgBox.1.4.2\lib\net451\MsgBox.dll</HintPath>
+    </Reference>
+    <Reference Include="MWindowInterfacesLib, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.MWindowLib.1.0.4.2\lib\net452\MWindowInterfacesLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MWindowLib, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.MWindowLib.1.0.4.2\lib\net452\MWindowLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Polly, Version=5.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Polly.5.8.0\lib\net45\Polly.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="protobuf-net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.1.0\lib\net451\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="SteamKit2, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SteamKit2.2.1.0\lib\netstandard2.0\SteamKit2.dll</HintPath>
+    </Reference>
+    <Reference Include="SteamStorefrontAPI, Version=1.2.6759.40399, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SteamStorefrontAPI.1.2.6759.40399\lib\net461\SteamStorefrontAPI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.4.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.4.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.MWindowLib.1.0.4.2\lib\net452\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="UserNotification, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.UserNotifications.1.3.1\lib\net451\UserNotification.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.4.0.8, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.AvalonDock.Themes.VS2013.3.4.0.8\lib\net4\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2013, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.AvalonDock.Themes.VS2013.3.4.0.8\lib\net4\Xceed.Wpf.AvalonDock.Themes.VS2013.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\Dialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\IDE.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -98,13 +204,69 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Theme\Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Theme\Dark\Global.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Theme\Dark\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Theme\Dark\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Theme\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\ComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\GroupBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\Menu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\ProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\TabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\TabItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\ToolTip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Theme\TreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Workspace.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Klei\" />
-    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -119,10 +281,67 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ktexlib_wrap\ktexlib_wrap.vcxproj">
-      <Project>{76ea486e-d8af-487f-8ee2-2878a46b2097}</Project>
-      <Name>ktexlib_wrap</Name>
-    </ProjectReference>
+    <Resource Include="Assets\Theme\Dark\DockAnchorableBottom.png" />
+    <Resource Include="Assets\Theme\Dark\DockAnchorableLeft.png" />
+    <Resource Include="Assets\Theme\Dark\DockAnchorableRight.png" />
+    <Resource Include="Assets\Theme\Dark\DockAnchorableTop.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableBottom.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableLeft.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableRight.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentAsAnchorableTop.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentBottom.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentInside.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentLeft.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentRight.png" />
+    <Resource Include="Assets\Theme\Dark\DockDocumentTop.png" />
+    <Resource Include="Assets\Theme\Dark\DockPaneEmpty.png" />
+    <Resource Include="Assets\Theme\Dark\DockPaneLargeEmpty.png" />
+    <Resource Include="Assets\Theme\Dark\HTabGroup.png" />
+    <Resource Include="Assets\Theme\Dark\Locked.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinAutoHide_White.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinClose_White.png" />
+    <Resource Include="Assets\Theme\Dark\PinDocMenu.png" />
+    <Resource Include="Assets\Theme\Dark\PinDocMenu_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinMaximize.png" />
+    <Resource Include="Assets\Theme\Dark\PinMaximize_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinMaximize_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\PinMenu_White.png" />
+    <Resource Include="Assets\Theme\Dark\PinRestore.png" />
+    <Resource Include="Assets\Theme\Dark\PinRestore_Black.png" />
+    <Resource Include="Assets\Theme\Dark\PinRestore_Dark.png" />
+    <Resource Include="Assets\Theme\Dark\VTabGroup.png" />
+    <Resource Include="Assets\Dialog\Exclamation.png" />
+    <Resource Include="Assets\Dialog\Asterisk.png" />
+    <Resource Include="Assets\Dialog\Error.png" />
+    <Resource Include="Assets\Dialog\Hand.png" />
+    <Resource Include="Assets\Dialog\Information.png" />
+    <Resource Include="Assets\Dialog\Question.png" />
+    <Resource Include="Assets\Dialog\Stop.png" />
+    <Resource Include="Assets\Dialog\Warning.png" />
+    <Resource Include="Assets\Logo.ico" />
+    <Content Include="Librarys\ktexlib_wrap.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Librarys\System.Windows.Interactivity.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Logo.ico" />
+    <Content Include="Librarys\System.Windows.Interactivity.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

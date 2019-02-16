@@ -3,10 +3,126 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:DSTEd="http://dsted.org/theme" 
         xmlns:local="clr-namespace:DSTEd.UI"
+        xmlns:winformsIntegration="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         mc:Ignorable="d"
-        Title="IDE" Height="450" Width="800">
-    <Grid>
-        
+        Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" WindowStartupLocation="CenterScreen" Height="600" Width="800" MinWidth="200" MinHeight="200" SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- https://github.com/microexs/AvalonDock.Themes.VS2013 -->
+               <!-- <ResourceDictionary Source="/DSTEd;component/UI/Theme/Dark.xaml" />-->
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabControl.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabItem.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/Button.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/GroupBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TextBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/ComboBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TreeView.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/Menu.xaml"/>
+                <!--<ResourceDictionary Source="/DSTEd;component/UI/Theme/ProgressBar.xaml"/>-->
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/ToolTip.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="layoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="New...">
+                    <MenuItem Header="Project" />
+                    <MenuItem Header="File" />
+                    <MenuItem Header="Asset" />
+                </MenuItem>
+                <MenuItem Header="Open" />
+                <MenuItem Header="Open Recent">
+                    <MenuItem Header="- No Recent Files -" />
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Save" />
+                <MenuItem Header="Save All" />
+                <MenuItem Header="Close" />
+                <MenuItem Header="Close All" />
+                <Separator/>
+                <MenuItem Header="Exit" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" />
+                <MenuItem Header="Redo" />
+                <Separator/>
+                <MenuItem Header="Cut" />
+                <MenuItem Header="Copy" />
+                <MenuItem Header="Paste" />
+                <MenuItem Header="Select All" />
+            </MenuItem>
+            <MenuItem Header="Search">
+                <MenuItem Header="Find..." />
+                <MenuItem Header="Find Next" />
+            </MenuItem>
+            <MenuItem Header="View" />
+            <MenuItem Header="Debug">
+                <MenuItem Header="Run DST" />
+            </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Steam" />
+                <MenuItem Header="Server" />
+            </MenuItem>
+            <MenuItem Header="Settings" />
+            <MenuItem Header="Help">
+                <MenuItem Header="Forum" />
+                <MenuItem Header="About" />
+            </MenuItem>
+        </Menu>
+
+        <avalonDock:DockingManager BorderThickness="0" Grid.Row="1" x:Name="dockManager" Background="#2D2D30" AllowMixedOrientation="True" DocumentClosing="dockManager_DocumentClosing">
+            <!--<avalonDock:DockingManager.Theme>
+                <avalonDock:Vs2013DarkTheme />
+            </avalonDock:DockingManager.Theme>-->
+            
+            <avalonDock:DockingManager.DocumentHeaderTemplate >
+                <DataTemplate >
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                </DataTemplate>
+            </avalonDock:DockingManager.DocumentHeaderTemplate>
+            <avalonDock:LayoutRoot PropertyChanged="OnLayoutRootPropertyChanged" >
+                <avalonDock:LayoutPanel Orientation="Horizontal" >
+
+                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="150" >
+                        <avalonDock:LayoutAnchorablePane >
+                            <avalonDock:LayoutAnchorable ContentId="workspace_mods" Title="Mods" Hiding="OnToolWindow1Hiding" >
+                                <StackPanel >
+                                    <TextBox Text="CONTENT" />
+                                </StackPanel>
+                            </avalonDock:LayoutAnchorable>
+                            <avalonDock:LayoutAnchorable ContentId="workspace_core" Title="Core">
+                                <TextBlock Text="CONTENT"/>
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorablePane>
+                    </avalonDock:LayoutAnchorablePaneGroup>
+
+                    <avalonDock:LayoutDocumentPaneGroup >
+                        <avalonDock:LayoutDocumentPane x:Name="LayoutDocumentPane"  >
+                            <avalonDock:LayoutDocument ContentId="document1" Title="Document 1" >
+                                <StackPanel Background="#2D2D30" >
+                                    <TextBox Text="CONTENT" />
+                                </StackPanel>
+                            </avalonDock:LayoutDocument>
+                            <avalonDock:LayoutDocument ContentId="document2" Title="Document 2" >
+                                <TextBox Text="CONTENT" />
+                            </avalonDock:LayoutDocument>
+                        </avalonDock:LayoutDocumentPane>
+                    </avalonDock:LayoutDocumentPaneGroup>
+                </avalonDock:LayoutPanel>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
+        <ContentControl Content="ContentControl" HorizontalAlignment="Left" Margin="1206,236,-516,0" Grid.Row="1" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>

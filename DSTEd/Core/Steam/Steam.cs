@@ -1,27 +1,74 @@
 ﻿using System;
-using Microsoft.Win32;
+using SteamKit2;
+using Indieteur.SAMAPI;
+using DSTEd.Core.Klei;
+using System.Collections.Generic;
+using System.IO;
 
 namespace DSTEd.Core.Steam {
     class Steam {
-        public Boolean IsInstalled() {
-            // @ToDo check installation path and registry
-            object regvalue = Registry.CurrentUser.OpenSubKey("Software").OpenSubKey("Valve").OpenSubKey("Steam").GetValue("SteamPath");
-            if (regvalue == null)
-                return false;
-            else
-            {
-                //initalize Steam Path
-                SteamPath = regvalue.ToString();
-                return true;
+        private SteamAppsManager software = null;
+        private Account account = null;
+        private Workshop workshop = null;
+        private string path = null;
+
+        public Steam() {
+            this.software = new SteamAppsManager();
+            this.account = new Account();
+            this.workshop = new Workshop();
+        }
+
+        public void LoadGame(KleiGame game) {
+            Console.WriteLine(string.Format("LoadGame: [#{0}] {1}", game.GetID(), game.GetName()));
+
+            IReadOnlyList<SteamApp> apps = software.SteamApps;
+            foreach (SteamApp app in apps) {
+                if (game.GetID() == app.AppID) {
+                    game.SetPath(app.InstallDir);
+                }
             }
         }
-        
-        public String GetPath() {
-            // @ToDo get steam installation path/directory
-            // Registry: \\Software\\Valve\\Steam
-            return SteamPath;
-        }
-        private String SteamPath;
 
+        public Boolean ValidatePath(string path) {
+            if (path == null) {
+                return false;
+            }
+
+            return File.Exists(string.Format("{0}{1}Steam.exe", path, Path.DirectorySeparatorChar));
+        }
+
+        public Boolean IsInstalled() {
+            return this.ValidatePath(this.path);
+        }
+
+        public void SetPath(string path) {
+            this.path = path;
+
+            if (this.ValidatePath(this.path) || this.path == null) {
+                this.path = software.InstallDir;
+            }
+        }
+
+        public String GetPath() {
+            return this.path;
+        }
+
+        public Account GetAccount() {
+            return this.account;
+        }
+
+        public Workshop GetWorkShop() {
+            return this.workshop;
+        }
+
+        public void GetNews() {
+            using(dynamic steamNews = WebAPI.GetInterface("ISteamNews")) {
+                KeyValue kvNews = steamNews.GetNewsForApp(appid: 322330);
+
+                foreach(KeyValue news in kvNews["newsitems"]["newsitem"].Children) {
+                    Console.WriteLine("News: {0}", news["title"].AsString());
+                }
+            }
+        }
     }
 }

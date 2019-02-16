@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using DSTEd.Core;
 
 namespace DSTEd.UI {
     public partial class Loading : Window {
         private Action callback_success = null;
-        private List<KeyValuePair<String, Action>> workers = new List<KeyValuePair<String, Action>>();
+        private List<KeyValuePair<String, Func<Boolean>>> workers = new List<KeyValuePair<String, Func<Boolean>>>();
+        private Boolean running = false;
 
         public Loading() {
             InitializeComponent();
@@ -15,46 +17,71 @@ namespace DSTEd.UI {
 
         public void SetProgress(int value) {
             Logger.Warn("Percent: ", value);
-            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
+
+            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(delegate () {
                 progress.Value = value;
             }));
         }
 
-        public void Run(String name, Action callback) {
-            this.workers.Add(new KeyValuePair<String, Action>(name, callback));
+        public void Wait() {
+            this.running = false;
+        }
+
+        public void Resume() {
+            this.running = true;
+        }
+
+        public Boolean IsRunning() {
+            return this.running;
+        }
+
+        public void Run(String name, Func<Boolean> callback) {
+            this.workers.Add(new KeyValuePair<String, Func<Boolean>>(name, callback));
         }
 
         public void OnSuccess(Action callback) {
-            this.callback_success += callback;
+            this.callback_success = callback;
         }
 
         public void Start() {
+            this.Resume();
             this.Show();
 
             int complete = this.workers.Count;
-            int position = 0;
+            int position = -1;
 
-            foreach (var entry in this.workers) {
-                ++position;
-                this.Loop(entry, position, complete);
-            }
+            Task.Run(() => {
+                Logger.Info("[Loading] working... " + position + " / " + complete + " (Run: " + (this.IsRunning() ? "Yes" : "No") + ")");
 
-            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
-                this.SetProgress(100);
-                Thread.Sleep(500);
-                this.callback_success();
-            }));
-        }
+                while (position + 1 < complete) {
+                    if (this.IsRunning()) {
+                        ++position;
+                        var entry = this.workers[position];
+                        String name = entry.Key;
+                        Func<Boolean> callback = entry.Value;
 
-        private void Loop(KeyValuePair<String, Action> entry, int position, int complete) {
-            String name = entry.Key;
-            Action callback = entry.Value;
+                        Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(delegate () {
+                            if (!callback()) {
+                                this.Wait();
+                            }
 
-            Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
-                callback();
-                this.SetProgress(position * 100 / complete);
-                Thread.Sleep(500);
-            }));
+                            this.SetProgress(position * 100 / complete);
+                            Thread.Sleep(1000);
+                        })).Wait();
+
+                        Task.Delay(1000);
+                    }
+
+                    if (position >= complete) {
+                        break;
+                    }
+                }
+
+                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
+                    this.SetProgress(100);
+                    this.callback_success();
+                }));
+            });
         }
     }
 }
