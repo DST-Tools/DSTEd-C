@@ -21,9 +21,9 @@ namespace DSTEd.Core {
 
             // Init classes
             this.configuration = new Configuration();
-            this.workspace = new Workspace();
-            this.loading = new Loading();
             this.ide = new IDE();
+            this.workspace = new Workspace(this);
+            this.loading = new Loading();
             this.steam = new Steam.Steam();
 
             // Set the steam path by configuration
@@ -103,6 +103,10 @@ namespace DSTEd.Core {
 
             this.loading.Start();
             this.Run();
+        }
+
+        public IDE GetIDE() {
+            return this.ide;
         }
 
         public String GetVersion() {

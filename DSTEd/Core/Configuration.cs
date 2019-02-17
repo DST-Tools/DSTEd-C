@@ -24,7 +24,7 @@ namespace DSTEd.Core {
                 using(StreamReader reader = new StreamReader(this.GetFullPath())) {
                     this.data = JsonConvert.DeserializeObject<Dictionary<string, string>>(reader.ReadToEnd());
                 }
-            } catch (IOException e) {
+            } catch (IOException) {
                 Logger.Warn("Configuration can't be found. Creating by default.", this.GetFullPath());
                 this.Save();
             }
@@ -33,7 +33,7 @@ namespace DSTEd.Core {
         public void Save() {
             try {
                 File.WriteAllText(this.GetFullPath(), JsonConvert.SerializeObject(this.data, Formatting.Indented));
-            } catch (IOException e) {
+            } catch (IOException) {
                 Logger.Warn("Configuration can't be write!", this.GetFullPath());
             }
         }

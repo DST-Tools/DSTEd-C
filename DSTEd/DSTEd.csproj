@@ -53,6 +53,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Contents\Welcome.cs" />
+    <Compile Include="Core\Document.cs" />
     <Compile Include="Core\Klei\Games\DSTC.cs" />
     <Compile Include="Core\Klei\Games\DSTM.cs" />
     <Compile Include="Core\Klei\Games\DSTS.cs" />
@@ -71,6 +73,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="UI\Components\Container.cs" />
+    <Compile Include="UI\Components\MenuSpacer.cs" />
     <Compile Include="UI\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,30 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="protobuf-net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\packages\protobuf-net.2.1.0\lib\net451\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Converters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b532964b8548be77, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Converters.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Core, Version=0.3.1.1588, Culture=neutral, PublicKeyToken=7407205e337c98ef, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Css, Version=0.3.1.1590, Culture=neutral, PublicKeyToken=7a46e3f532fdb787, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Css.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Dom, Version=0.3.1.1589, Culture=neutral, PublicKeyToken=517340b6277b1a7a, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Dom.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Model, Version=0.3.1.1592, Culture=neutral, PublicKeyToken=2236cfc76b505845, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Rendering.Gdi, Version=0.3.1.1595, Culture=neutral, PublicKeyToken=03902092284347e3, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Rendering.Gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Rendering.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d0902381100df30e, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Rendering.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpVectors.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d16e717f0a981fb9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="SteamKit2, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SteamKit2.2.1.0\lib\netstandard2.0\SteamKit2.dll</HintPath>
@@ -270,6 +297,7 @@
       <Project>{76ea486e-d8af-487f-8ee2-2878a46b2097}</Project>
       <Name>ktexlib_wrap</Name>
     </ProjectReference>
+    <Folder Include="Core\Contents\Editors\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -331,8 +359,11 @@
     <Resource Include="Assets\Dialog\Stop.png" />
     <Resource Include="Assets\Dialog\Warning.png" />
     <Resource Include="Assets\Logo.ico" />
-
     <Content Include="Librarys\ktexlib_wrap.dll" />
+    <Resource Include="Assets\Icons\Klei.ico" />
+    <Resource Include="Assets\Icons\GitHub.ico" />
+    <EmbeddedResource Include="Assets\Documents\Welcome.html" />
+    <Content Include="Assets\Vectors\Account.svg" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <ItemGroup>

@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DSTEd.UI"
-        xmlns:Components="clr-namespace:DSTEd.UI.Components"
         mc:Ignorable="d"
         Title="Workspace" Height="228" Width="500" Background="#FF2D2D30" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Disabled" Icon="/DSTEd;component/Assets/Logo.ico" WindowStyle="ThreeDBorderWindow">
     <Window.Resources>

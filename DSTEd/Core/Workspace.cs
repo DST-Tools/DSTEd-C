@@ -7,10 +7,15 @@ using DSTEd.Core;
 namespace DSTEd.Core {
     class Workspace {
         private UI.Workspace window;
+        private DSTEd core = null;
         private string path = "C:\\Program Files\\";
+        private Dictionary<string, Document> documents = null;
 
-        public Workspace() {
+        public Workspace(DSTEd core) {
+            this.core = core;
             this.window = new UI.Workspace();
+            this.documents = new Dictionary<string, Document>();
+            this.CreateWelcome();
         }
 
         public void Show() {
@@ -40,6 +45,25 @@ namespace DSTEd.Core {
 
         public string GetPath() {
             return this.path;
+        }
+
+        public void CreateWelcome() {
+            Document welcome = new Document();
+            welcome.SetTitle("Welcome");
+            this.AddDocument(welcome);
+        }
+
+        public void AddDocument(Document document) {
+            document.OnChange(this.OnChanged);
+            this.documents.Add(document.GetName(), document);
+            document.Init();
+        }
+
+        public void OnChanged(Document document, Document.State state) {
+            Logger.Info("[Workspace] Changed document: " + document.GetName() + " >> " + state);
+
+            // Forward to IDE-UI
+            this.core.GetIDE().OnChanged(document, state);
         }
     }
 }

@@ -1,3 +1,4 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -92,6 +93,34 @@ namespace DSTEd.UI {
 
             if (item != null) {
                 this.menu.Handle(item.Name, item);
+            }
+        }
+
+        internal void OnChanged(Document document, Document.State state) {
+            Logger.Info("[IDE] Changed document: " + document.GetName() + " >> " + state);
+            
+            switch (state) {
+                case Document.State.CREATED:
+                    this.editors.Children.Add(new LayoutDocument {
+                        Title = document.GetName(),
+                        ContentId = document.GetName(),
+                        // IconSource = document.GetIcon(),
+                        Content = document.GetContent(),
+                        CanFloat = true
+                    });
+                    break;
+                case Document.State.CHANGED:
+                    foreach (LayoutDocument entry in this.editors.Children) {
+                        if(entry.GetType() == typeof(LayoutDocument)) {
+                            LayoutDocument doc = (LayoutDocument) entry;
+                            doc.Title = document.GetName() + "*";
+                        }
+                    }
+                    // @ToDo
+                    break;
+                case Document.State.REMOVED:
+                    // @ToDo
+                    break;
             }
         }
     }

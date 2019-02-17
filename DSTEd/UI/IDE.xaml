@@ -4,16 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-        xmlns:DSTEd="http://dsted.org/theme" 
-        xmlns:local="clr-namespace:DSTEd.UI"
-        xmlns:winformsIntegration="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
-        Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" WindowStartupLocation="CenterScreen" Height="600" Width="800" MinWidth="200" MinHeight="200" SizeToContent="WidthAndHeight">
+        Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF"
+        VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1"
+        BorderBrush="#FFED5C2D" Margin="0" WindowStartupLocation="CenterScreen"
+        Height="600" Width="800" MinWidth="400" MinHeight="300" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <ResourceDictionary>
+            <sys:Double x:Key="IconSize">14</sys:Double>
             <ResourceDictionary.MergedDictionaries>
                 <!-- https://github.com/microexs/AvalonDock.Themes.VS2013 -->
-               <!-- <ResourceDictionary Source="/DSTEd;component/UI/Theme/Dark.xaml" />-->
+                <!-- <ResourceDictionary Source="/DSTEd;component/UI/Theme/Dark.xaml" />-->
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabControl.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabItem.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/Button.xaml"/>
@@ -33,8 +36,25 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="File">
+        <Menu Grid.Row="0" HorizontalAlignment="Stretch">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="File" Grid.Column="0">
                 <MenuItem Header="New...">
                     <MenuItem Name="FILE_NEW_PROJECT" Header="Project" Click="OnMenu" />
                     <MenuItem Name="FILE_NEW_FILE" Header="File" Click="OnMenu" />
@@ -52,7 +72,7 @@
                 <Separator/>
                 <MenuItem Name="FILE_EXIT" Header="Exit" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="Edit">
+            <MenuItem Header="Edit" Grid.Column="1">
                 <MenuItem Name="EDIT_UNDO" Header="Undo" Click="OnMenu" />
                 <MenuItem Name="EDIT_REDO" Header="Redo" Click="OnMenu" />
                 <Separator/>
@@ -61,47 +81,61 @@
                 <MenuItem Name="EDIT_PASTE" Header="Paste" Click="OnMenu" />
                 <MenuItem Name="EDIT_SELECT_ALL" Header="Select All" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="Search">
+            <MenuItem Header="Search" Grid.Column="2">
                 <MenuItem Name="SEARCH_FIND" Header="Find..." Click="OnMenu" />
                 <MenuItem Name="SEARCH_FIND_NEXT" Header="Find Next" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Name="VIEW" Header="View" Click="OnMenu" />
-            <MenuItem Header="Debug">
+            <MenuItem Name="VIEW" Header="View" Grid.Column="3" Click="OnMenu" />
+            <MenuItem Header="Debug" Grid.Column="4">
                 <MenuItem Name="DEBUG_RUN_DST" Header="Run DST" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="Tools">
+            <MenuItem Header="Tools" Grid.Column="5">
                 <MenuItem Name="TOOLS_STEAM" Header="Steam" Click="OnMenu" />
                 <MenuItem Name="TOOLS_SERVER" Header="Server" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Name="SETTINGS" Header="Settings" Click="OnMenu" />
-            <MenuItem Header="Help">
-                <MenuItem Name="HELP_FORUM" Header="Forum" Click="OnMenu" />
-                <MenuItem Name="HELP_FEEDBACK" Header="Feedback / Bug" Click="OnMenu" />
+            <MenuItem Name="SETTINGS" Header="Settings" Grid.Column="6" Click="OnMenu" />
+            <MenuItem Header="Help" Grid.Column="7">
+                <MenuItem Name="HELP_FORUM" Header="Forum" Click="OnMenu">
+                    <MenuItem.Icon>
+                        <Image Width="{StaticResource IconSize}" Height="{StaticResource IconSize}" Source="/DSTEd;component/Assets/Icons/Klei.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="HELP_FEEDBACK" Header="Feedback / Bug" Click="OnMenu">
+                    <MenuItem.Icon>
+                        <Image Width="{StaticResource IconSize}" Height="{StaticResource IconSize}" Source="/DSTEd;component/Assets/Icons/GitHub.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Name="HELP_ABOUT" Header="About" Click="OnMenu" />
+            </MenuItem>
+            <MenuItem Name="STEAM" Header="Guest" Grid.Column="8" Click="OnMenu" HorizontalAlignment="Right">
+                <MenuItem.Icon>
+                    <svgc:SvgViewbox Height="{StaticResource IconSize}" Width="{StaticResource IconSize}" Stretch="Uniform" Source="/DSTEd;component/Assets/Vectors/Account.svg"/>
+                </MenuItem.Icon>
+                <MenuItem Name="STEAM_LOGIN" Header="Login" Click="OnMenu" />
+                <Separator/>
+                <MenuItem Name="STEAM_SETTINGS" Header="Settings" Click="OnMenu" />
             </MenuItem>
         </Menu>
 
         <avalonDock:DockingManager BorderThickness="0" Grid.Row="1" x:Name="dockManager" Background="#2D2D30" AllowMixedOrientation="True" DocumentClosing="dockManager_DocumentClosing">
-            <!--<avalonDock:DockingManager.Theme>
-                <avalonDock:Vs2013DarkTheme />
-            </avalonDock:DockingManager.Theme>-->
-            
+            <!-- Configuration -->
             <avalonDock:DockingManager.DocumentHeaderTemplate >
                 <DataTemplate >
-                    <StackPanel Orientation="Horizontal" >
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
                 </DataTemplate>
             </avalonDock:DockingManager.DocumentHeaderTemplate>
+            
+            <!-- Layout -->
             <avalonDock:LayoutRoot PropertyChanged="OnLayoutRootPropertyChanged" >
                 <avalonDock:LayoutPanel Orientation="Horizontal" >
 
-                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="150" >
+                    <!-- Sidebar -->
+                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="150">
                         <avalonDock:LayoutAnchorablePane >
                             <avalonDock:LayoutAnchorable ContentId="workspace_mods" Title="Mods" Hiding="OnToolWindow1Hiding" >
-                                <StackPanel >
-                                    <TextBox Text="CONTENT" />
-                                </StackPanel>
+                                <TextBlock Text="CONTENT" />
                             </avalonDock:LayoutAnchorable>
                             <avalonDock:LayoutAnchorable ContentId="workspace_core" Title="Core">
                                 <TextBlock Text="CONTENT"/>
@@ -109,21 +143,13 @@
                         </avalonDock:LayoutAnchorablePane>
                     </avalonDock:LayoutAnchorablePaneGroup>
 
-                    <avalonDock:LayoutDocumentPaneGroup >
-                        <avalonDock:LayoutDocumentPane x:Name="LayoutDocumentPane"  >
-                            <avalonDock:LayoutDocument ContentId="document1" Title="Document 1" >
-                                <StackPanel Background="#2D2D30" >
-                                    <TextBox Text="CONTENT" />
-                                </StackPanel>
-                            </avalonDock:LayoutDocument>
-                            <avalonDock:LayoutDocument ContentId="document2" Title="Document 2" >
-                                <TextBox Text="CONTENT" />
-                            </avalonDock:LayoutDocument>
-                        </avalonDock:LayoutDocumentPane>
+                    <!-- Content -->
+                    <avalonDock:LayoutDocumentPaneGroup>
+                        <avalonDock:LayoutDocumentPane x:Name="editors" />
                     </avalonDock:LayoutDocumentPaneGroup>
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
-        <ContentControl Content="ContentControl" HorizontalAlignment="Left" Margin="1206,236,-516,0" Grid.Row="1" VerticalAlignment="Top" Width="100"/>
+        <!--<ContentControl Content="ContentControl" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="100"/>-->
     </Grid>
 </Window>

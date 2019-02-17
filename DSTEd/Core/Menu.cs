@@ -51,6 +51,9 @@ namespace DSTEd.Core {
                 case "HELP_FEEDBACK":
                     Process.Start("https://github.com/DST-Tools/DSTEd-C/issues");
                     break;
+                //case "STEAM":
+                //case "STEAM_LOGIN":
+                //case "STEAM_SETTINGS":
                 default:
                     Logger.Warn("[Menu] Entry is not implemented: " + name);
                     break;
