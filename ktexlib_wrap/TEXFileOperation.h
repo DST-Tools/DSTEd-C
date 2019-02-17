@@ -76,7 +76,10 @@ namespace ktexlib
 			void __fastcall LoadPNG(std::string InputPngFileName, std::string output = "");//使用lodepng 
 			bool LoadKTEX(std::wstring FileName);
 			void GetRBGAImage(uc_vector& ret);
-			//KTEXFile(std::string InputKtexFileName);//加载 KTEX,没弄好
+			inline mipmap Getmipmapv1()
+			{
+				return this->mipmap;
+			}
 			KTEXFile();
 			~KTEXFile();
 

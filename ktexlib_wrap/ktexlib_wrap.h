@@ -15,7 +15,9 @@ namespace ktexlibwrap
 		void LoadKTEX(String^ FileName);
 		void LoadPNG(String^ FileName);
 		void SetInfo(ktexlib::KTEXFileOperation::KTEXInfo info);
-		void SetHeader(ktexlib::KTEXFileOperation::KTEXHeader Header);
+		ktexlib::KTEXFileOperation::KTEXInfo GetInfo();
+		ktexlib::KTEXFileOperation::mipmap GetMinmapv1();
+		//void SetHeader(ktexlib::KTEXFileOperation::KTEXHeader Header);
 		array<System::Byte>^ GetRGBAImage();
 	private:
 		ktexlib::KTEXFileOperation::KTEXFile* theNative;

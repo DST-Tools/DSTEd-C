@@ -44,11 +44,20 @@ void ktexlibwrap::KTEX::SetInfo(ktexlib::KTEXFileOperation::KTEXInfo info)
 	this->theNative->Info = info;
 }
 
+ktexlib::KTEXFileOperation::KTEXInfo ktexlibwrap::KTEX::GetInfo()
+{
+	return theNative->Info;
+}
+ktexlib::KTEXFileOperation::mipmap ktexlibwrap::KTEX::GetMinmapv1()
+{
+	return theNative->Getmipmapv1();
+}
+/*
 void ktexlibwrap::KTEX::SetHeader(ktexlib::KTEXFileOperation::KTEXHeader Header)
 {
 	this->theNative->Header = Header;
 }
-
+*/
 array<System::Byte>^ ktexlibwrap::KTEX::GetRGBAImage()
 {
 	ktexlib::KTEXFileOperation::uc_vector ret;
