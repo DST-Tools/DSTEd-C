@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using DSTEd.Core;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DSTEd.UI {
