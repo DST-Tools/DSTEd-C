@@ -5,11 +5,8 @@
 #include <vector>
 #include <iostream>
 //#include <mutex>
-#include <exception>
-//#include <lodepng/lodepng.h>
-//#include <squish/squish.h>
+#include <filesystem>
 
-//#include "AltasGen.h"
 //多线程控制台输出
 #define MULTI_THREAD_KTEXCONOUTPUT
 
@@ -52,7 +49,7 @@ namespace ktexlib
 		};
 		struct KTEXInfo
 		{
-			bool flags = 0;
+			unsigned char flags = 0;
 			unsigned short mipscount = 0;
 			unsigned char texturetype = textyp.d1;
 			unsigned char pixelformat = pixfrm.DXT5;
@@ -73,16 +70,13 @@ namespace ktexlib
 		{
 		public:
 			bool ConvertFromPNG();
-			void __fastcall LoadPNG(std::string InputPngFileName, std::string output = "");//使用lodepng 
+			void __fastcall LoadPNG(std::experimental::filesystem::path InputPngFileName, std::string output = "");//使用lodepng 
 			bool LoadKTEX(std::wstring FileName);
 			void GetRBGAImage(uc_vector& ret);
-			inline mipmap Getmipmapv1()
-			{
-				return this->mipmap;
-			}
+			//KTEXFile(std::string InputKtexFileName);//加载 KTEX,没弄好
 			KTEXFile();
 			~KTEXFile();
-
+			mipmap Getmipmapv1();
 			std::wstring output;//输出文件位置
 			KTEXHeader Header;
 			KTEXInfo Info;

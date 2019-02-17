@@ -48,9 +48,21 @@ ktexlib::KTEXFileOperation::KTEXInfo ktexlibwrap::KTEX::GetInfo()
 {
 	return theNative->Info;
 }
-ktexlib::KTEXFileOperation::mipmap ktexlibwrap::KTEX::GetMinmapv1()
+ktexlibwrap::mipmap^ ktexlibwrap::KTEX::GetMinmapv1()
 {
-	return theNative->Getmipmapv1();
+	auto native = theNative->Getmipmapv1();
+	auto managed = gcnew ktexlibwrap::mipmap;
+	managed->height = native.height;
+	managed->width = native.width;
+	managed->pitch = native.Z;
+	for(size_t i = 0; i < native.data.size(); i++)
+	{
+		auto it = native.data.begin();
+		managed->data->Resize(managed->data, native.data.size());
+		managed->data[i] = *it;
+		it++;
+	}
+	return managed;
 }
 /*
 void ktexlibwrap::KTEX::SetHeader(ktexlib::KTEXFileOperation::KTEXHeader Header)

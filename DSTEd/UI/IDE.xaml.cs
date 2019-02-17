@@ -57,13 +57,16 @@ namespace DSTEd.UI {
         }
 
         private void dockManager_DocumentClosing(object sender, DocumentClosingEventArgs e) {
-            Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
-                if (result == Dialog.Result.Yes) {
+            Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result)
+            {
+                if (result == Dialog.Result.Yes)
+                {
                     return true;
                 }
                 // @ToDo check closing document to fire REMOVED event
                 e.Cancel = true;
-            }
+                return false;
+            });
         }
 
         private void OnDumpToConsole(object sender, RoutedEventArgs e) {

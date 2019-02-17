@@ -13,7 +13,7 @@ namespace DSTEd.Core.Steam {
                 // additionally, if the API you are using requires you to POST,
                 // you may specify with the "method" reserved parameter
                 try {
-                    steamUserAuth.AuthenticateUser(someParam: "someValue", method: HttpMethod.Post);
+                    await steamUserAuth.AuthenticateUser(someParam: "someValue", method: HttpMethod.Post);
                 } catch (Exception ex) {
                     Console.WriteLine("Unable to make AuthenticateUser API Request: {0}", ex.Message);
                 }
