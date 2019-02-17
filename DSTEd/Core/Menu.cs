@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Controls;
 using DSTEd.UI;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DSTEd.Core {
     public class Menu {
@@ -11,12 +12,37 @@ namespace DSTEd.Core {
             this.ide = ide;
         }
 
+        private IDE GetIDE() {
+            return this.ide;
+        }
+
         public void Handle(string name, MenuItem menu) {
             switch (name) {
                 //case "FILE_NEW_PROJECT":
                 //case "FILE_NEW_FILE":
                 //case "FILE_NEW_ASSET":
-                //case "FILE_OPEN":
+                case "FILE_OPEN":
+                    // @ToDo implement with own style (https://github.com/jkells/folder-browser-dialog-example/blob/master/FolderBrowserDialogEx.cs)
+                    var dialog = new CommonOpenFileDialog();
+                    dialog.Title = "Open File";
+                    dialog.AllowNonFileSystemItems = false;
+                    dialog.Multiselect = false;
+                    dialog.RestoreDirectory = false;
+                    dialog.InitialDirectory = this.GetIDE().GetCore().GetWorkspace().GetPath();
+
+                    CommonFileDialogResult value = dialog.ShowDialog();
+
+                    if (value == CommonFileDialogResult.Ok) {
+                        if (this.GetIDE().GetCore().GetWorkspace().ExistingDocument(dialog.FileName)) {
+                            this.GetIDE().GetCore().GetWorkspace().ShowDocument(dialog.FileName);
+                            return;
+                        }
+
+                        Document document = new Document(Document.Editor.CODE);
+                        document.Load(dialog.FileName);
+                        this.GetIDE().GetCore().GetWorkspace().AddDocument(document);
+                    }
+                    break;
                 //case "FILE_OPEN_RECENT":
                 //case "FILE_SAVE":
                 //case "FILE_SAVE_ALL":

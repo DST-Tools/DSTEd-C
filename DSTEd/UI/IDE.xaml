@@ -10,7 +10,7 @@
         Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF"
         VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1"
         BorderBrush="#FFED5C2D" Margin="0" WindowStartupLocation="CenterScreen"
-        Height="600" Width="800" MinWidth="400" MinHeight="300" SizeToContent="WidthAndHeight">
+        Height="600" Width="800" MinWidth="400" MinHeight="300">
     <Window.Resources>
         <ResourceDictionary>
             <sys:Double x:Key="IconSize">14</sys:Double>
@@ -62,28 +62,28 @@
                 </MenuItem>
                 <MenuItem Header="Open" Name="FILE_OPEN" Click="OnMenu" />
                 <MenuItem Header="Open Recent">
-                    <MenuItem Name="FILE_OPEN_RECENT" Header="- No Recent Files -" Click="OnMenu" />
+                    <MenuItem Name="FILE_OPEN_RECENT" Header="- No Recent Files -" Click="OnMenu" IsEnabled="False" />
                 </MenuItem>
                 <Separator/>
-                <MenuItem Name="FILE_SAVE" Header="Save" Click="OnMenu" />
-                <MenuItem Name="FILE_SAVE_ALL" Header="Save All" Click="OnMenu" />
+                <MenuItem Name="FILE_SAVE" Header="Save" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="FILE_SAVE_ALL" Header="Save All" IsEnabled="False" Click="OnMenu" />
                 <MenuItem Name="FILE_CLOSE" Header="Close" Click="OnMenu" />
                 <MenuItem Name="FILE_CLOSE_ALL" Header="Close All" Click="OnMenu" />
                 <Separator/>
                 <MenuItem Name="FILE_EXIT" Header="Exit" Click="OnMenu" />
             </MenuItem>
             <MenuItem Header="Edit" Grid.Column="1">
-                <MenuItem Name="EDIT_UNDO" Header="Undo" Click="OnMenu" />
-                <MenuItem Name="EDIT_REDO" Header="Redo" Click="OnMenu" />
+                <MenuItem Name="EDIT_UNDO" Header="Undo" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_REDO" Header="Redo" IsEnabled="False" Click="OnMenu" />
                 <Separator/>
-                <MenuItem Name="EDIT_CUT" Header="Cut" Click="OnMenu" />
-                <MenuItem Name="EDIT_COPY" Header="Copy" Click="OnMenu" />
-                <MenuItem Name="EDIT_PASTE" Header="Paste" Click="OnMenu" />
-                <MenuItem Name="EDIT_SELECT_ALL" Header="Select All" Click="OnMenu" />
+                <MenuItem Name="EDIT_CUT" Header="Cut" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_COPY" Header="Copy" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_PASTE" Header="Paste" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_SELECT_ALL" Header="Select All" IsEnabled="False" Click="OnMenu" />
             </MenuItem>
             <MenuItem Header="Search" Grid.Column="2">
-                <MenuItem Name="SEARCH_FIND" Header="Find..." Click="OnMenu" />
-                <MenuItem Name="SEARCH_FIND_NEXT" Header="Find Next" Click="OnMenu" />
+                <MenuItem Name="SEARCH_FIND" Header="Find..." IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="SEARCH_FIND_NEXT" Header="Find Next" IsEnabled="False" Click="OnMenu" />
             </MenuItem>
             <MenuItem Name="VIEW" Header="View" Grid.Column="3" Click="OnMenu" />
             <MenuItem Header="Debug" Grid.Column="4">
