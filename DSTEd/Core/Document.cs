@@ -14,7 +14,8 @@ namespace DSTEd.Core {
 
         public enum Editor {
             NONE,
-            CODE
+            CODE,
+            TEXTURE
         }
 
         private string title = null;
@@ -79,6 +80,9 @@ namespace DSTEd.Core {
                     break;
                 case Editor.CODE:
                     this.content = new Contents.Editors.Code(this);
+                    break;
+                case Editor.TEXTURE:
+                    this.content = new Contents.Editors.TEX(this);
                     break;
             }
 

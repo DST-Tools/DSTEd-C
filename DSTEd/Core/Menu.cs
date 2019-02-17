@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Controls;
 using DSTEd.UI;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -38,7 +39,13 @@ namespace DSTEd.Core {
                             return;
                         }
 
-                        Document document = new Document(Document.Editor.CODE);
+                        Document.Editor type = Document.Editor.CODE;
+                        switch (Path.GetExtension(dialog.FileName)) {
+                            case ".tex":
+                                type = Document.Editor.TEXTURE;
+                                break;
+                        }
+                        Document document = new Document(type);
                         document.Load(dialog.FileName);
                         this.GetIDE().GetCore().GetWorkspace().AddDocument(document);
                     }
