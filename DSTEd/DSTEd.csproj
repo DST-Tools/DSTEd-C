@@ -357,7 +357,6 @@
     <Resource Include="Assets\Logo.ico" />
     <Resource Include="Assets\Icons\Klei.ico" />
     <Resource Include="Assets\Icons\GitHub.ico" />
-    <EmbeddedResource Include="Assets\Documents\Welcome.html" />
     <Content Include="Assets\Vectors\Account.svg" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />
   </ItemGroup>

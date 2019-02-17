@@ -47,15 +47,7 @@ namespace DSTEd.Core {
             // @ToDo bad behavior, but its currently a test...
             switch (this.GetName()) {
                 case "Welcome":
-                    WebBrowser b = new WebBrowser();
-
-                    try {
-                        b.NavigateToStream(Assembly.Load("DSTEd").GetManifestResourceStream("DSTEd.Assets.Documents.Welcome.html"));
-                    } catch (Exception) {
-
-                    }
-
-                    return b;
+                    return new Welcome();
             }
 
             return null;
