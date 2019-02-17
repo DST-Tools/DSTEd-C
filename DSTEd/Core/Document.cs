@@ -1,26 +1,51 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Windows.Controls;
 using DSTEd.Core.Contents;
 
 namespace DSTEd.Core {
-    class Document {
+    public class Document {
         public enum State {
             CREATED,
             CHANGED,
             REMOVED
         };
 
+        public enum Editor {
+            NONE,
+            CODE
+        }
+
         private string title = null;
         private string file = null;
         private Action<Document, State> callback_changed = null;
+        private Editor type = Editor.NONE;
+        private object content = null;
+        private string file_content = null;
 
         public Document() {
+         
+        }
 
+        public Document(Editor type) {
+            this.type = type;
         }
 
         public void SetTitle(string title) {
             this.title = title;
+        }
+
+        public void Load(string file) {
+            this.SetTitle(Path.GetFileName(file));
+            this.file = file;
+
+            try {
+                using (StreamReader reader = new StreamReader(this.GetFile())) {
+                    this.file_content = reader.ReadToEnd();
+                }
+            } catch (IOException) {
+            }
         }
 
         public string GetName() {
@@ -29,6 +54,10 @@ namespace DSTEd.Core {
             }
 
             return this.GetFile(); // Hashing(?)
+        }
+
+        public string GetFileContent() {
+            return this.file_content;
         }
 
         public string GetFile() {
@@ -44,21 +73,16 @@ namespace DSTEd.Core {
         }
 
         internal object GetContent() {
-            // @ToDo bad behavior, but its currently a test...
-            switch (this.GetName()) {
-                case "Welcome":
-                    WebBrowser b = new WebBrowser();
-
-                    try {
-                        b.NavigateToStream(Assembly.Load("DSTEd").GetManifestResourceStream("DSTEd.Assets.Documents.Welcome.html"));
-                    } catch (Exception) {
-
-                    }
-
-                    return b;
+            switch (this.type) {
+                case Editor.NONE:
+                    this.content = new Welcome();
+                    break;
+                case Editor.CODE:
+                    this.content = new Contents.Editors.Code(this);
+                    break;
             }
 
-            return null;
+            return content;
         }
     }
 }

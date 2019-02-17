@@ -5,7 +5,7 @@ using System.Windows;
 using DSTEd.Core;
 
 namespace DSTEd.Core {
-    class Workspace {
+    public class Workspace {
         private UI.Workspace window;
         private DSTEd core = null;
         private string path = "C:\\Program Files\\";
@@ -51,6 +51,28 @@ namespace DSTEd.Core {
             Document welcome = new Document();
             welcome.SetTitle("Welcome");
             this.AddDocument(welcome);
+        }
+
+        internal void ShowDocument(string file) {
+            foreach (KeyValuePair<string, Document> entry in this.documents) {
+                if (entry.Key == file || entry.Value.GetFile() == file) {
+                    // @ToDo check content if its newer and ask for reloading...
+                    this.core.GetIDE().SetActiveDocument(entry.Value);
+                }
+            }
+        }
+
+        internal bool ExistingDocument(string file) {
+            Boolean existing = false;
+
+            foreach (KeyValuePair<string, Document> entry in this.documents) {
+                if (entry.Key == file || entry.Value.GetFile() == file) {
+                    existing = true;
+                    break;
+                }
+            }
+
+            return existing;
         }
 
         public void AddDocument(Document document) {

@@ -53,6 +53,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\Contents\AvalonDocument.cs" />
+    <Compile Include="Core\Contents\Editors\Code.cs" />
     <Compile Include="Core\Contents\Welcome.cs" />
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\Klei\Games\DSTC.cs" />
@@ -106,6 +108,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
     <Reference Include="Indieteur.SAMAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Indieteur.SteamAppsManAndVDFAPI.1.0.2\lib\Indieteur.SAMAPI.dll</HintPath>
     </Reference>
@@ -362,7 +367,6 @@
     <Content Include="Librarys\ktexlib_wrap.dll" />
     <Resource Include="Assets\Icons\Klei.ico" />
     <Resource Include="Assets\Icons\GitHub.ico" />
-    <EmbeddedResource Include="Assets\Documents\Welcome.html" />
     <Content Include="Assets\Vectors\Account.svg" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />
   </ItemGroup>

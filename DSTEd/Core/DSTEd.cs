@@ -5,7 +5,7 @@ using System.Threading;
 using DSTEd.UI;
 
 namespace DSTEd.Core {
-    class DSTEd : System.Windows.Application {
+    public class DSTEd : System.Windows.Application {
         private String version = "2.0.0";
         private String language = "en_US";
         private IDE ide = null;
@@ -21,7 +21,7 @@ namespace DSTEd.Core {
 
             // Init classes
             this.configuration = new Configuration();
-            this.ide = new IDE();
+            this.ide = new IDE(this);
             this.workspace = new Workspace(this);
             this.loading = new Loading();
             this.steam = new Steam.Steam();
@@ -107,6 +107,10 @@ namespace DSTEd.Core {
 
         public IDE GetIDE() {
             return this.ide;
+        }
+
+        public Workspace GetWorkspace() {
+            return this.workspace;
         }
 
         public String GetVersion() {
