@@ -20,7 +20,7 @@ namespace DSTEd.Core.Steam {
             this.account = new Account(this);
             this.workshop = new Workshop();
 
-            /*this.account.Login("adi_does", "40dexxa35", delegate (string email, Action<string> callback) {
+            /*this.account.Login("Username", "Password", delegate (string email, Action<string> callback) {
                 if (email == null) {
                     Dialog.Open("SteamGuard App", "Steam Guard", Dialog.Buttons.OK, Dialog.Icon.Asterisk, delegate (Dialog.Result result) {
                         return true;
