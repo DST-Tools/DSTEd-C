@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DSTEd.UI"
         xmlns:Component="clr-namespace:DSTEd.UI.Components"
         mc:Ignorable="d"
         Title="Dialog" Icon="/DSTEd;component/Assets/Logo.ico" Height="200" Width="400" Background="#FF303030" BorderBrush="#FFF15F1B" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
@@ -22,7 +21,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <Grid Grid.IsSharedSizeScope="True" UseLayoutRounding="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
