@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using DSTEd.Core;
 using DSTEd.UI.Theme;
@@ -95,6 +96,17 @@ namespace DSTEd.UI {
             if (item != null) {
                 this.menu.Handle(item.Name, item);
             }
+        }
+
+        internal void OnChanged(Document document, Document.State state) {
+            Logger.Info("[IDE] Changed document: " + document.GetName() + " >> " + state);
+
+            LayoutDocument layoutDocument = new LayoutDocument {
+                Title = document.GetName()
+            };
+
+            layoutDocument.Content = new StackPanel();
+            this.editors.Children.Add(layoutDocument);
         }
     }
 }
