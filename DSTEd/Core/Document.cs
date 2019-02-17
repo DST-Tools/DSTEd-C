@@ -69,6 +69,10 @@ namespace DSTEd.Core {
             this.callback_changed?.Invoke(this, State.CREATED);
         }
 
+        public void UpdateChanges() {
+            this.callback_changed?.Invoke(this, State.CHANGED);
+        }
+
         public void OnChange(Action<Document, State> callback) {
             this.callback_changed = callback;
         }

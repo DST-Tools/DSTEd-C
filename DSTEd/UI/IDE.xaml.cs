@@ -129,7 +129,10 @@ namespace DSTEd.UI {
                     foreach (LayoutDocument entry in this.editors.Children) {
                         if(entry.GetType() == typeof(AvalonDocument)) {
                             AvalonDocument doc = (AvalonDocument) entry;
-                            doc.Title = document.GetName() + "*";
+
+                            if (doc.GetDocument() == document) {
+                                doc.Title = document.GetName() + "*";
+                            }
                         }
                     }
                     // @ToDo

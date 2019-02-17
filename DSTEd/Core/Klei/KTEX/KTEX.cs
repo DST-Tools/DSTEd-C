@@ -7,7 +7,7 @@ using Core.Klei.Squish;
 
 namespace DSTEd.Core.Klei.KTEX {
     class KTEX {
-        public class InvalidTEXFileException : System.Exception { public InvalidTEXFileException(string msg) : base(msg) { } };
+        public class InvalidTEXFileException : Exception { public InvalidTEXFileException(string msg) : base(msg) { } };
 
         public enum Platform {
             PC = 12,
@@ -99,7 +99,7 @@ namespace DSTEd.Core.Klei.KTEX {
         }
 
         public string GetTexType() {
-            return "NON";// return EnumHelper<TextureType>.GetEnumDescription(((TextureType) this.File.Header.TextureType).ToString());
+            return "NONE";// return EnumHelper<TextureType>.GetEnumDescription(((TextureType) this.File.Header.TextureType).ToString());
         }
 
         public int GetWidth() {
