@@ -1,5 +1,5 @@
 ﻿namespace DSTEd.Core.Klei {
-    class KleiGame {
+    public class KleiGame {
         protected int id = -1;
         protected string name = null;
         protected string path = null;

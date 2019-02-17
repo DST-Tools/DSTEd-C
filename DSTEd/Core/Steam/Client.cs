@@ -10,7 +10,7 @@ using static SteamKit2.SteamUser;
 using SteamKit2.Internal;
 
 namespace DSTEd.Core.Steam {
-    class Client {
+    public class Client {
         private SteamClient client = null;
         private Boolean connected = false;
         private CallbackManager manager = null;

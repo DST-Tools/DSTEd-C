@@ -7,7 +7,7 @@ using System.Windows.Threading;
 using SteamKit2;
 
 namespace DSTEd.Core.Steam {
-    class Account {
+    public class Account {
         private Steam steam;
         private Boolean logged_in = false;
         private SteamUser user = null;

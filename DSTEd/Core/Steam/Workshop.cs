@@ -1,4 +1,4 @@
 ﻿namespace DSTEd.Core.Steam {
-    class Workshop {
+    public class Workshop {
     }
 }

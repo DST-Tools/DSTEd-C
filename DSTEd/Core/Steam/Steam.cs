@@ -7,7 +7,7 @@ using Indieteur.SAMAPI;
 using SteamKit2;
 
 namespace DSTEd.Core.Steam {
-    class Steam {
+    public class Steam {
         private SteamAppsManager software = null;
         private Account account = null;
         private Workshop workshop = null;
@@ -19,23 +19,6 @@ namespace DSTEd.Core.Steam {
             this.software = new SteamAppsManager();
             this.account = new Account(this);
             this.workshop = new Workshop();
-
-            /*this.account.Login("Username", "Password", delegate (string email, Action<string> callback) {
-                if (email == null) {
-                    Dialog.Open("SteamGuard App", "Steam Guard", Dialog.Buttons.OK, Dialog.Icon.Asterisk, delegate (Dialog.Result result) {
-                        return true;
-                    });
-                } else {
-                    Dialog.Open("SteamGuard E - Mail(" + email + ")", "Steam Guard", Dialog.Buttons.OK, Dialog.Icon.Asterisk, delegate (Dialog.Result result) {
-                        return true;
-                    });
-                }
-
-                callback("CODE");
-            }, delegate (string error, Boolean logged_in) {
-
-                Logger.Info("LOGIN", error, logged_in);
-            });*/
         }
 
         public void LoadGame(KleiGame game) {

@@ -84,6 +84,12 @@
     <Compile Include="UI\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Steam\Guard.xaml.cs">
+      <DependentUpon>Guard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Steam\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Theme\Avalon\Menu\MenuKeys.cs" />
     <Compile Include="UI\Theme\Avalon\ResourceKeys.cs" />
     <Compile Include="UI\Theme\Dark.cs" />
@@ -243,6 +249,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Loading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Steam\Guard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Steam\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
