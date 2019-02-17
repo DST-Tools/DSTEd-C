@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
 using DSTEd.Core;
 using DSTEd.UI.Theme;
 using Xceed.Wpf.AvalonDock;
@@ -100,13 +98,30 @@ namespace DSTEd.UI {
 
         internal void OnChanged(Document document, Document.State state) {
             Logger.Info("[IDE] Changed document: " + document.GetName() + " >> " + state);
-
-            LayoutDocument layoutDocument = new LayoutDocument {
-                Title = document.GetName()
-            };
-
-            layoutDocument.Content = new StackPanel();
-            this.editors.Children.Add(layoutDocument);
+            
+            switch (state) {
+                case Document.State.CREATED:
+                    this.editors.Children.Add(new LayoutDocument {
+                        Title = document.GetName(),
+                        ContentId = document.GetName(),
+                        // IconSource = document.GetIcon(),
+                        Content = document.GetContent(),
+                        CanFloat = true
+                    });
+                    break;
+                case Document.State.CHANGED:
+                    foreach (LayoutDocument entry in this.editors.Children) {
+                        if(entry.GetType() == typeof(LayoutDocument)) {
+                            LayoutDocument doc = (LayoutDocument) entry;
+                            doc.Title = document.GetName() + "*";
+                        }
+                    }
+                    // @ToDo
+                    break;
+                case Document.State.REMOVED:
+                    // @ToDo
+                    break;
+            }
         }
     }
 }

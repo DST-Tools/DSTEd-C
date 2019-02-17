@@ -118,16 +118,20 @@
         </Menu>
 
         <avalonDock:DockingManager BorderThickness="0" Grid.Row="1" x:Name="dockManager" Background="#2D2D30" AllowMixedOrientation="True" DocumentClosing="dockManager_DocumentClosing">
+            <!-- Configuration -->
             <avalonDock:DockingManager.DocumentHeaderTemplate >
                 <DataTemplate >
-                    <StackPanel Orientation="Horizontal" >
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis"/>
                     </StackPanel>
                 </DataTemplate>
             </avalonDock:DockingManager.DocumentHeaderTemplate>
+            
+            <!-- Layout -->
             <avalonDock:LayoutRoot PropertyChanged="OnLayoutRootPropertyChanged" >
                 <avalonDock:LayoutPanel Orientation="Horizontal" >
 
+                    <!-- Sidebar -->
                     <avalonDock:LayoutAnchorablePaneGroup DockWidth="150">
                         <avalonDock:LayoutAnchorablePane >
                             <avalonDock:LayoutAnchorable ContentId="workspace_mods" Title="Mods" Hiding="OnToolWindow1Hiding" >
@@ -139,18 +143,13 @@
                         </avalonDock:LayoutAnchorablePane>
                     </avalonDock:LayoutAnchorablePaneGroup>
 
+                    <!-- Content -->
                     <avalonDock:LayoutDocumentPaneGroup>
-                        <avalonDock:LayoutDocumentPane x:Name="editors">
-                            <!--<avalonDock:LayoutDocument ContentId="document1" Title="Document 1" >
-                                <StackPanel Background="#2D2D30" >
-                                    <TextBox Text="CONTENT" />
-                                </StackPanel>
-                            </avalonDock:LayoutDocument>-->
-                        </avalonDock:LayoutDocumentPane>
+                        <avalonDock:LayoutDocumentPane x:Name="editors" />
                     </avalonDock:LayoutDocumentPaneGroup>
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
-        <!--        <ContentControl Content="ContentControl" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="100"/>-->
+        <!--<ContentControl Content="ContentControl" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="100"/>-->
     </Grid>
 </Window>

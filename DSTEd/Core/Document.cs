@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Windows.Controls;
+using DSTEd.Core.Contents;
 
 namespace DSTEd.Core {
     class Document {
@@ -17,7 +16,7 @@ namespace DSTEd.Core {
         private Action<Document, State> callback_changed = null;
 
         public Document() {
-            
+
         }
 
         public void SetTitle(string title) {
@@ -42,6 +41,24 @@ namespace DSTEd.Core {
 
         public void OnChange(Action<Document, State> callback) {
             this.callback_changed = callback;
+        }
+
+        internal object GetContent() {
+            // @ToDo bad behavior, but its currently a test...
+            switch (this.GetName()) {
+                case "Welcome":
+                    WebBrowser b = new WebBrowser();
+
+                    try {
+                        b.NavigateToStream(Assembly.Load("DSTEd").GetManifestResourceStream("DSTEd.Assets.Documents.Welcome.html"));
+                    } catch (Exception) {
+
+                    }
+
+                    return b;
+            }
+
+            return null;
         }
     }
 }
