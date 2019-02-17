@@ -1,18 +1,25 @@
 ﻿using System.Windows;
 using DSTEd.Core;
+using DSTEd.Core.Contents;
 using DSTEd.UI.Theme;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DSTEd.UI {
     public partial class IDE : Window {
-        private Core.Menu menu = null;
+        private Menu menu = null;
+        private Core.DSTEd core = null;
 
-        public IDE() {
+        public IDE(Core.DSTEd core) {
             InitializeComponent();
 
+            this.core = core;
             this.menu = new Core.Menu(this);
             this.dockManager.Theme = new Dark();
+        }
+
+        public Core.DSTEd GetCore() {
+            return this.core;
         }
 
         private void OnLayoutRootPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
@@ -48,7 +55,7 @@ namespace DSTEd.UI {
                 if (result == Dialog.Result.Yes) {
                     return true;
                 }
-
+                // @ToDo check closing document to fire REMOVED event
                 e.Cancel = true;
                 return true;
             });
@@ -96,23 +103,32 @@ namespace DSTEd.UI {
             }
         }
 
+        public LayoutDocumentPane GetEditors() {
+            return this.editors;
+        }
+
+        public void SetActiveDocument(Document document) {
+            foreach (LayoutDocument entry in this.editors.Children) {
+                if (entry.GetType() == typeof(AvalonDocument)) {
+                    AvalonDocument doc = (AvalonDocument) entry;
+                    doc.IsActive = (doc.GetDocument() == document);
+                }
+            }
+        }
+
         internal void OnChanged(Document document, Document.State state) {
             Logger.Info("[IDE] Changed document: " + document.GetName() + " >> " + state);
             
             switch (state) {
                 case Document.State.CREATED:
-                    this.editors.Children.Add(new LayoutDocument {
-                        Title = document.GetName(),
-                        ContentId = document.GetName(),
-                        // IconSource = document.GetIcon(),
-                        Content = document.GetContent(),
-                        CanFloat = true
-                    });
-                    break;
+                    AvalonDocument d = new AvalonDocument(document);
+                    this.editors.Children.Add(d);
+                    this.SetActiveDocument(document);
+                break;
                 case Document.State.CHANGED:
                     foreach (LayoutDocument entry in this.editors.Children) {
-                        if(entry.GetType() == typeof(LayoutDocument)) {
-                            LayoutDocument doc = (LayoutDocument) entry;
+                        if(entry.GetType() == typeof(AvalonDocument)) {
+                            AvalonDocument doc = (AvalonDocument) entry;
                             doc.Title = document.GetName() + "*";
                         }
                     }

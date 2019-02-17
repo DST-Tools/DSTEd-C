@@ -5,6 +5,7 @@
     <SolidColorBrush x:Key="MenuBackgroundHover" Color="#3E3E40"/>
     <SolidColorBrush x:Key="MenuSelected" Color="#1B1B1C"/>
     <SolidColorBrush x:Key="MenuBorder" Color="#3E3E40"/>
+    <SolidColorBrush x:Key="MenuDisabled" Color="#3E3E40"/>
     <SolidColorBrush x:Key="MenuBorderHover" Color="#3E3E40"/>
     <SolidColorBrush x:Key="MenuInnerBorder" Color="#0000FF"/>
     <SolidColorBrush x:Key="MenuForeground" Color="White"/>
@@ -58,12 +59,10 @@
             </Trigger>
             <Trigger Property="IsHighlighted" Value="true">
                 <Setter Property="Fill" TargetName="Bg" Value="{StaticResource MenuBackgroundHover}"/>
-               <!-- <Setter Property="Stroke" TargetName="Bg" Value="{StaticResource MenuBorderHover}"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-  <!--              <Setter Property="Foreground" Value="#FF9A9A9A"/>-->
+                <Setter Property="Foreground" Value="{StaticResource MenuDisabled}"/>
                 <Setter Property="Background" TargetName="GlyphPanel" Value="#EEE9E9"/>
-<!--                <Setter Property="BorderBrush" TargetName="GlyphPanel" Value="#DBD6D6"/>-->
                 <Setter Property="Fill" TargetName="Glyph" Value="#848589"/>
             </Trigger>
         </ControlTemplate.Triggers>
@@ -71,7 +70,6 @@
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}" TargetType="{x:Type ContentControl}">
         <Border Background="{StaticResource MenuItemBackground}" BorderBrush="{StaticResource MenuBorder}" BorderThickness="1">
             <Grid>
-                <!--<Rectangle HorizontalAlignment="Left" Margin="2" Width="28" Fill="{StaticResource MenuItemIconBackground}" RadiusX="0" RadiusY="0"/>-->
                 <Rectangle HorizontalAlignment="Left" Margin="30,0,0,0" Width="1" Fill="Transparent"/>
                 <Rectangle HorizontalAlignment="Left" Margin="31,0,0,0" Width="1" Fill="Transparent"/>
                 <ContentPresenter Margin="0,0" Grid.ColumnSpan="2"/>
@@ -167,17 +165,14 @@
             <Rectangle Margin="0" x:Name="InnerBorder"/>
             <DockPanel>
                 <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0,0,0,0" x:Name="Icon" VerticalAlignment="Center" ContentSource="Icon"/>
-                <!--<Path Visibility="Collapsed" FlowDirection="LeftToRight" Margin="7,0,0,0" x:Name="GlyphPanel" VerticalAlignment="Center" Fill="{TemplateBinding Foreground}" Data="{StaticResource Checkmark}"/>
-                --><ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" ContentSource="Header" RecognizesAccessKey="True"/>
+                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" ContentSource="Header" RecognizesAccessKey="True"/>
             </DockPanel>
             <Popup Focusable="false" AllowsTransparency="true" HorizontalOffset="1" IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" VerticalOffset="-1" x:Name="PART_Popup">
-                <!--<Microsoft_Windows_Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent">-->
                 <ContentControl IsTabStop="false" x:Name="SubMenuBorder" Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                     <ScrollViewer Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}" CanContentScroll="true">
                         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0" Grid.IsSharedSizeScope="true" KeyboardNavigation.DirectionalNavigation="Cycle" KeyboardNavigation.TabNavigation="Cycle"/>
                     </ScrollViewer>
                 </ContentControl>
-                <!--</Microsoft_Windows_Themes:SystemDropShadowChrome>-->
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -188,13 +183,8 @@
                 <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
             </Trigger>
             <Trigger Property="IsChecked" Value="true">
-               <!-- <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>-->
                 <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
             </Trigger>
-            <!--<Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
-					<Setter Property="Margin" TargetName="Shdw" Value="0,0,5,5"/>
-					<Setter Property="Color" TargetName="Shdw" Value="#71000000"/>
-				</Trigger>-->
             <Trigger Property="IsHighlighted" Value="true">
 <!--                <Setter Property="Fill" TargetName="InnerBorder" Value="{StaticResource MenuBackgroundHover}"/>-->
 <!--                <Setter Property="Stroke" TargetName="InnerBorder" Value="{StaticResource MenuBorderHover}"/>-->
@@ -206,14 +196,12 @@
 					<Setter Property="Stroke" TargetName="InnerBorder" Value="#50747272"/>
 				</Trigger>-->
             <Trigger Property="IsSubmenuOpen" Value="true">
-                <!--<Setter Property="Fill" TargetName="OuterBorder" Value="{StaticResource MenuSelected}"/>-->
                 <Setter Property="Fill" TargetName="InnerBorder" Value="Transparent"/>
-                <!--<Setter Property="Stroke" TargetName="InnerBorder" Value="{StaticResource MenuInnerBorder}"/>-->
-<!--                <Setter Property="Stroke" TargetName="OuterBorder" Value="{StaticResource MenuBorderHover}"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-<!--                <Setter Property="Foreground" Value="#FF9A9A9A"/>-->
-<!--                <Setter Property="Fill" TargetName="GlyphPanel" Value="#848589"/>-->
+                <Setter Property="Foreground" Value="{StaticResource MenuDisabled}"/>
+                
+                <!--                <Setter Property="Fill" TargetName="GlyphPanel" Value="#848589"/>-->
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -249,7 +237,7 @@
                <!-- <Setter Property="Stroke" TargetName="InnerBorder" Value="#50747272"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <!--<Setter Property="Foreground" Value="#FF9A9A9A"/>-->
+                <Setter Property="Foreground" Value="{StaticResource MenuDisabled}"/>
                 <Setter Property="Fill" TargetName="GlyphPanel" Value="#848589"/>
             </Trigger>
         </ControlTemplate.Triggers>
@@ -280,14 +268,11 @@
                 <Path Margin="0,0,0,0" VerticalAlignment="Center" Fill="{TemplateBinding Foreground}" Grid.Column="5" Data="{StaticResource RightArrow}"/>
             </Grid>
             <Popup Focusable="false" AllowsTransparency="true" HorizontalOffset="-2" IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" VerticalOffset="-3" x:Name="PART_Popup">
-
-                <!--<Microsoft_Windows_Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent">-->
                 <ContentControl IsTabStop="false" Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}" x:Name="SubMenuBorder">
                     <ScrollViewer Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}" CanContentScroll="true">
                         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0" Grid.IsSharedSizeScope="true" KeyboardNavigation.DirectionalNavigation="Cycle" KeyboardNavigation.TabNavigation="Cycle"/>
                     </ScrollViewer>
                 </ContentControl>
-                <!--</Microsoft_Windows_Themes:SystemDropShadowChrome>-->
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -295,8 +280,8 @@
                 <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
             </Trigger>
             <Trigger Property="IsHighlighted" Value="true">
-               <!-- MENU BORDER!!! -->
-<!-- <Setter Property="Stroke" TargetName="InnerBorder" Value="#D1DBF4FF"/>-->
+                <!-- MENU BORDER!!! -->
+                <!-- <Setter Property="Stroke" TargetName="InnerBorder" Value="#D1DBF4FF"/>-->
             </Trigger>
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
@@ -315,16 +300,13 @@
                 <!--<Setter Property="Stroke" TargetName="InnerBorder" Value="#FFFFFF"/>-->
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-<!--                <Setter Property="Foreground" Value="#FF9A9A9A"/>-->
+                <Setter Property="Foreground" Value="{StaticResource MenuDisabled}"/>
                 <Setter Property="Background" TargetName="GlyphPanel" Value="#EEE9E9"/>
                 <Setter Property="BorderBrush" TargetName="GlyphPanel" Value="#DBD6D6"/>
                 <Setter Property="Fill" TargetName="Glyph" Value="#848589"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-
-
-
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
@@ -348,7 +330,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="Separator">
         <Setter Property="Height" Value="1"/>
         <Setter Property="Margin" Value="0,0,0,0"/>
@@ -360,5 +341,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>
