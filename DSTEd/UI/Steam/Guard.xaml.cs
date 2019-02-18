@@ -23,6 +23,7 @@ namespace DSTEd.UI.Steam {
 
         private void OnLogin(object sender, RoutedEventArgs e) {
             this.callback?.Invoke(this.code.Text);
+            this.Hide();
         }
     }
 }
