@@ -57,6 +57,7 @@
     <Compile Include="Core\Configuration.cs" />
     <Compile Include="Core\Contents\AvalonDocument.cs" />
     <Compile Include="Core\Contents\Editors\Code.cs" />
+    <Compile Include="Core\Contents\Editors\TEX.cs" />
     <Compile Include="Core\Contents\Welcome.cs" />
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\Klei\Games\DSTC.cs" />
@@ -64,8 +65,12 @@
     <Compile Include="Core\Klei\Games\DSTS.cs" />
     <Compile Include="Core\Klei\KleiGame.cs" />
     <Compile Include="Core\Klei\KleiTools.cs" />
+    <Compile Include="Core\Klei\KTEX\KTEX.cs" />
+    <Compile Include="Core\Klei\Squish\Flags.cs" />
+    <Compile Include="Core\Klei\Squish\Squish.cs" />
     <Compile Include="Core\Menu.cs" />
     <Compile Include="Core\Servers.cs" />
+    <Compile Include="Core\Steam\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -81,6 +86,12 @@
     <Compile Include="UI\Components\MenuSpacer.cs" />
     <Compile Include="UI\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Steam\Guard.xaml.cs">
+      <DependentUpon>Guard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Steam\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Theme\Avalon\Menu\MenuKeys.cs" />
     <Compile Include="UI\Theme\Avalon\ResourceKeys.cs" />
@@ -152,6 +163,14 @@
     </Reference>
     <Reference Include="MWindowLib, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dirkster.MWindowLib.1.0.4.2\lib\net452\MWindowLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NativeSquish_x64, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fac8b2bfeda84eab, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librarys\NativeSquish_x64.dll</HintPath>
+    </Reference>
+    <Reference Include="NativeSquish_x86, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fac8b2bfeda84eab, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librarys\NativeSquish_x86.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -238,6 +257,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Loading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Steam\Guard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Steam\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -374,7 +401,10 @@
     <Content Include="Librarys\ktexlib_wrap.dll" />
     <Resource Include="Assets\Icons\Klei.ico" />
     <Resource Include="Assets\Icons\GitHub.ico" />
+    <Resource Include="Assets\Raster.png" />
     <Content Include="Assets\Vectors\Account.svg" />
+    <Content Include="Librarys\NativeSquish_x64.dll" />
+    <Content Include="Librarys\NativeSquish_x86.dll" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <ItemGroup>

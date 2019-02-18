@@ -126,21 +126,23 @@ namespace DSTEd.UI {
 
         internal void OnChanged(Document document, Document.State state) {
             Logger.Info("[IDE] Changed document: " + document.GetName() + " >> " + state);
-            
+
             switch (state) {
                 case Document.State.CREATED:
                     AvalonDocument d = new AvalonDocument(document);
                     this.editors.Children.Add(d);
                     this.SetActiveDocument(document);
-                break;
+                    break;
                 case Document.State.CHANGED:
                     foreach (LayoutDocument entry in this.editors.Children) {
-                        if(entry.GetType() == typeof(AvalonDocument)) {
+                        if (entry.GetType() == typeof(AvalonDocument)) {
                             AvalonDocument doc = (AvalonDocument) entry;
-                            doc.Title = document.GetName() + "*";
+
+                            if (doc.GetDocument() == document) {
+                                doc.Title = document.GetName() + "*";
+                            }
                         }
                     }
-                    // @ToDo
                     break;
                 case Document.State.REMOVED:
                     // @ToDo

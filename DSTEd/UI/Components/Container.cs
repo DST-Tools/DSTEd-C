@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace DSTEd.UI.Components {
-    class Container : Panel {
+    public class Container : Panel {
         public HorizontalAlignment HorizontalContentAlignment {
             get {
                 return (HorizontalAlignment) GetValue(HorizontalContentAlignmentProperty);

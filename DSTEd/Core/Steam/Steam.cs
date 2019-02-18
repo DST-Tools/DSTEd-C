@@ -1,20 +1,23 @@
 ﻿using System;
-using SteamKit2;
-using Indieteur.SAMAPI;
-using DSTEd.Core.Klei;
 using System.Collections.Generic;
 using System.IO;
+using DSTEd.Core.Klei;
+using DSTEd.UI;
+using Indieteur.SAMAPI;
+using SteamKit2;
 
 namespace DSTEd.Core.Steam {
-    class Steam {
+    public class Steam {
         private SteamAppsManager software = null;
         private Account account = null;
         private Workshop workshop = null;
         private string path = null;
+        private Client client = null;
 
         public Steam() {
+            this.client = new Client();
             this.software = new SteamAppsManager();
-            this.account = new Account();
+            this.account = new Account(this);
             this.workshop = new Workshop();
         }
 
@@ -49,6 +52,10 @@ namespace DSTEd.Core.Steam {
             }
         }
 
+        public Client GetClient() {
+            return this.client;
+        }
+
         public String GetPath() {
             return this.path;
         }
@@ -62,10 +69,10 @@ namespace DSTEd.Core.Steam {
         }
 
         public void GetNews() {
-            using(dynamic steamNews = WebAPI.GetInterface("ISteamNews")) {
+            using (dynamic steamNews = WebAPI.GetInterface("ISteamNews")) {
                 KeyValue kvNews = steamNews.GetNewsForApp(appid: 322330);
 
-                foreach(KeyValue news in kvNews["newsitems"]["newsitem"].Children) {
+                foreach (KeyValue news in kvNews["newsitems"]["newsitem"].Children) {
                     Console.WriteLine("News: {0}", news["title"].AsString());
                 }
             }

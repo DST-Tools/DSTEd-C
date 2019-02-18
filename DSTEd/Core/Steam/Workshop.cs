@@ -5,7 +5,6 @@ namespace DSTEd.Core.Steam
 {
     class Workshop {
         private SteamWorkshop WorkShopHandler;
-        //private CDNClient DLMgr;
         private SteamWorkshop.PublishedFilesCallback filesCallback;
         public async Task<SteamWorkshop.PublishedFilesCallback> Quary(uint startindex = 0,uint count = 9,SteamKit2.EWorkshopEnumerationType how = EWorkshopEnumerationType.Recent)
         {
