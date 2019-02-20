@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using DSTEd.Core.Klei.Games;
 using DSTEd.UI;
+using DSTEd.UI.Components;
 using DSTEd.UI.Steam;
 
 namespace DSTEd.Core {
@@ -21,10 +22,10 @@ namespace DSTEd.Core {
             // Init classes
             this.login = new Login(this);
             this.configuration = new Configuration();
+            this.steam = new Steam.Steam();
             this.ide = new IDE(this);
             this.workspace = new Workspace(this);
             this.loading = new Loading();
-            this.steam = new Steam.Steam();
 
             // Set the steam path by configuration
             this.steam.SetPath(this.configuration.Get("STEAM_PATH", null));

@@ -68,13 +68,10 @@ namespace DSTEd.Core.Steam {
             return this.workshop;
         }
 
-        public void GetNews() {
+        public void GetNews(Action<List<KeyValue>> callback) {
             using (dynamic steamNews = WebAPI.GetInterface("ISteamNews")) {
                 KeyValue kvNews = steamNews.GetNewsForApp(appid: 322330);
-
-                foreach (KeyValue news in kvNews["newsitems"]["newsitem"].Children) {
-                    Console.WriteLine("News: {0}", news["title"].AsString());
-                }
+                callback(kvNews["newsitems"]["newsitem"].Children);
             }
         }
     }

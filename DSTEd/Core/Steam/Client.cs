@@ -42,7 +42,7 @@ namespace DSTEd.Core.Steam {
                 while (true) {
                     Thread.Sleep(1000);
                     //if (this.connected) {
-                    Logger.Warn("RUN");
+                    //Logger.Warn("RUN");
                         this.GetManager().RunCallbacks();
                     //}
                 }

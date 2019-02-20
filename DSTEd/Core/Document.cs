@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
-using System.Windows.Controls;
-using DSTEd.Core.Contents;
+using DSTEd.UI.Contents;
 
 namespace DSTEd.Core {
     public class Document {
@@ -18,19 +16,23 @@ namespace DSTEd.Core {
             TEXTURE
         }
 
+        private Menu menu = null;
         private string title = null;
         private string file = null;
         private Action<Document, State> callback_changed = null;
         private Editor type = Editor.NONE;
         private object content = null;
         private string file_content = null;
+        private DSTEd core;
+        private Editor nONE;
 
-        public Document() {
-         
+        public Document(DSTEd core, Editor type) {
+            this.core = core;
+            this.type = type;
         }
 
-        public Document(Editor type) {
-            this.type = type;
+        public DSTEd GetCore() {
+            return this.core;
         }
 
         public void SetTitle(string title) {
@@ -80,7 +82,7 @@ namespace DSTEd.Core {
         internal object GetContent() {
             switch (this.type) {
                 case Editor.NONE:
-                    this.content = new Welcome();
+                    this.content = new Welcome(this);
                     break;
                 case Editor.CODE:
                     this.content = new Contents.Editors.Code(this);

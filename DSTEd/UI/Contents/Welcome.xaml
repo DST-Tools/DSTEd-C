@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="DSTEd.UI.Contents.Welcome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Components="clr-namespace:DSTEd.UI.Components"
+             mc:Ignorable="d" MinWidth="600" MinHeight="500">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="350"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Left -->
+        <Grid Margin="20" Grid.RowSpan="2" MinWidth="320">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border BorderThickness="4" BorderBrush="#FFED5C2D" Background="White" Width="60" Height="60" >
+                <Image Grid.Column="0" Source="/DSTEd;component/Assets/Logo.png" Margin="0" />
+            </Border>
+            <Label Content="DSTEd" Grid.Column="1" Foreground="White" FontWeight="Bold" FontSize="80" VerticalContentAlignment="Stretch" Padding="10,0,0,10" />
+            <Label Content="Recent" Grid.Column="0" Foreground="White" FontSize="24" Grid.Row="1" Grid.ColumnSpan="2" />
+        </Grid>
+        <DockPanel Grid.Row="2" VerticalAlignment="Stretch">
+            <Grid VerticalAlignment="Stretch" Margin="20,0,20,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Name="recent" Grid.Row="0" MinHeight="100" VerticalAlignment="Stretch"  />
+                <Grid Grid.Row="1" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Open" Grid.Column="0" />
+                    <Button Content="Create Project" Grid.Column="2" />
+                </Grid>
+            </Grid>
+        </DockPanel>
+        
+        <!-- Right -->
+        <Label Content="News" Grid.Column="2" Foreground="White" FontSize="24" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Margin="5,0,20,0">
+            <StackPanel Name="news" />
+        </ScrollViewer>
+    </Grid>
+</UserControl>
