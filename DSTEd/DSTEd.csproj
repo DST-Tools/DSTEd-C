@@ -417,7 +417,6 @@
     <Content Include="Assets\Vectors\Account.svg" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />
-    <Content Include="Librarys\Steam.BBCode.dll" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <ItemGroup>

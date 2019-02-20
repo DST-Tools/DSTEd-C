@@ -47,8 +47,8 @@ namespace DSTEd.Core.Steam {
         public void SetPath(string path) {
             this.path = path;
 
-            if (this.ValidatePath(this.path) || this.path == null) {
-                this.path = software.InstallDir;
+            if (!this.ValidatePath(this.path) || this.path == null) {
+                //this.path = software.InstallDir;
             }
         }
 
