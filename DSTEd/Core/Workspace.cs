@@ -48,7 +48,7 @@ namespace DSTEd.Core {
         }
 
         public void CreateWelcome() {
-            Document welcome = new Document();
+            Document welcome = new Document(this.core, Document.Editor.NONE);
             welcome.SetTitle("Welcome");
             this.AddDocument(welcome);
         }

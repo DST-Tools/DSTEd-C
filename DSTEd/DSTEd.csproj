@@ -58,7 +58,6 @@
     <Compile Include="Core\Contents\AvalonDocument.cs" />
     <Compile Include="Core\Contents\Editors\Code.cs" />
     <Compile Include="Core\Contents\Editors\TEX.cs" />
-    <Compile Include="Core\Contents\Welcome.cs" />
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\Klei\Games\DSTC.cs" />
     <Compile Include="Core\Klei\Games\DSTM.cs" />
@@ -70,6 +69,9 @@
     <Compile Include="Core\Klei\Squish\Squish.cs" />
     <Compile Include="Core\Menu.cs" />
     <Compile Include="Core\Servers.cs" />
+    <Compile Include="Core\Steam\BBCode\Node.cs" />
+    <Compile Include="Core\Steam\BBCode\NodeType.cs" />
+    <Compile Include="Core\Steam\BBCode\State.cs" />
     <Compile Include="Core\Steam\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -82,11 +84,19 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="UI\Components\BBCodePanel.cs" />
     <Compile Include="UI\Components\Container.cs" />
     <Compile Include="UI\Components\MenuSpacer.cs" />
+    <Compile Include="UI\Contents\News.xaml.cs">
+      <DependentUpon>News.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Contents\Welcome.xaml.cs">
+      <DependentUpon>Welcome.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\Steam\BBCode\BBCode.cs" />
     <Compile Include="UI\Steam\Guard.xaml.cs">
       <DependentUpon>Guard.xaml</DependentUpon>
     </Compile>
@@ -213,6 +223,9 @@
     <Reference Include="SteamStorefrontAPI, Version=1.2.6759.40399, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SteamStorefrontAPI.1.2.6759.40399\lib\net461\SteamStorefrontAPI.dll</HintPath>
     </Reference>
+    <Reference Include="StmlParsing, Version=1.0.5471.37935, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StmlParser.1.0.2\lib\StmlParsing.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -221,9 +234,10 @@
     <Reference Include="System.Security.AccessControl, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.4.4.0\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.4.4.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.5.1\lib\net461\System.Security.Principal.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
@@ -240,14 +254,26 @@
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.4.0.8, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dirkster.AvalonDock.Themes.VS2013.3.4.0.8\lib\net4\Xceed.Wpf.AvalonDock.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.5.2.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dirkster.AvalonDock.Themes.VS2013.3.5.0.2\lib\net4\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2013, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dirkster.AvalonDock.Themes.VS2013.3.4.0.8\lib\net4\Xceed.Wpf.AvalonDock.Themes.VS2013.dll</HintPath>
+      <HintPath>..\packages\Dirkster.AvalonDock.Themes.VS2013.3.5.0.2\lib\net4\Xceed.Wpf.AvalonDock.Themes.VS2013.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Contents\News.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Contents\Welcome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

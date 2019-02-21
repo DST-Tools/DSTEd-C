@@ -47,8 +47,8 @@ namespace DSTEd.Core.Steam {
         public void SetPath(string path) {
             this.path = path;
 
-            if (this.ValidatePath(this.path) || this.path == null) {
-                this.path = software.InstallDir;
+            if (!this.ValidatePath(this.path) || this.path == null) {
+                //this.path = software.InstallDir;
             }
         }
 
@@ -68,13 +68,10 @@ namespace DSTEd.Core.Steam {
             return this.workshop;
         }
 
-        public void GetNews() {
+        public void GetNews(Action<List<KeyValue>> callback) {
             using (dynamic steamNews = WebAPI.GetInterface("ISteamNews")) {
                 KeyValue kvNews = steamNews.GetNewsForApp(appid: 322330);
-
-                foreach (KeyValue news in kvNews["newsitems"]["newsitem"].Children) {
-                    Console.WriteLine("News: {0}", news["title"].AsString());
-                }
+                callback(kvNews["newsitems"]["newsitem"].Children);
             }
         }
     }

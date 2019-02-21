@@ -13,7 +13,7 @@ namespace DSTEd.Core {
             this.ide = ide;
         }
 
-        private IDE GetIDE() {
+        public IDE GetIDE() {
             return this.ide;
         }
 
@@ -45,7 +45,7 @@ namespace DSTEd.Core {
                                 type = Document.Editor.TEXTURE;
                                 break;
                         }
-                        Document document = new Document(type);
+                        Document document = new Document(this.GetIDE().GetCore(), type);
                         document.Load(dialog.FileName);
                         this.GetIDE().GetCore().GetWorkspace().AddDocument(document);
                     }

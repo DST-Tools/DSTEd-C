@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SteamKit2;
 using static SteamKit2.SteamClient;
-using static SteamKit2.SteamUser;
-using SteamKit2.Internal;
 
 namespace DSTEd.Core.Steam {
     public class Client {
@@ -24,10 +19,13 @@ namespace DSTEd.Core.Steam {
             this.manager = new CallbackManager(this.GetClient());
 
             this.manager.Subscribe<ConnectedCallback>(delegate (ConnectedCallback c) {
+                Logger.Warn("ConnectedCallback");
                 this.connected = true;
             });
 
             this.manager.Subscribe<DisconnectedCallback>(delegate (DisconnectedCallback c) {
+                Logger.Warn("DisconnectedCallback");
+
                 if (!c.UserInitiated) {
                     Logger.Warn("Account has been forcefully disconnected!");
                 } else {
@@ -35,17 +33,31 @@ namespace DSTEd.Core.Steam {
                 }
 
                 this.connected = false;
+                this.Disconnect();
             });
-            
-            //this.GetClient().Connect();
+
+            this.Connect();
+
+            Task.Run(() => {
+                while (true) {
+                    Thread.Sleep(1000);
+                    //if (this.connected) {
+                    //Logger.Warn("RUN");
+                        this.GetManager().RunCallbacks();
+                    //}
+                }
+            });
         }
 
         public void Execute(Action callback) {
+            this.Connect();
+
             Task.Run(() => {
                 while (true) {
                     Thread.Sleep(500);
 
                     if (this.connected) {
+                        Logger.Warn("Execute...");
                         callback();
                         break;
                     }
@@ -54,13 +66,10 @@ namespace DSTEd.Core.Steam {
         }
 
         public void Connect() {
-            this.GetClient().Connect();
-
-            Task.Run(() => {
-                while (true) {
-                    this.manager.RunWaitCallbacks(TimeSpan.FromSeconds(1));
-                }
-            });
+            //if (!this.connected) {
+                Logger.Warn("CONNECT TRY");
+                this.GetClient().Connect();
+            //}
         }
 
         public SteamClient GetClient() {
@@ -73,6 +82,14 @@ namespace DSTEd.Core.Steam {
 
         public SteamUser GetUserHandler() {
             return this.GetClient().GetHandler<SteamUser>();
+        }
+
+        internal void Disconnect() {
+            //if (!this.connected) {
+                Logger.Warn("DISCONNECT!");
+                this.connected = false;
+                this.GetClient().Disconnect();
+            //}
         }
     }
 }
