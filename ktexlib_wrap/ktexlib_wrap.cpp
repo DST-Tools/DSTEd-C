@@ -2,85 +2,124 @@
 
 #include "ktexlib_wrap.h"
 
-ktexlibwrap::KTEX::KTEX()
+using namespace ktexlibwrap;
+void ktexlibwrap::KTEX::PushRGBA(RGBA src)
 {
-	this->theNative = new ktexlib::KTEXFileOperation::KTEXFile();
-}
-
-ktexlibwrap::KTEX::~KTEX()
-{
-	delete this->theNative;
-}
-
-void ktexlibwrap::KTEX::ConvertFromPNG()
-{
-	this->theNative->ConvertFromPNG();
-}
-
-void ktexlibwrap::KTEX::LoadKTEX(String ^ FileName)
-{
-	auto a = FileName->ToCharArray();
-	this->theNative->LoadKTEX(std::wstring(a[1], a[a->Length]));
-}
-
-void ktexlibwrap::KTEX::LoadPNG(String ^ FileName)
-{
-	auto managedwfilename = FileName->ToCharArray();
-	wchar_t* wfilename = new wchar_t[managedwfilename->LongLength];
-	for (size_t i = 0; i < managedwfilename->LongLength; i++)
+	using namespace ktexlib::KTEXFileOperation;
+	RGBAv2 temp =
 	{
-		wfilename[i] = managedwfilename[i];
-	}
-	char* mbfilename = new char[(managedwfilename->LongLength) * 2];
-	size_t convertedcount = 0;
-	wcstombs_s(&convertedcount,mbfilename, (managedwfilename->LongLength) * 2, wfilename, (size_t)managedwfilename->LongLength);
-	this->theNative->LoadPNG(mbfilename);
-	delete[] mbfilename;
-	delete[] wfilename;
+		src.width,
+		src.height,
+		src.pitch
+	};
+	auto data = new char[src.data->LongLength];
+	for (size_t i = 0; i < src.data->LongLength; i++)
+		*(data + i) = src.data[i];
+	temp.data.assign(data, data + src.data->LongLength);
+	delete[] data;
+	native->PushRGBA(temp);
 }
 
-void ktexlibwrap::KTEX::SetInfo(ktexlib::KTEXFileOperation::KTEXInfo info)
+void ktexlibwrap::KTEX::PushRGBA(RGBA src, unsigned int pitch)
 {
-	this->theNative->Info = info;
+	using namespace ktexlib::KTEXFileOperation;
+	RGBAv2 temp =
+	{
+		src.width,
+		src.height,
+		pitch
+	};
+	auto data = new char[src.data->LongLength];
+	for (size_t i = 0; i < src.data->LongLength; i++)
+		*(data + i) = src.data[i];
+	temp.data.assign(data, data + src.data->LongLength);
+	delete[] data;
+	native->PushRGBA(temp);
 }
 
-ktexlib::KTEXFileOperation::KTEXInfo ktexlibwrap::KTEX::GetInfo()
+void ktexlibwrap::KTEX::Convert()
 {
-	return theNative->Info;
+	native->Convert();
 }
-ktexlibwrap::mipmap^ ktexlibwrap::KTEX::GetMinmapv1()
+
+void ktexlibwrap::KTEX::LoadKTEX(System::String^ I)
 {
-	auto native = theNative->Getmipmapv1();
-	auto managed = gcnew ktexlibwrap::mipmap;
-	managed->height = native.height;
-	managed->width = native.width;
-	managed->pitch = native.Z;
-	for(size_t i = 0; i < native.data.size(); i++)
+	auto mwcsname = I->ToCharArray();
+	auto wcsname = new wchar_t[mwcsname->LongLength];
+	native->LoadKTEX(wcsname);
+	delete[] wcsname;
+}
+//watch if struct mipmapv2 destructs.
+mipmap^ ktexlibwrap::KTEX::GetMipmapByPitch(unsigned int pitch)
+{
+	auto temp = native->GetMipmapByPitch(pitch);
+	auto mtemp = gcnew mipmap();
+	mtemp->height = temp.height;
+	mtemp->width = temp.width;
+	mtemp->pitch = pitch;
+	array<System::Byte>::Resize(mtemp->data, temp.size);
+	for (size_t i = 0; i < temp.size; i++)
+		mtemp->data[i] = temp.data[i];
+	return mtemp;
+}
+//watch if struct mipmapv2 destructs.
+mipmap^ ktexlibwrap::KTEX::GetMipmap(size_t order)
+{
+	auto temp = native->GetMipmap(order);
+	auto mtemp = gcnew mipmap();
+	mtemp->height = temp.height;
+	mtemp->width = temp.width;
+	mtemp->pitch = temp.pitch;
+	array<System::Byte>::Resize(mtemp->data, temp.size);
+	for (size_t i = 0; i < temp.size; i++)
+		mtemp->data[i] = temp.data[i];
+	return mtemp;
+}
+
+RGBA^ ktexlibwrap::KTEX::GetImageFromMipmap(size_t order)
+{
+	auto mtemp = gcnew RGBA();
+	auto temp = native->GetImageFromMipmap(order);
+	mtemp->height = temp.height;
+	mtemp->width = temp.width;
+	mtemp->pitch = temp.pitch;
+	array<System::Byte>::Resize(mtemp->data, temp.data.size());
+	for (size_t i = 0; i < temp.data.size(); i++)
+		mtemp->data[i] = temp.data[i];
+	return mtemp;
+}
+
+RGBA^ ktexlibwrap::KTEX::GetImageArray(unsigned int pitch)
+{
+	auto mtemp = gcnew RGBA();
+	auto temp = native->GetImageArray(pitch);
+	mtemp->height = temp.height;
+	mtemp->width = temp.width;
+	mtemp->pitch = temp.pitch;
+	array<System::Byte>::Resize(mtemp->data, temp.data.size());
+	for (size_t i = 0; i < temp.data.size(); i++)
+		mtemp->data[i] = temp.data[i];
+	return mtemp;
+}
+
+void ktexlibwrap::KTEX::clear()
+{
+	native->clear();
+}
+
+void ktexlibwrap::KTEX::operator+=(RGBA src)
+{
+	using namespace ktexlib::KTEXFileOperation;
+	RGBAv2 temp =
 	{
-		auto it = native.data.begin();
-		managed->data->Resize(managed->data, native.data.size());
-		managed->data[i] = *it;
-		it++;
-	}
-	return managed;
-}
-/*
-void ktexlibwrap::KTEX::SetHeader(ktexlib::KTEXFileOperation::KTEXHeader Header)
-{
-	this->theNative->Header = Header;
-}
-*/
-array<System::Byte>^ ktexlibwrap::KTEX::GetRGBAImage()
-{
-	ktexlib::KTEXFileOperation::uc_vector ret;
-	array<System::Byte>^ retarray = nullptr;
-	this->theNative->GetRBGAImage(ret);
-	retarray = gcnew array<System::Byte>(ret.size());
-	for (auto it = ret.begin(); it != ret.end(); it++)
-	{
-		unsigned int i = 0;
-		retarray[i] = *it;
-		i++;
-	}
-	return retarray;
+		src.width,
+		src.height,
+		src.pitch
+	};
+	auto data = new char[src.data->LongLength];
+	for (size_t i = 0; i < src.data->LongLength; i++)
+		*(data + i) = src.data[i];
+	temp.data.assign(data, data + src.data->LongLength);
+	delete[] data;
+	native->PushRGBA(temp);
 }

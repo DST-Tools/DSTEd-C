@@ -9,16 +9,41 @@ Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e0
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
+Class ktexlibwrap.mipmap: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    UInt16 width : Public
+    UInt16 height : Public
+    UInt16 pitch : Public
+    Byte[] data : Public
+Class ktexlibwrap.RGBA: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    UInt16 width : Public
+    UInt16 height : Public
+    UInt16 pitch : Public
+    Byte[] data : Public
+Class ktexlibwrap.KTEXInfo: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Byte flags : Public
+    UInt16 mipscount : Public
+    ktexlib.KTEXFileOperation.textyp texturetype : Public
+    ktexlib.KTEXFileOperation.pixfrm pixelformat : Public
+    ktexlib.KTEXFileOperation.platfrm platform : Public
 Class ktexlibwrap.KTEX: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Interfaces:
     System.IDisposable
   Methods:
-    ConvertFromPNG(): PrivateScope, Public, HideBySig
+    PushRGBA(RGBA IsByValue, UInt32): PrivateScope, Public, HideBySig
+    PushRGBA(RGBA IsByValue): PrivateScope, Public, HideBySig
+    Convert(): PrivateScope, Public, HideBySig
     LoadKTEX(String): PrivateScope, Public, HideBySig
-    LoadPNG(String): PrivateScope, Public, HideBySig
-    SetInfo(KTEXInfo): PrivateScope, Public, HideBySig
-    GetInfo(KTEXInfo*): PrivateScope, Public, HideBySig
-    GetMinmapv1(): PrivateScope, Public, HideBySig
-    GetRGBAImage(): PrivateScope, Public, HideBySig
+    GetMipmapByPitch(UInt32): PrivateScope, Public, HideBySig
+    GetMipmap(UInt64): PrivateScope, Public, HideBySig
+    GetImageFromMipmap(UInt64): PrivateScope, Public, HideBySig
+    GetImageArray(UInt32): PrivateScope, Public, HideBySig
+    clear(): PrivateScope, Public, HideBySig
+    op_AdditionAssignment(RGBA IsByValue): PrivateScope, Public, HideBySig, SpecialName
     Dispose(): PrivateScope, Public, Final, Virtual, HideBySig
