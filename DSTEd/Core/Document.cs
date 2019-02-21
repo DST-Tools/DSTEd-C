@@ -16,7 +16,6 @@ namespace DSTEd.Core {
             TEXTURE
         }
 
-        private Menu menu = null;
         private string title = null;
         private string file = null;
         private Action<Document, State> callback_changed = null;
@@ -24,7 +23,6 @@ namespace DSTEd.Core {
         private object content = null;
         private string file_content = null;
         private DSTEd core;
-        private Editor nONE;
 
         public Document(DSTEd core, Editor type) {
             this.core = core;
