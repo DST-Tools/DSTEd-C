@@ -74,7 +74,9 @@
 	"TEXTURE_VIEWER": "Texture Viewer",
 
 	"Welcome": "Willkommen",
-	"Create Projekt": "Projekt erstellen",
+	"Recent": "Zuletzt verwendet",
+	"News": "Neuigkeiten",
+	"Create Project": "Projekt erstellen",
 
 	"Username": "Benutzername",
 	"Password": "Passwort",

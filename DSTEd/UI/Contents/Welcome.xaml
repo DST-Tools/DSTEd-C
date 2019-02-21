@@ -33,7 +33,7 @@
                 <Image Grid.Column="0" Source="/DSTEd;component/Assets/Logo.png" Margin="0" />
             </Border>
             <Label Content="DSTEd" Grid.Column="1" Foreground="White" FontWeight="Bold" FontSize="80" VerticalContentAlignment="Stretch" Padding="10,0,0,10" />
-            <Label Content="Recent" Grid.Column="0" Foreground="White" FontSize="24" Grid.Row="1" Grid.ColumnSpan="2" />
+            <Label Content="{Core:I18N_XAML Recent}" Grid.Column="0" Foreground="White" FontSize="24" Grid.Row="1" Grid.ColumnSpan="2" />
         </Grid>
         <DockPanel Grid.Row="2" VerticalAlignment="Stretch">
             <Grid VerticalAlignment="Stretch" Margin="20,0,20,20">
@@ -55,7 +55,7 @@
         </DockPanel>
         
         <!-- Right -->
-        <Label Content="News" Grid.Column="2" Foreground="White" FontSize="24" />
+        <Label Content="{Core:I18N_XAML News}" Grid.Column="2" Foreground="White" FontSize="24" />
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Margin="5,0,20,0">
             <StackPanel Name="news" />
         </ScrollViewer>
