@@ -6,7 +6,6 @@
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:Core="clr-namespace:DSTEd.Core"
-        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF"
         VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1"
@@ -106,9 +105,6 @@
                 <MenuItem Name="HELP_ABOUT" Header="{Core:I18N_XAML About}" Click="OnMenu" />
             </MenuItem>
             <MenuItem Name="STEAM" Header="{Core:I18N_XAML Guest}" Grid.Column="8" Click="OnMenu" HorizontalAlignment="Right">
-                <MenuItem.Icon>
-                    <svgc:SvgViewbox Height="{StaticResource IconSize}" Width="{StaticResource IconSize}" Stretch="Uniform" Source="/DSTEd;component/Assets/Vectors/Account.svg"/>
-                </MenuItem.Icon>
                 <MenuItem Name="STEAM_LOGIN" Header="{Core:I18N_XAML Login}" Click="OnMenu" />
                 <Separator/>
                 <MenuItem Name="STEAM_SETTINGS" Header="{Core:I18N_XAML Settings}" Click="OnMenu" />
