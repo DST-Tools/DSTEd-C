@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using DSTEd.Core;
 using DSTEd.Core.Contents;
 using DSTEd.UI.Theme;
@@ -14,8 +15,9 @@ namespace DSTEd.UI {
             InitializeComponent();
 
             this.core = core;
-            this.menu = new Core.Menu(this);
+            this.menu = new Menu(this);
             this.dockManager.Theme = new Dark();
+            this.Closing += this.IDE_Closing;
         }
 
         public System.Windows.Controls.MenuItem GetTools() {
@@ -148,6 +150,10 @@ namespace DSTEd.UI {
                     // @ToDo
                     break;
             }
+        }
+
+        private void IDE_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            Environment.Exit(0);
         }
     }
 }
