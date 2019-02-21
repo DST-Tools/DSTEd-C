@@ -3,6 +3,8 @@ using System.ComponentModel;
 using DSTEd.Core.Klei.Games;
 using System.Threading;
 using DSTEd.UI;
+using DSTEd.UI.Components;
+using DSTEd.UI.Steam;
 
 namespace DSTEd.Core {
     public class DSTEd : System.Windows.Application {
@@ -15,16 +17,18 @@ namespace DSTEd.Core {
 
         private string[] LangList = { "en_US", "de_DE", "zh_CHS" };//try to read from file?
         private Configuration configuration = null;
+        private Login login = null;
 
         public DSTEd() {
             Logger.Info("Start DSTEd v" + GetVersion());
 
             // Init classes
+            this.login = new Login(this);
             this.configuration = new Configuration();
+            this.steam = new Steam.Steam();
             this.ide = new IDE(this);
             this.workspace = new Workspace(this);
             this.loading = new Loading();
-            this.steam = new Steam.Steam();
 
             // Set the steam path by configuration
             this.steam.SetPath(this.configuration.Get("STEAM_PATH", null));
@@ -105,8 +109,16 @@ namespace DSTEd.Core {
             this.Run();
         }
 
+        public Login GetLogin() {
+            return this.login;
+        }
+
         public IDE GetIDE() {
             return this.ide;
+        }
+
+        public Steam.Steam GetSteam() {
+            return this.steam;
         }
 
         public Workspace GetWorkspace() {

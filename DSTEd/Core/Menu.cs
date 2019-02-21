@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Controls;
 using DSTEd.UI;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -12,7 +13,7 @@ namespace DSTEd.Core {
             this.ide = ide;
         }
 
-        private IDE GetIDE() {
+        public IDE GetIDE() {
             return this.ide;
         }
 
@@ -38,7 +39,13 @@ namespace DSTEd.Core {
                             return;
                         }
 
-                        Document document = new Document(Document.Editor.CODE);
+                        Document.Editor type = Document.Editor.CODE;
+                        switch (Path.GetExtension(dialog.FileName)) {
+                            case ".tex":
+                                type = Document.Editor.TEXTURE;
+                                break;
+                        }
+                        Document document = new Document(this.GetIDE().GetCore(), type);
                         document.Load(dialog.FileName);
                         this.GetIDE().GetCore().GetWorkspace().AddDocument(document);
                     }
@@ -78,7 +85,9 @@ namespace DSTEd.Core {
                     Process.Start("https://github.com/DST-Tools/DSTEd-C/issues");
                     break;
                 //case "STEAM":
-                //case "STEAM_LOGIN":
+                case "STEAM_LOGIN":
+                    this.GetIDE().GetCore().GetLogin().ShowDialog();
+                    break;
                 //case "STEAM_SETTINGS":
                 default:
                     Logger.Warn("[Menu] Entry is not implemented: " + name);

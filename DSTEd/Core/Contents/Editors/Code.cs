@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using ICSharpCode.AvalonEdit;
 
 namespace DSTEd.Core.Contents.Editors {
@@ -10,6 +11,11 @@ namespace DSTEd.Core.Contents.Editors {
             this.ShowLineNumbers = true;
             this.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(this.document.GetFile()));
             this.Text = document.GetFileContent();
+            this.Document.UpdateFinished += new EventHandler(OnChange);
+        }
+
+        private void OnChange(object sender, EventArgs e) {
+            this.document.UpdateChanges();
         }
     }
 }

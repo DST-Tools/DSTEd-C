@@ -22,5 +22,29 @@ namespace DSTEd.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string STEAM_HASH {
+            get {
+                return ((string)(this["STEAM_HASH"]));
+            }
+            set {
+                this["STEAM_HASH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string STEAM_KEY {
+            get {
+                return ((string)(this["STEAM_KEY"]));
+            }
+            set {
+                this["STEAM_KEY"] = value;
+            }
+        }
     }
 }

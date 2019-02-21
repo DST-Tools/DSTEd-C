@@ -128,18 +128,14 @@
             </avalonDock:DockingManager.DocumentHeaderTemplate>
             
             <!-- Layout -->
-            <avalonDock:LayoutRoot PropertyChanged="OnLayoutRootPropertyChanged" >
-                <avalonDock:LayoutPanel Orientation="Horizontal" >
+            <avalonDock:LayoutRoot PropertyChanged="OnLayoutRootPropertyChanged">
+                <avalonDock:LayoutPanel Orientation="Horizontal">
 
                     <!-- Sidebar -->
                     <avalonDock:LayoutAnchorablePaneGroup DockWidth="150">
                         <avalonDock:LayoutAnchorablePane >
-                            <avalonDock:LayoutAnchorable ContentId="workspace_mods" Title="Mods" Hiding="OnToolWindow1Hiding" >
-                                <TextBlock Text="CONTENT" />
-                            </avalonDock:LayoutAnchorable>
-                            <avalonDock:LayoutAnchorable ContentId="workspace_core" Title="Core">
-                                <TextBlock Text="CONTENT"/>
-                            </avalonDock:LayoutAnchorable>
+                            <avalonDock:LayoutAnchorable ContentId="workspace_mods" Title="Mods" />
+                            <avalonDock:LayoutAnchorable ContentId="workspace_core" Title="Core" />
                         </avalonDock:LayoutAnchorablePane>
                     </avalonDock:LayoutAnchorablePaneGroup>
 
