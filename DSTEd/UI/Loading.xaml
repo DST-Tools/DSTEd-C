@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Core="clr-namespace:DSTEd.Core"
         mc:Ignorable="d"
         Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Height="300" Width="500" Background="#FF2D2D30" MinWidth="500" MinHeight="300" VerticalAlignment="Center" HorizontalAlignment="Center" AllowsTransparency="True" WindowStyle="None" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Width="Auto" Height="Auto">
@@ -22,6 +23,18 @@
         <Image Grid.Row="1" Grid.Column="1" Source="/DSTEd;component/Assets/Logo.png" Margin="10,0" />
         <Label Foreground="White" Grid.Row="1" Grid.Column="2" FontSize="36" FontWeight="Bold" Padding="0">DSTEd</Label>
         <ProgressBar x:Name="progress" Grid.Row="3" Grid.ColumnSpan="3" Panel.ZIndex="4" Background="#FF4C4C4F" BorderBrush="{x:Null}" Foreground="#FFED5C2D" Value="-1" BorderThickness="0" Margin="10,0"  />
-        <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Margin="10,11,10,10" Foreground="#FF999999">Dieses Programm steht unter OpenSource Lizenz.<LineBreak />© 2017 Adrian Preuß<LineBreak/>Alle Rechte vorbehalten.</TextBlock>
+        <Grid Grid.Row="4" Grid.ColumnSpan="3" Margin="10,11,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Foreground="#FF999999" Text="{Core:I18N_XAML 'This program was licensed under OpenSource.'}" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#FF999999" Text="{Core:I18N_XAML '© 2017 Adrian Preuß'}" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Foreground="#FF999999" Text="{Core:I18N_XAML 'All Rights Reserved.'}" />
+        </Grid>
     </Grid>
 </Window>

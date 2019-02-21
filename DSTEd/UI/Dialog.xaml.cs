@@ -185,39 +185,39 @@ namespace DSTEd.UI {
 
             switch (buttons) {
                 case Dialog.Buttons.None:
-                    this.UpdateButton(this.button_left, "OK", true, this.OnOK);
+                    this.UpdateButton(this.button_left, I18N.__("OK"), true, this.OnOK);
                     this.UpdateButton(this.button_middle, null, false, null);
                     this.UpdateButton(this.button_right, null, false, null);
                     break;
                 case Dialog.Buttons.AbortRetryIgnore:
-                    this.UpdateButton(this.button_left, "Abort", true, this.OnOK);
-                    this.UpdateButton(this.button_middle, "Retry", true, this.OnRetry);
-                    this.UpdateButton(this.button_right, "Ignore", true, this.OnIgnore);
+                    this.UpdateButton(this.button_left, I18N.__("Abort"), true, this.OnOK);
+                    this.UpdateButton(this.button_middle, I18N.__("Retry"), true, this.OnRetry);
+                    this.UpdateButton(this.button_right, I18N.__("Ignore"), true, this.OnIgnore);
                     break;
                 case Dialog.Buttons.OK:
-                    this.UpdateButton(this.button_left, "OK", true, this.OnOK);
+                    this.UpdateButton(this.button_left, I18N.__("OK"), true, this.OnOK);
                     this.UpdateButton(this.button_middle, null, false, null);
                     this.UpdateButton(this.button_right, null, false, null);
                     break;
                 case Dialog.Buttons.OKCancel:
-                    this.UpdateButton(this.button_left, "OK", true, this.OnOK);
-                    this.UpdateButton(this.button_middle, "Cancel", true, this.OnCancel);
+                    this.UpdateButton(this.button_left, I18N.__("OK"), true, this.OnOK);
+                    this.UpdateButton(this.button_middle, I18N.__("Cancel"), true, this.OnCancel);
                     this.UpdateButton(this.button_right, null, false, null);
                     break;
                 case Dialog.Buttons.RetryCancel:
-                    this.UpdateButton(this.button_left, "Retry", true, this.OnRetry);
-                    this.UpdateButton(this.button_middle, "Cancel", true, this.OnCancel);
+                    this.UpdateButton(this.button_left, I18N.__("Retry"), true, this.OnRetry);
+                    this.UpdateButton(this.button_middle, I18N.__("Cancel"), true, this.OnCancel);
                     this.UpdateButton(this.button_right, null, false, null);
                     break;
                 case Dialog.Buttons.YesNo:
-                    this.UpdateButton(this.button_left, "Yes", true, this.OnYes);
-                    this.UpdateButton(this.button_middle, "No", true, this.OnNo);
+                    this.UpdateButton(this.button_left, I18N.__("Yes"), true, this.OnYes);
+                    this.UpdateButton(this.button_middle, I18N.__("No"), true, this.OnNo);
                     this.UpdateButton(this.button_right, null, false, null);
                     break;
                 case Dialog.Buttons.YesNoCancel:
-                    this.UpdateButton(this.button_left, "Yes", true, this.OnYes);
-                    this.UpdateButton(this.button_middle, "No", true, this.OnNo);
-                    this.UpdateButton(this.button_right, "Cancel", true, this.OnCancel);
+                    this.UpdateButton(this.button_left, I18N.__("Yes"), true, this.OnYes);
+                    this.UpdateButton(this.button_middle, I18N.__("No"), true, this.OnNo);
+                    this.UpdateButton(this.button_right, I18N.__("Cancel"), true, this.OnCancel);
                     break;
             }
 

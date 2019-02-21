@@ -25,7 +25,7 @@ namespace DSTEd.Core {
                 case "FILE_OPEN":
                     // @ToDo implement with own style (https://github.com/jkells/folder-browser-dialog-example/blob/master/FolderBrowserDialogEx.cs)
                     var dialog = new CommonOpenFileDialog();
-                    dialog.Title = "Open File";
+                    dialog.Title = I18N.__("Open File");
                     dialog.AllowNonFileSystemItems = false;
                     dialog.Multiselect = false;
                     dialog.RestoreDirectory = false;
@@ -56,7 +56,7 @@ namespace DSTEd.Core {
                 //case "FILE_CLOSE":
                 //case "FILE_CLOSE_ALL":
                 case "FILE_EXIT":
-                    Dialog.Open("Do you want to exit DSTEd?", "Exit DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                    Dialog.Open(I18N.__("Do you want to exit DSTEd?"), I18N.__("Exit DSTEd"), Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                         if (result == Dialog.Result.Yes) {
                             Environment.Exit(0);
                         }

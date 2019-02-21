@@ -18,6 +18,14 @@ namespace DSTEd.UI {
             this.dockManager.Theme = new Dark();
         }
 
+        public System.Windows.Controls.MenuItem GetTools() {
+            return this.tools;
+        }
+
+        public Menu GetMenu() {
+            return this.menu;
+        }
+
         public Core.DSTEd GetCore() {
             return this.core;
         }

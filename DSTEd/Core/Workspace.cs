@@ -49,7 +49,7 @@ namespace DSTEd.Core {
 
         public void CreateWelcome() {
             Document welcome = new Document(this.core, Document.Editor.NONE);
-            welcome.SetTitle("Welcome");
+            welcome.SetTitle(I18N.__("Welcome"));
             this.AddDocument(welcome);
         }
 
