@@ -10,8 +10,6 @@ using DSTEd.Core.Steam.BBCode;
 
 namespace DSTEd.UI.Components {
     class BBCodePanel : WrapPanel {
-        private string bbcode = "";
-
         public BBCodePanel(string bbcode) {
             BBCode parser = new BBCode();
             Node root = parser.CreateNode("root");
