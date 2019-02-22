@@ -96,6 +96,8 @@ namespace DSTEd.Core {
                 this.steam.LoadGame(new DSTS(this));
                 this.steam.LoadGame(new DSTM(this));
 
+                this.ide.Init();
+
                 return true;
             });
 

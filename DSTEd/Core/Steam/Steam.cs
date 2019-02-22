@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using DSTEd.Core.Klei;
+using DSTEd.Core.Klei.Games;
 using DSTEd.UI;
 using Indieteur.SAMAPI;
 using SteamKit2;
@@ -13,6 +14,7 @@ namespace DSTEd.Core.Steam {
         private Workshop workshop = null;
         private string path = null;
         private Client client = null;
+        private List<KleiGame> games = new List<KleiGame>();
 
         public Steam() {
             this.client = new Client();
@@ -22,7 +24,7 @@ namespace DSTEd.Core.Steam {
         }
 
         public void LoadGame(KleiGame game) {
-            Console.WriteLine(string.Format("LoadGame: [#{0}] {1}", game.GetID(), game.GetName()));
+            Logger.Info(string.Format("LoadGame: [#{0}] {1}", game.GetID(), game.GetName()));
 
             IReadOnlyList<SteamApp> apps = software.SteamApps;
             foreach (SteamApp app in apps) {
@@ -30,6 +32,25 @@ namespace DSTEd.Core.Steam {
                     game.SetPath(app.InstallDir);
                 }
             }
+
+            games.Add(game);
+        }
+
+        public List<KleiGame> GetGames() {
+            return this.games;
+        }
+
+        public KleiGame GetGame() {
+            KleiGame game = null;
+
+            foreach (KleiGame instance in this.games) {
+                if (instance.IsMainGame()) {
+                    game = instance;
+                    break;
+                }
+            }
+
+            return game;
         }
 
         public Boolean ValidatePath(string path) {

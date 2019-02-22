@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using DSTEd.Core;
 using DSTEd.Core.Contents;
+using DSTEd.Core.IO;
+using DSTEd.Core.Klei;
+using DSTEd.UI.Components;
 using DSTEd.UI.Theme;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -18,6 +22,12 @@ namespace DSTEd.UI {
             this.menu = new Menu(this);
             this.dockManager.Theme = new Dark();
             this.Closing += this.IDE_Closing;
+        }
+
+        public void Init() {
+            string path = this.GetCore().GetSteam().GetGame().GetPath();
+            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"));
+            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"));
         }
 
         public System.Windows.Controls.MenuItem GetTools() {
@@ -51,11 +61,7 @@ namespace DSTEd.UI {
         private void OnShowWinformsWindow(object sender, RoutedEventArgs e) {
 
         }
-
-        private void AddTwoDocuments_click(object sender, RoutedEventArgs e) {
-
-        }
-
+        
         private void OnShowToolWindow1(object sender, RoutedEventArgs e) {
 
         }

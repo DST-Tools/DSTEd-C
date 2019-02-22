@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using DSTEd.Core.IO;
 
 namespace DSTEd.Core.Klei {
     public class KleiGame {
@@ -12,7 +13,8 @@ namespace DSTEd.Core.Klei {
         protected string name = null;
         protected string path = null;
         protected string executable = null;
-        protected List<string> files = new List<string>();
+        private Boolean is_main = false;
+        private FileSystem files = null;
 
         public KleiGame(DSTEd core) {
             this.core = core;
@@ -26,53 +28,29 @@ namespace DSTEd.Core.Klei {
             return this.name;
         }
 
-        private IEnumerable<string> Load(string path) {
-            Queue<string> queue = new Queue<string>();
-            queue.Enqueue(path);
-
-            while (queue.Count > 0) {
-                path = queue.Dequeue();
-
-                try {
-                    foreach (string subDir in Directory.GetDirectories(path)) {
-                        queue.Enqueue(subDir);
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                }
-
-                string[] files = null;
-
-                try {
-                    files = Directory.GetFiles(path);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                }
-
-                if (files != null) {
-                    for (int i = 0; i < files.Length; i++) {
-                        yield return files[i];
-                    }
-                }
-            }
-        }
-
-        public List<string> GetFiles() {
-            return this.files;
-        }
-
         public int GetID() {
             return this.id;
         }
 
+        public Boolean IsMainGame() {
+            return this.is_main;
+        }
+
+        public void SetMainGame() {
+            this.is_main = true;
+        }
+
         public void SetPath(string path) {
             this.path = path;
+            this.Update();
+        }
 
-            files.Clear();
+        private void Update() {
+            this.files = new FileSystem(this.GetPath());
+        }
 
-            foreach (string file in this.Load(this.path)) {
-                files.Add(file);
-            }
+        public FileSystem GetFiles() {
+            return this.files;
         }
 
         public string GetPath() {

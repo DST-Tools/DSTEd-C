@@ -4,6 +4,7 @@
             this.id = 322330;
             this.name = I18N.__("Client");
             this.executable = "bin/dontstarve_steam.exe";
+            this.SetMainGame();
         }
     }
 }
