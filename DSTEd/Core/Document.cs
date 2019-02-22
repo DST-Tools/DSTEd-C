@@ -16,7 +16,7 @@ namespace DSTEd.Core {
             NONE,
             CODE,
             TEXTURE,
-            LUA
+            MODINFO
         }
 
         private string title = null;
@@ -112,8 +112,8 @@ namespace DSTEd.Core {
                 case Editor.TEXTURE:
                     this.content = new Contents.Editors.TEX(this);
                     break;
-                case Editor.LUA:
-                    this.content = new Contents.Editors.LUA(this);
+                case Editor.MODINFO:
+                    this.content = new Contents.Editors.ModInfo(this);
                     break;
             }
 

@@ -51,6 +51,10 @@ namespace DSTEd.UI.Components {
                 foreach (FileInfo file in files.GetFiles()) {
                     TreeViewItem entry = new TreeViewItem { Header = file.Name };
 
+                    if (file.Name == "modinfo.lua") {
+                        entry = new ModInfoItem { Header = "ModInfo" }; // @ToDo need Translation(?)
+                    }
+
                     entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e) {
                         Logger.Info("ContextMenu: " + file.FullName);
                     });

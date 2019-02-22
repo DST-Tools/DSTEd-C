@@ -4,6 +4,30 @@
     xmlns:AvalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:Components="clr-namespace:DSTEd.UI.Components">
 
+    <Style TargetType="{x:Type Components:ModInfoItem}">
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Components:ModInfoItem}">
+                    <StackPanel Orientation="Vertical" Margin="10,0,0,1">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="icon" Width="16" Height="16" Stretch="Fill" Source="pack://application:,,,/DSTEd;component/Assets/FileSystem/ModInfo.png" />
+                            <ContentPresenter Margin="5,0,0,0" x:Name="PART_Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="Header"/>
+                        </StackPanel>
+                        <ItemsPresenter x:Name="ItemsHost" Margin="10,0,0,0" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style TargetType="{x:Type Components:WorkshopItem}">
         <Setter Property="Foreground" Value="#FFFFFF"/>
         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
@@ -11,12 +35,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Components:WorkshopItem}">
-                    <StackPanel Orientation="Vertical" Margin="5,0">
+                    <StackPanel Orientation="Vertical" Margin="5,5,0,0">
                         <StackPanel Orientation="Horizontal">
                             <Image Name="icon" Width="16" Height="16" Stretch="Fill" Source="pack://application:,,,/DSTEd;component/Assets/FileSystem/Workshop_Closed.png" />
-                            <ContentPresenter Margin="5,0" x:Name="PART_Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="Header"/>
+                            <ContentPresenter Margin="5,0,0,0" x:Name="PART_Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="Header"/>
                         </StackPanel>
-                        <ItemsPresenter x:Name="ItemsHost" Margin="5,0" />
+                        <ItemsPresenter x:Name="ItemsHost" Margin="12,1,0,0" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="True">
@@ -36,6 +60,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF0000"/>
                 <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
         </Style.Triggers>
@@ -48,12 +73,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
-                    <StackPanel Orientation="Vertical" Margin="5,0">
+                    <StackPanel Orientation="Vertical" Margin="10,1,0,1">
                         <StackPanel Orientation="Horizontal">
                             <Image Name="icon" Width="16" Height="16" Stretch="Fill" Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Header, Converter={x:Static Components:Iconizer.Instance}}" />
-                            <ContentPresenter Margin="5,0" x:Name="PART_Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="Header"/>
+                            <ContentPresenter Margin="5,0,0,0" x:Name="PART_Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="Header"/>
                         </StackPanel>
-                        <ItemsPresenter x:Name="ItemsHost" Margin="5,0" />
+                        <ItemsPresenter x:Name="ItemsHost" Margin="10,0,0,1" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="True">
@@ -73,6 +98,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF0000"/>
                 <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
         </Style.Triggers>

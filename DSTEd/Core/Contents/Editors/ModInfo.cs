@@ -3,10 +3,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace DSTEd.Core.Contents.Editors {
-    class LUA : TabControl {
+    class ModInfo : TabControl {
         private Document document;
 
-        public LUA(Document document) {
+        public ModInfo(Document document) {
             this.document = document;
             this.TabStripPlacement = Dock.Bottom;
             this.BorderBrush = Brushes.Transparent;

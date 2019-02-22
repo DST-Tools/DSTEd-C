@@ -57,7 +57,7 @@
     <Compile Include="Core\Configuration.cs" />
     <Compile Include="Core\Contents\AvalonDocument.cs" />
     <Compile Include="Core\Contents\Editors\Code.cs" />
-    <Compile Include="Core\Contents\Editors\LUA.cs" />
+    <Compile Include="Core\Contents\Editors\ModInfo.cs" />
     <Compile Include="Core\Contents\Editors\TEX.cs" />
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\IO\FileNode.cs" />
@@ -103,6 +103,7 @@
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Steam\BBCode\BBCode.cs" />
+    <Compile Include="UI\Components\ModInfoItem.cs" />
     <Compile Include="UI\Steam\Guard.xaml.cs">
       <DependentUpon>Guard.xaml</DependentUpon>
     </Compile>
@@ -522,6 +523,7 @@
     <Resource Include="Assets\FileSystem\Workshop_Opened.png" />
     <Resource Include="Assets\FileSystem\Workshop_Closed.png" />
     <Compile Include="Core\I18N.cs" />
+    <Resource Include="Assets\FileSystem\ModInfo.png" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />

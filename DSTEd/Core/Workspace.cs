@@ -107,9 +107,10 @@ namespace DSTEd.Core {
                 case ".tex":
                     type = Document.Editor.TEXTURE;
                     break;
-                case ".lua":
-                    type = Document.Editor.LUA;
-                    break;
+            }
+
+            if (file.EndsWith("modinfo.lua")) {
+                type = Document.Editor.MODINFO;
             }
 
             Document document = new Document(this.GetCore(), type);
