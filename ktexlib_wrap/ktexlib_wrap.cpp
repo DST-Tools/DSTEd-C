@@ -76,6 +76,18 @@ mipmap^ ktexlibwrap::KTEX::GetMipmap(size_t order)
 	return mtemp;
 }
 
+System::Collections::Generic::List<mipmap^>^ ktexlibwrap::KTEX::GetMipmaps()
+{
+	 
+	
+	LMipmap temp;
+	for (unsigned short i = 0; i < this->native->Info.mipscount; i++)
+	{
+		temp->Add(this->GetMipmap(i));
+	}
+	return temp;
+}
+
 RGBA^ ktexlibwrap::KTEX::GetImageFromMipmap(size_t order)
 {
 	auto mtemp = gcnew RGBA();
@@ -122,4 +134,9 @@ void ktexlibwrap::KTEX::operator+=(RGBA src)
 	temp.data.assign(data, data + src.data->LongLength);
 	delete[] data;
 	native->PushRGBA(temp);
+}
+
+void ktexlibwrap::KTEX::operator[](RGBA src)
+{
+	throw gcnew System::NotImplementedException();
 }

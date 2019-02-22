@@ -22,6 +22,8 @@ namespace ktexlibwrap
 		array<System::Byte>^ data;
 	};
 	
+	typedef System::Collections::Generic::List<mipmap^>^ LMipmap;
+
 	public ref struct mKTEXInfo
 	{
 		unsigned char flags;
@@ -57,11 +59,12 @@ namespace ktexlibwrap
 		void LoadKTEX(System::String^ filepath);
 		mipmap^ GetMipmapByPitch(unsigned int pitch);
 		mipmap^ GetMipmap(size_t order);
+		System::Collections::Generic::List<mipmap^>^ GetMipmaps();
 		RGBA^ GetImageFromMipmap(size_t order);
 		RGBA^ GetImageArray(unsigned int pitch);
 		void clear();
 		void operator+=(RGBA src);
-		
+		void operator[](RGBA src);
 	private:
 		ktexlib::KTEXFileOperation::KTEX* native;
 	};
