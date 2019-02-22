@@ -533,7 +533,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if not exist "$(TargetDir)Languages" mkdir "$(TargetDir)Languages"
-XCOPY "$(ProjectDir)Languages\*json" "$(TargetDir)Languages" /i /d /y</PreBuildEvent>
+XCOPY "$(ProjectDir)Languages\*.json" "$(TargetDir)Languages" /i /d /y
+
+if not exist "$(TargetDir)Librarys" mkdir "$(TargetDir)Librarys"
+XCOPY "$(ProjectDir)Librarys\*.dll" "$(TargetDir)Librarys" /i /d /y</PreBuildEvent>
   </PropertyGroup>
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths">
     <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
