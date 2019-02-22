@@ -124,6 +124,7 @@
     <Resource Include="Languages\de_DE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <EmbeddedResource Include="Core\Contents\Editors\Format\LUA.xshd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
