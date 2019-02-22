@@ -15,7 +15,8 @@ namespace DSTEd.Core {
         public enum Editor {
             NONE,
             CODE,
-            TEXTURE
+            TEXTURE,
+            LUA
         }
 
         private string title = null;
@@ -110,6 +111,9 @@ namespace DSTEd.Core {
                     break;
                 case Editor.TEXTURE:
                     this.content = new Contents.Editors.TEX(this);
+                    break;
+                case Editor.LUA:
+                    this.content = new Contents.Editors.LUA(this);
                     break;
             }
 

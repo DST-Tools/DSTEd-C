@@ -28,8 +28,11 @@ namespace DSTEd.UI {
 
         public void Init() {
             string path = this.GetCore().GetSteam().GetGame().GetPath();
-            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore());
-            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), this.GetCore());
+            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore(), delegate(FileNode file) {
+                return new WorkshopItem(this.GetCore(), file);
+            });
+
+            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), this.GetCore(), null);
             this.menu.Init();
         }
 

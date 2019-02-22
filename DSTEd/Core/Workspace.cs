@@ -82,6 +82,19 @@ namespace DSTEd.Core {
             return visible;
         }
 
+        public Document GetDocument(string path) {
+            Document existing = null;
+
+            foreach (KeyValuePair<string, Document> entry in this.documents) {
+                if (entry.Key == path || entry.Value.GetFile() == path) {
+                    existing = entry.Value;
+                    break;
+                }
+            }
+
+            return existing;
+        }
+
         public void OpenDocument(string file) {
             if (this.ExistingDocument(file)) {
                 this.ShowDocument(file);
@@ -93,6 +106,9 @@ namespace DSTEd.Core {
             switch (Path.GetExtension(file)) {
                 case ".tex":
                     type = Document.Editor.TEXTURE;
+                    break;
+                case ".lua":
+                    type = Document.Editor.LUA;
                     break;
             }
 
