@@ -15,8 +15,8 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Name="title" Foreground="#FFFFFF" Text="Title" FontWeight="Bold" FontSize="20" Margin="10" />
-        <Label Name="date" Foreground="#DDDDDD" Content="24. Jan" FontSize="16" Grid.Column="1" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Name="title" Foreground="#FFFFFF" Text="" FontWeight="Bold" TextTrimming="CharacterEllipsis" FontSize="20" Margin="10" />
+        <Label Name="date" Foreground="#DDDDDD" Content="" FontSize="16" Grid.Column="1" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Grid Name="content" Grid.Row="2" Grid.ColumnSpan="2" Margin="10"></Grid>
     </Grid>
 </UserControl>
