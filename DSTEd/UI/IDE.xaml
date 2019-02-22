@@ -126,7 +126,7 @@
                 <avalonDock:LayoutPanel Orientation="Horizontal">
 
                     <!-- Sidebar -->
-                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="150">
+                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="200">
                         <avalonDock:LayoutAnchorablePane>
                             <avalonDock:LayoutAnchorable x:Name="workspace_mods" ContentId="workspace_mods" Title="{Core:I18N_XAML Mods}" />
                             <avalonDock:LayoutAnchorable x:Name="workspace_core" ContentId="workspace_core" Title="{Core:I18N_XAML Core}" />

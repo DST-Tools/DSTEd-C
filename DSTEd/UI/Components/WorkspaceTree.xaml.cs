@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Windows.Controls;
-using DSTEd.Core;
+using System.Windows.Data;
+using System.Windows.Media.Imaging;
 using DSTEd.Core.IO;
 
 namespace DSTEd.UI.Components {
@@ -39,6 +42,39 @@ namespace DSTEd.UI.Components {
             }
 
             return item;
+        }
+    }
+
+    [ValueConversion(typeof(string), typeof(bool))]
+    public class HeaderToImageConverter : IValueConverter {
+        public static HeaderToImageConverter Instance = new HeaderToImageConverter();
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            string name = "";
+
+            if ((value as string).EndsWith(".lua")) {
+                name = "LUA";
+            } else if ((value as string).EndsWith(".tex")) {
+                name = "Bundle";
+            } else if ((value as string).EndsWith(".xml")) {
+                name = "XML";
+            } else if ((value as string).EndsWith(".zip")) {
+                name = "Archive";
+            } else if ((value as string).EndsWith(".png")) {
+                name = "Image";
+            } else if ((value as string).EndsWith(".txt")) {
+                name = "Text";
+            } else if ((value as string).Contains(".")) {
+                name = "Unknown";
+            } else {
+                name = "Folder_Closed";
+            }
+
+            return new BitmapImage(new Uri("pack://application:,,,/DSTEd;component/Assets/FileSystem/" + name + ".png"));
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotSupportedException("Cannot convert back");
         }
     }
 }

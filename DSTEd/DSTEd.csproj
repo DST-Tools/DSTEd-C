@@ -505,6 +505,15 @@
     <Resource Include="Assets\Icons\Klei.ico" />
     <Resource Include="Assets\Icons\GitHub.ico" />
     <Resource Include="Assets\Raster.png" />
+    <Resource Include="Assets\FileSystem\Folder_Closed.png" />
+    <Resource Include="Assets\FileSystem\Folder_Opened.png" />
+    <Resource Include="Assets\FileSystem\Image.png" />
+    <Resource Include="Assets\FileSystem\LUA.png" />
+    <Resource Include="Assets\FileSystem\Bundle.png" />
+    <Resource Include="Assets\FileSystem\Text.png" />
+    <Resource Include="Assets\FileSystem\XML.png" />
+    <Resource Include="Assets\FileSystem\Archive.png" />
+    <Resource Include="Assets\FileSystem\Unknown.png" />
     <Content Include="Assets\Vectors\Account.svg" />
     <Compile Include="Core\I18N.cs" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
