@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using DSTEd.UI;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -11,6 +13,18 @@ namespace DSTEd.Core {
 
         public Menu(IDE ide) {
             this.ide = ide;
+        }
+
+        public void Init() {
+            this.Update();
+        }
+
+        public void Update() {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.DataBind, new Action(delegate () {
+                if (this.GetIDE().GetCore().IsWorkspaceReady()) {
+                    this.GetIDE().UpdateWelcome(this.GetIDE().GetCore().GetWorkspace().HasWelcome());
+                }
+            }));
         }
 
         public IDE GetIDE() {
@@ -59,7 +73,9 @@ namespace DSTEd.Core {
                 //case "EDIT_SELECT_ALL":
                 //case "SEARCH_FIND":
                 //case "SEARCH_FIND_NEXT":
-                //case "VIEW":
+                case "VIEW_WELCOME":
+                    this.GetIDE().UpdateWelcome(this.GetIDE().GetCore().GetWorkspace().ToggleWelcome());
+                break;
                 //case "DEBUG_RUN_DST":
                 //case "TOOLS_STEAM":
                 //case "TOOLS_SERVER":

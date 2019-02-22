@@ -8,6 +8,7 @@ namespace DSTEd.Core.Contents {
             this.document = document;
             this.Title = document.GetName();
             this.ContentId = document.GetName();
+            this.CanClose = document.IsCloseable();
             // this.IconSource = document.GetIcon();
             this.Content = document.GetContent();
             this.CanFloat = true;
