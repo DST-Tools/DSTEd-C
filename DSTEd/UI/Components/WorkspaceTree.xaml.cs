@@ -46,8 +46,8 @@ namespace DSTEd.UI.Components {
     }
 
     [ValueConversion(typeof(string), typeof(bool))]
-    public class HeaderToImageConverter : IValueConverter {
-        public static HeaderToImageConverter Instance = new HeaderToImageConverter();
+    public class Iconizer : IValueConverter {
+        public static Iconizer Instance = new Iconizer();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             string name = "";
@@ -74,7 +74,9 @@ namespace DSTEd.UI.Components {
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            throw new NotSupportedException("Cannot convert back");
+            /* Do Nothing */
+
+            return null;
         }
     }
 }
