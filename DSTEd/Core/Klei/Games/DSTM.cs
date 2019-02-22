@@ -4,10 +4,11 @@
             this.id = 245850;
             this.name = I18N.__("Mod Tools");
 
-            this.AddTool("FMOD_DESIGNER", "mod_tools/FMOD_Designer/fmod_designer.exe");
-            this.AddTool("SPRITER", "mod_tools/Spriter/Spriter.exe");
-            this.AddTool("TILED", "mod_tools/Tiled/tiled.exe");
-            this.AddTool("TEXTURE_VIEWER", "mod_tools/tools/bin/TextureViewer.exe");
+            this.AddTool("DST_TOOLS", null);
+            this.AddSubTool("DST_TOOLS", "FMOD_DESIGNER", "mod_tools/FMOD_Designer/fmod_designer.exe");
+            this.AddSubTool("DST_TOOLS", "SPRITER", "mod_tools/Spriter/Spriter.exe");
+            this.AddSubTool("DST_TOOLS", "TILED", "mod_tools/Tiled/tiled.exe");
+            this.AddSubTool("DST_TOOLS", "TEXTURE_VIEWER", "mod_tools/tools/bin/TextureViewer.exe");
              /*
              * @ToDo add scripts with specific arguments/parameters (see these secripts, check their help files & arguments)
              * compiler_scripts/image_build.py
