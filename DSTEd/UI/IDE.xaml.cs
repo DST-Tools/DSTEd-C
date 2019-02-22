@@ -1,10 +1,12 @@
-
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using DSTEd.Core;
 using DSTEd.Core.Contents;
+using DSTEd.Core.IO;
+using DSTEd.Core.Klei;
+using DSTEd.UI.Components;
 using DSTEd.UI.Theme;
 using MLib.Interfaces;
 using Xceed.Wpf.AvalonDock;
@@ -19,8 +21,23 @@ namespace DSTEd.UI {
             InitializeComponent();
 
             this.core = core;
-            this.menu = new Core.Menu(this);
+            this.menu = new Menu(this);
             this.dockManager.Theme = new Dark();
+            this.Closing += this.IDE_Closing;
+        }
+
+        public void Init() {
+            string path = this.GetCore().GetSteam().GetGame().GetPath();
+            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore());
+            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), this.GetCore());
+        }
+
+        public System.Windows.Controls.MenuItem GetTools() {
+            return this.tools;
+        }
+
+        public Menu GetMenu() {
+            return this.menu;
         }
 
         public Core.DSTEd GetCore() {
@@ -148,6 +165,10 @@ namespace DSTEd.UI {
                     // @ToDo
                     break;
             }
+        }
+
+        private void IDE_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            Environment.Exit(0);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using DSTEd.Core;
 
@@ -49,8 +50,28 @@ namespace DSTEd.Core {
 
         public void CreateWelcome() {
             Document welcome = new Document(this.core, Document.Editor.NONE);
-            welcome.SetTitle("Welcome");
+            welcome.SetTitle(I18N.__("Welcome"));
             this.AddDocument(welcome);
+        }
+
+        public void OpenDocument(string file) {
+            if (this.ExistingDocument(file)) {
+                this.ShowDocument(file);
+                return;
+            }
+
+            Document.Editor type = Document.Editor.CODE;
+
+            switch (Path.GetExtension(file)) {
+                case ".tex":
+                    type = Document.Editor.TEXTURE;
+                    break;
+            }
+
+            Document document = new Document(this.GetCore(), type);
+            document.Load(file);
+            // @ToDo add to RecentFiles
+            this.GetCore().GetWorkspace().AddDocument(document);
         }
 
         internal void ShowDocument(string file) {
@@ -77,7 +98,7 @@ namespace DSTEd.Core {
 
         public void AddDocument(Document document) {
             document.OnChange(this.OnChanged);
-            this.documents.Add(document.GetName(), document);
+            this.documents.Add(document.GetHash(), document);
             document.Init();
         }
 
@@ -86,6 +107,10 @@ namespace DSTEd.Core {
 
             // Forward to IDE-UI
             this.core.GetIDE().OnChanged(document, state);
+        }
+
+        public DSTEd GetCore() {
+            return this.core;
         }
     }
 }

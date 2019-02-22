@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DSTEd.UI"
         xmlns:Components="clr-namespace:DSTEd.UI.Components"
+        xmlns:Core="clr-namespace:DSTEd.Core"
         mc:Ignorable="d"
-        Title="Workspace" Height="228" Width="500" Background="#FF2D2D30" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Disabled" Icon="/DSTEd;component/Assets/Logo.ico" WindowStyle="ThreeDBorderWindow">
+        Title="{Core:I18N_XAML Workspace}" Height="228" Width="500" Background="#FF2D2D30" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Disabled" Icon="/DSTEd;component/Assets/Logo.ico" WindowStyle="ThreeDBorderWindow">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -39,15 +40,27 @@
             <RowDefinition Height="30*"/>
         </Grid.RowDefinitions>
         <WrapPanel Background="#242426" Orientation="Vertical" Grid.ColumnSpan="5">
-            <Label Margin="10,10,0,0" Content="Select a Workspace" Foreground="#FFFFFF" FontSize="10" FontWeight="Bold" />
-            <TextBlock Margin="15,0,0,0" Foreground="#FFFFFF" FontSize="9">
-                DSTEd stores your projects in your installed game.<LineBreak />Please select your installed <Bold>Don't Starve Together</Bold> directory.
-            </TextBlock>
+            <Label Margin="10,10,0,0" Content="{Core:I18N_XAML Select a Workspace}" Foreground="#FFFFFF" FontSize="10" FontWeight="Bold" />
+            <Grid Margin="15,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Foreground="#FFFFFF" FontSize="9" Text="{Core:I18N_XAML 'DSTEd stores your projects in your installed game.'}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#FFFFFF" FontSize="9" Text="{Core:I18N_XAML 'Please select your installed '}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Foreground="#FFFFFF" Margin="5,0,5,0" FontWeight="Bold" FontSize="9" Text="{Core:I18N_XAML 'Dont Starve Together'}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Foreground="#FFFFFF" FontSize="9" Text="{Core:I18N_XAML ' directory.'}" />
+            </Grid>
         </WrapPanel>
-        <Label Content="Workspace:" Foreground="#FFFFFF" FontSize="9" Grid.Row="2" Grid.Column="1" />
+        <Label Content="{Core:I18N_XAML Workspace:}" Foreground="#FFFFFF" FontSize="9" Grid.Row="2" Grid.Column="1" />
         <TextBox Text="" Name="path" Grid.Row="2" Grid.Column="2" />
-        <Button Content="Browse" Grid.Row="2" Grid.Column="3" Click="OnBrowse" />
-        <CheckBox Name="save" Grid.Row="4" Grid.Column="2" Content="Use this as the default and do not ask again." />
-        <Button Grid.Row="5" Grid.Column="2" Content="OK" Click="OnSave" HorizontalAlignment="Center" />
+        <Button Content="{Core:I18N_XAML Browse}" Grid.Row="2" Grid.Column="3" Click="OnBrowse" />
+        <CheckBox Name="save" Grid.Row="4" Grid.Column="2" Content="{Core:I18N_XAML Use this as the default and do not ask again.}" />
+        <Button Grid.Row="5" Grid.Column="2" Content="{Core:I18N_XAML OK}" Click="OnSave" HorizontalAlignment="Center" />
     </Grid>
 </Window>

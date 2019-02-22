@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:Core="clr-namespace:DSTEd.Core"
         mc:Ignorable="d"
         Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF"
         VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1"
@@ -54,66 +54,60 @@
                     </Grid>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem Header="File" Grid.Column="0">
-                <MenuItem Header="New...">
-                    <MenuItem Name="FILE_NEW_PROJECT" Header="Project" Click="OnMenu" />
-                    <MenuItem Name="FILE_NEW_FILE" Header="File" Click="OnMenu" />
-                    <MenuItem Name="FILE_NEW_ASSET" Header="Asset" Click="OnMenu" />
+            <MenuItem Header="{Core:I18N_XAML File}" Grid.Column="0">
+                <MenuItem Header="{Core:I18N_XAML New...}">
+                    <MenuItem Name="FILE_NEW_PROJECT" Header="{Core:I18N_XAML Project}" Click="OnMenu" />
+                    <MenuItem Name="FILE_NEW_FILE" Header="{Core:I18N_XAML File}" Click="OnMenu" />
+                    <MenuItem Name="FILE_NEW_ASSET" Header="{Core:I18N_XAML Asset}" Click="OnMenu" />
                 </MenuItem>
-                <MenuItem Header="Open" Name="FILE_OPEN" Click="OnMenu" />
-                <MenuItem Header="Open Recent">
-                    <MenuItem Name="FILE_OPEN_RECENT" Header="- No Recent Files -" Click="OnMenu" IsEnabled="False" />
+                <MenuItem Header="{Core:I18N_XAML Open}" Name="FILE_OPEN" Click="OnMenu" />
+                <MenuItem Header="{Core:I18N_XAML Open Recent}">
+                    <MenuItem Name="FILE_OPEN_RECENT" Header="{Core:I18N_XAML - No Recent Files -}" Click="OnMenu" IsEnabled="False" />
                 </MenuItem>
                 <Separator/>
-                <MenuItem Name="FILE_SAVE" Header="Save" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="FILE_SAVE_ALL" Header="Save All" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="FILE_CLOSE" Header="Close" Click="OnMenu" />
-                <MenuItem Name="FILE_CLOSE_ALL" Header="Close All" Click="OnMenu" />
+                <MenuItem Name="FILE_SAVE" Header="{Core:I18N_XAML Save}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="FILE_SAVE_ALL" Header="{Core:I18N_XAML Save All}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="FILE_CLOSE" Header="{Core:I18N_XAML Close}" Click="OnMenu" />
+                <MenuItem Name="FILE_CLOSE_ALL" Header="{Core:I18N_XAML Close All}" Click="OnMenu" />
                 <Separator/>
-                <MenuItem Name="FILE_EXIT" Header="Exit" Click="OnMenu" />
+                <MenuItem Name="FILE_EXIT" Header="{Core:I18N_XAML Exit}" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="Edit" Grid.Column="1">
-                <MenuItem Name="EDIT_UNDO" Header="Undo" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_REDO" Header="Redo" IsEnabled="False" Click="OnMenu" />
+            <MenuItem Header="{Core:I18N_XAML Edit}" Grid.Column="1">
+                <MenuItem Name="EDIT_UNDO" Header="{Core:I18N_XAML Undo}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_REDO" Header="{Core:I18N_XAML Redo}" IsEnabled="False" Click="OnMenu" />
                 <Separator/>
-                <MenuItem Name="EDIT_CUT" Header="Cut" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_COPY" Header="Copy" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_PASTE" Header="Paste" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_SELECT_ALL" Header="Select All" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_CUT" Header="{Core:I18N_XAML Cut}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_COPY" Header="{Core:I18N_XAML Copy}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_PASTE" Header="{Core:I18N_XAML Paste}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_SELECT_ALL" Header="{Core:I18N_XAML Select All}" IsEnabled="False" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="Search" Grid.Column="2">
-                <MenuItem Name="SEARCH_FIND" Header="Find..." IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="SEARCH_FIND_NEXT" Header="Find Next" IsEnabled="False" Click="OnMenu" />
+            <MenuItem Header="{Core:I18N_XAML Search}" Grid.Column="2">
+                <MenuItem Name="SEARCH_FIND" Header="{Core:I18N_XAML Find...}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="SEARCH_FIND_NEXT" Header="{Core:I18N_XAML Find Next}" IsEnabled="False" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Name="VIEW" Header="View" Grid.Column="3" Click="OnMenu" />
-            <MenuItem Header="Debug" Grid.Column="4">
-                <MenuItem Name="DEBUG_RUN_DST" Header="Run DST" Click="OnMenu" />
+            <MenuItem Name="VIEW" Header="{Core:I18N_XAML View}" Grid.Column="3" Click="OnMenu" />
+            <MenuItem Header="{Core:I18N_XAML Debug}" Grid.Column="4">
+                <MenuItem Name="DEBUG_RUN_DST" Header="{Core:I18N_XAML Run DST}" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Header="Tools" Grid.Column="5">
-                <MenuItem Name="TOOLS_STEAM" Header="Steam" Click="OnMenu" />
-                <MenuItem Name="TOOLS_SERVER" Header="Server" Click="OnMenu" />
-            </MenuItem>
-            <MenuItem Name="SETTINGS" Header="Settings" Grid.Column="6" Click="OnMenu" />
-            <MenuItem Header="Help" Grid.Column="7">
-                <MenuItem Name="HELP_FORUM" Header="Forum" Click="OnMenu">
+            <MenuItem Name="tools" Header="{Core:I18N_XAML Tools}" Grid.Column="5" />
+            <MenuItem Name="SETTINGS" Header="{Core:I18N_XAML Settings}" Grid.Column="6" Click="OnMenu" />
+            <MenuItem Header="{Core:I18N_XAML Help}" Grid.Column="7">
+                <MenuItem Name="HELP_FORUM" Header="{Core:I18N_XAML Forum}" Click="OnMenu">
                     <MenuItem.Icon>
                         <Image Width="{StaticResource IconSize}" Height="{StaticResource IconSize}" Source="/DSTEd;component/Assets/Icons/Klei.ico"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="HELP_FEEDBACK" Header="Feedback / Bug" Click="OnMenu">
+                <MenuItem Name="HELP_FEEDBACK" Header="{Core:I18N_XAML Feedback / Bug}" Click="OnMenu">
                     <MenuItem.Icon>
                         <Image Width="{StaticResource IconSize}" Height="{StaticResource IconSize}" Source="/DSTEd;component/Assets/Icons/GitHub.ico"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="HELP_ABOUT" Header="About" Click="OnMenu" />
+                <MenuItem Name="HELP_ABOUT" Header="{Core:I18N_XAML About}" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Name="STEAM" Header="Guest" Grid.Column="8" Click="OnMenu" HorizontalAlignment="Right">
-                <MenuItem.Icon>
-                    <svgc:SvgViewbox Height="{StaticResource IconSize}" Width="{StaticResource IconSize}" Stretch="Uniform" Source="/DSTEd;component/Assets/Vectors/Account.svg"/>
-                </MenuItem.Icon>
-                <MenuItem Name="STEAM_LOGIN" Header="Login" Click="OnMenu" />
+            <MenuItem Name="STEAM" Header="{Core:I18N_XAML Guest}" Grid.Column="8" Click="OnMenu" HorizontalAlignment="Right">
+                <MenuItem Name="STEAM_LOGIN" Header="{Core:I18N_XAML Login}" Click="OnMenu" />
                 <Separator/>
-                <MenuItem Name="STEAM_SETTINGS" Header="Settings" Click="OnMenu" />
+                <MenuItem Name="STEAM_SETTINGS" Header="{Core:I18N_XAML Settings}" Click="OnMenu" />
             </MenuItem>
         </Menu>
 
@@ -132,10 +126,10 @@
                 <avalonDock:LayoutPanel Orientation="Horizontal">
 
                     <!-- Sidebar -->
-                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="150">
-                        <avalonDock:LayoutAnchorablePane >
-                            <avalonDock:LayoutAnchorable ContentId="workspace_mods" Title="Mods" />
-                            <avalonDock:LayoutAnchorable ContentId="workspace_core" Title="Core" />
+                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="200">
+                        <avalonDock:LayoutAnchorablePane>
+                            <avalonDock:LayoutAnchorable x:Name="workspace_mods" ContentId="workspace_mods" Title="{Core:I18N_XAML Mods}" />
+                            <avalonDock:LayoutAnchorable x:Name="workspace_core" ContentId="workspace_core" Title="{Core:I18N_XAML Core}" />
                         </avalonDock:LayoutAnchorablePane>
                     </avalonDock:LayoutAnchorablePaneGroup>
 

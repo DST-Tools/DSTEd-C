@@ -22,9 +22,13 @@ namespace DSTEd.Core {
         public DSTEd() {
             Logger.Info("Start DSTEd v" + GetVersion());
 
+            this.configuration = new Configuration();
+
+            // Init Language
+            I18N.SetLanguage(this.GetLanguage());
+
             // Init classes
             this.login = new Login(this);
-            this.configuration = new Configuration();
             this.steam = new Steam.Steam();
             this.ide = new IDE(this);
             this.workspace = new Workspace(this);
@@ -36,7 +40,7 @@ namespace DSTEd.Core {
 
             this.workspace.OnSelect(delegate (string path, Boolean save) {
                 if (!this.steam.ValidatePath(path)) {
-                    Dialog.Open("Bad steam path! Please select the directory of Steam.", "Problem", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                    Dialog.Open(I18N.__("Bad steam path! Please select the directory of Steam."), I18N.__("Problem"), Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                         return true;
                     });
                     return;
@@ -55,7 +59,7 @@ namespace DSTEd.Core {
             });
 
             this.workspace.OnClose(delegate (CancelEventArgs e) {
-                Dialog.Open("You must set the workspace path! If you cancel these, DSTEd will be closed.", "Problem", Dialog.Buttons.RetryCancel, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                Dialog.Open(I18N.__("You must set the workspace path! If you cancel these, DSTEd will be closed."), I18N.__("Problem"), Dialog.Buttons.RetryCancel, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                     if (result == Dialog.Result.Cancel) {
                         Environment.Exit(0);
                         return true;
@@ -79,7 +83,7 @@ namespace DSTEd.Core {
 
                     Logger.Info("Steam is not installed? Ask for Workspace...");
 
-                    Dialog.Open("We can not find the path to STEAM. Please check the workspace settings.", "Problem: Steam", Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                    Dialog.Open(I18N.__("We can not find the path to STEAM. Please check the workspace settings."), I18N.__("Problem: Steam"), Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                         this.workspace.Show();
                         return true;
                     });
@@ -93,9 +97,11 @@ namespace DSTEd.Core {
             });
 
             this.loading.Run("KLEI_GAMES", delegate () {
-                this.steam.LoadGame(new DSTC());//client->CL?
-                this.steam.LoadGame(new DSTS());//server->SV?
-                this.steam.LoadGame(new DSTM());//mod tools->TOOL?
+                this.steam.LoadGame(new DSTC(this));
+                this.steam.LoadGame(new DSTS(this));
+                this.steam.LoadGame(new DSTM(this));
+
+                this.ide.Init();
 
                 return true;
             });

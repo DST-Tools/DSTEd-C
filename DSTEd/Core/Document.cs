@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using DSTEd.UI.Contents;
 
 namespace DSTEd.Core {
@@ -16,7 +18,6 @@ namespace DSTEd.Core {
             TEXTURE
         }
 
-        private Menu menu = null;
         private string title = null;
         private string file = null;
         private Action<Document, State> callback_changed = null;
@@ -24,11 +25,14 @@ namespace DSTEd.Core {
         private object content = null;
         private string file_content = null;
         private DSTEd core;
-        private Editor nONE;
 
         public Document(DSTEd core, Editor type) {
             this.core = core;
             this.type = type;
+        }
+
+        public string GetHash() {
+            return Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}-{1}", this.GetTitle(), this.GetFile()))));
         }
 
         public DSTEd GetCore() {
@@ -37,6 +41,10 @@ namespace DSTEd.Core {
 
         public void SetTitle(string title) {
             this.title = title;
+        }
+
+        public string GetTitle() {
+            return this.title;
         }
 
         public void Load(string file) {

@@ -64,7 +64,7 @@ namespace DSTEd.Core.Contents.Editors {
             try {
                 KTEX texture = new KTEX(File.OpenRead(this.document.GetFile()));
                 if (!texture.IsValid()) {
-                    this.CreateLabel("Texture is Invalid.");
+                    this.CreateLabel(I18N.__("Texture is Invalid."));
                 } else {
 
                     Bitmap img = texture.GenerateBitMap();
@@ -76,7 +76,7 @@ namespace DSTEd.Core.Contents.Editors {
                     // EArgs.Size = mipmap.Width + "x" + mipmap.Height;
                 }
             } catch(Exception e) {
-                this.CreateLabel("Texture can't load: " + e.Message);
+                this.CreateLabel(I18N.__("Texture can't load: ") + e.Message);
             }
             
         }
