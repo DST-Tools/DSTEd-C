@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using DSTEd.UI.Contents;
 
 namespace DSTEd.Core {
@@ -29,12 +31,20 @@ namespace DSTEd.Core {
             this.type = type;
         }
 
+        public string GetHash() {
+            return Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}-{1}", this.GetTitle(), this.GetFile()))));
+        }
+
         public DSTEd GetCore() {
             return this.core;
         }
 
         public void SetTitle(string title) {
             this.title = title;
+        }
+
+        public string GetTitle() {
+            return this.title;
         }
 
         public void Load(string file) {

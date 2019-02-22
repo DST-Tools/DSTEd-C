@@ -34,20 +34,7 @@ namespace DSTEd.Core {
                     CommonFileDialogResult value = dialog.ShowDialog();
 
                     if (value == CommonFileDialogResult.Ok) {
-                        if (this.GetIDE().GetCore().GetWorkspace().ExistingDocument(dialog.FileName)) {
-                            this.GetIDE().GetCore().GetWorkspace().ShowDocument(dialog.FileName);
-                            return;
-                        }
-
-                        Document.Editor type = Document.Editor.CODE;
-                        switch (Path.GetExtension(dialog.FileName)) {
-                            case ".tex":
-                                type = Document.Editor.TEXTURE;
-                                break;
-                        }
-                        Document document = new Document(this.GetIDE().GetCore(), type);
-                        document.Load(dialog.FileName);
-                        this.GetIDE().GetCore().GetWorkspace().AddDocument(document);
+                        this.GetIDE().GetCore().GetWorkspace().OpenDocument(dialog.FileName);
                     }
                     break;
                 //case "FILE_OPEN_RECENT":

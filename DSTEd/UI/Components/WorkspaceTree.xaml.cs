@@ -3,14 +3,19 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using DSTEd.Core;
 using DSTEd.Core.IO;
 
 namespace DSTEd.UI.Components {
     public partial class WorkspaceTree : UserControl {
-        public WorkspaceTree(FileSystem files) {
+        private Core.DSTEd core = null;
+
+        public WorkspaceTree(FileSystem files, Core.DSTEd core) {
             InitializeComponent();
 
+            this.core = core;
             this.tree.Items.Clear();
 
             foreach (FileNode directory in files.GetDirectories()) {
@@ -22,8 +27,8 @@ namespace DSTEd.UI.Components {
             TreeViewItem item = new TreeViewItem { Header = files.GetName() };
 
             if (files.HasSubdirectories()) {
-                foreach (FileNode d in files.GetSubdirectories()) {
-                    TreeViewItem root = this.Render(d, null);
+                foreach (FileNode directory in files.GetSubdirectories()) {
+                    TreeViewItem root = this.Render(directory, null);
 
                     if (container != null) {
                         container.Items.Add(root);
@@ -34,14 +39,26 @@ namespace DSTEd.UI.Components {
             }
 
             if (files.HasFiles()) {
-                foreach (FileInfo d in files.GetFiles()) {
-                    var tt = new TreeViewItem { Header = d.Name };
+                foreach (FileInfo file in files.GetFiles()) {
+                    TreeViewItem entry = new TreeViewItem { Header = file.Name };
 
-                    item.Items.Add(tt);
+                    entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e) {
+                        Logger.Info("ContextMenu: " + file.FullName);
+                    });
+
+                    entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e) {
+                        this.GetCore().GetWorkspace().OpenDocument(file.FullName);
+                    });
+
+                    item.Items.Add(entry);
                 }
             }
 
             return item;
+        }
+
+        public Core.DSTEd GetCore() {
+            return this.core;
         }
     }
 
