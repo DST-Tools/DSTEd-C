@@ -70,6 +70,7 @@ namespace DSTEd.Core {
 
             Document document = new Document(this.GetCore(), type);
             document.Load(file);
+            // @ToDo add to RecentFiles
             this.GetCore().GetWorkspace().AddDocument(document);
         }
 
