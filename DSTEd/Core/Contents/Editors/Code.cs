@@ -17,7 +17,7 @@ namespace DSTEd.Core.Contents.Editors {
             this.SyntaxHighlighting = LoadSyntax(Path.GetExtension(this.document.GetFile()));
             this.Text = document.GetFileContent();
             this.Document.UpdateFinished += new EventHandler(OnChange);
-            
+
             new XmlFoldingStrategy().UpdateFoldings(FoldingManager.Install(this.TextArea), this.Document);
         }
 

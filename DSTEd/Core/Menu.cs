@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -75,7 +74,7 @@ namespace DSTEd.Core {
                 //case "SEARCH_FIND_NEXT":
                 case "VIEW_WELCOME":
                     this.GetIDE().UpdateWelcome(this.GetIDE().GetCore().GetWorkspace().ToggleWelcome());
-                break;
+                    break;
                 //case "DEBUG_RUN_DST":
                 //case "TOOLS_STEAM":
                 //case "TOOLS_SERVER":

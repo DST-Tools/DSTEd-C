@@ -9,24 +9,24 @@
             this.AddSubTool("DST_TOOLS", "SPRITER", "mod_tools/Spriter/Spriter.exe");
             this.AddSubTool("DST_TOOLS", "TILED", "mod_tools/Tiled/tiled.exe");
             this.AddSubTool("DST_TOOLS", "TEXTURE_VIEWER", "mod_tools/tools/bin/TextureViewer.exe");
-             /*
-             * @ToDo add scripts with specific arguments/parameters (see these secripts, check their help files & arguments)
-             * compiler_scripts/image_build.py
-             * compiler_scripts/properties.py
-             * compiler_scripts/properties.pyc
-             * compiler_scripts/zipanim.py
-             * 
-             * mod_tools/export.py
-             * mod_tools/ExportOptions.py
-             * mod_tools/ResizeInfo.py
-             * mod_tools/validate.py
-             * 
-             * scripts/ds_to_spriter.py
-             * scripts/resize.py
-             * 
-             * tools/bin/ShaderCompiler.exe
-             * tools/bin/TextureConverter.exe
-             */
+            /*
+            * @ToDo add scripts with specific arguments/parameters (see these secripts, check their help files & arguments)
+            * compiler_scripts/image_build.py
+            * compiler_scripts/properties.py
+            * compiler_scripts/properties.pyc
+            * compiler_scripts/zipanim.py
+            * 
+            * mod_tools/export.py
+            * mod_tools/ExportOptions.py
+            * mod_tools/ResizeInfo.py
+            * mod_tools/validate.py
+            * 
+            * scripts/ds_to_spriter.py
+            * scripts/resize.py
+            * 
+            * tools/bin/ShaderCompiler.exe
+            * tools/bin/TextureConverter.exe
+            */
         }
     }
 }

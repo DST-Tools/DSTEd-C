@@ -28,7 +28,7 @@ namespace DSTEd.UI {
 
         public void Init() {
             string path = this.GetCore().GetSteam().GetGame().GetPath();
-            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore(), delegate(FileNode file) {
+            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore(), delegate (FileNode file) {
                 return new WorkshopItem(this.GetCore(), file);
             });
 
@@ -75,16 +75,16 @@ namespace DSTEd.UI {
         private void dockManager_DocumentClosing(object sender, DocumentClosingEventArgs e) {
             Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                 this.GetMenu().Update();
-                
+
                 if (result == Dialog.Result.Yes) {
                     return true;
                 }
-                
+
                 e.Cancel = true;
                 return true;
             });
         }
-        
+
         private void OnReloadManager(object sender, RoutedEventArgs e) {
         }
 

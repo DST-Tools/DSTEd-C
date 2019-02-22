@@ -18,7 +18,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Left -->
         <Grid Margin="20" Grid.RowSpan="2" MinWidth="320">
             <Grid.RowDefinitions>
@@ -53,7 +53,7 @@
                 </Grid>
             </Grid>
         </DockPanel>
-        
+
         <!-- Right -->
         <Label Content="{Core:I18N_XAML News}" Grid.Column="2" Foreground="White" FontSize="24" />
         <ScrollViewer VerticalScrollBarVisibility="Auto"  Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Margin="5,0,20,0">

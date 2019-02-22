@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 using DSTEd.Core;
 using DSTEd.UI.Components;
@@ -14,7 +13,7 @@ namespace DSTEd.UI.Contents {
             this.document = document;
             this.news.Children.Clear();
 
-            this.document.GetCore().GetSteam().GetNews(delegate(List<SteamKit2.KeyValue> news) {
+            this.document.GetCore().GetSteam().GetNews(delegate (List<SteamKit2.KeyValue> news) {
                 foreach (SteamKit2.KeyValue entry in news) {
                     this.AddNewsEntry(entry);
                 }

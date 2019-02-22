@@ -144,7 +144,7 @@ namespace DSTEd.Core.Klei.KTEX {
                     pt.SetPixel(x, y, Color.FromArgb(a, r, g, b));
                 }
                 //if (OnProgressUpdate != null) {
-                    //OnProgressUpdate(y * 100 / mipmap.Height);
+                //OnProgressUpdate(y * 100 / mipmap.Height);
                 //}
             }
             return pt;

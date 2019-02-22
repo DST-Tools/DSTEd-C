@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using DSTEd.Core.IO;
@@ -86,12 +84,12 @@ namespace DSTEd.Core.Klei {
         }
 
         public void AddSubTool(string node, string name, string executable) {
-            MenuItem item   = AddToolMenu(name, executable);
-            MenuItem tools  = this.GetCore().GetIDE().GetTools();
-            MenuItem found  = null;
+            MenuItem item = AddToolMenu(name, executable);
+            MenuItem tools = this.GetCore().GetIDE().GetTools();
+            MenuItem found = null;
 
-            foreach(MenuItem entry in tools.Items) {
-                if(entry.Name == node) {
+            foreach (MenuItem entry in tools.Items) {
+                if (entry.Name == node) {
                     found = entry;
                     break;
                 }

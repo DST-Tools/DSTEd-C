@@ -76,7 +76,6 @@
     <Compile Include="Core\Steam\BBCode\NodeType.cs" />
     <Compile Include="Core\Steam\BBCode\State.cs" />
     <Compile Include="Core\Steam\Client.cs" />
-    <Compile Include="Core\StringBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -90,7 +89,6 @@
     </Compile>
     <Compile Include="UI\Components\BBCodePanel.cs" />
     <Compile Include="UI\Components\Container.cs" />
-    <Compile Include="UI\Components\MenuSpacer.cs" />
     <Compile Include="UI\Components\WorkshopItem.cs" />
     <Compile Include="UI\Components\WorkspaceTree.xaml.cs">
       <DependentUpon>WorkspaceTree.xaml</DependentUpon>

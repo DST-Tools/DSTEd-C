@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using DSTEd.Core.Klei.Games;
 using DSTEd.UI;
-using DSTEd.UI.Components;
 using DSTEd.UI.Steam;
 
 namespace DSTEd.Core {
