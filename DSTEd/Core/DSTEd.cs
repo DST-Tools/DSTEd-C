@@ -131,6 +131,10 @@ namespace DSTEd.Core {
             return this.workspace;
         }
 
+        public Boolean IsWorkspaceReady() {
+            return this.workspace != null;
+        }
+
         public String GetVersion() {
             return this.version;
         }

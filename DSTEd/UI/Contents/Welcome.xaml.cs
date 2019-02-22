@@ -12,7 +12,6 @@ namespace DSTEd.UI.Contents {
         public Welcome(Document document) {
             InitializeComponent();
             this.document = document;
-
             this.news.Children.Clear();
 
             this.document.GetCore().GetSteam().GetNews(delegate(List<SteamKit2.KeyValue> news) {
