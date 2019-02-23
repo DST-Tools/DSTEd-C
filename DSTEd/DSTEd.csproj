@@ -57,6 +57,7 @@
     <Compile Include="Core\Configuration.cs" />
     <Compile Include="Core\Contents\AvalonDocument.cs" />
     <Compile Include="Core\Contents\Editors\Code.cs" />
+    <Compile Include="Core\Contents\Editors\ModInfo.cs" />
     <Compile Include="Core\Contents\Editors\TEX.cs" />
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\IO\FileNode.cs" />
@@ -69,13 +70,13 @@
     <Compile Include="Core\Klei\KTEX\KTEX.cs" />
     <Compile Include="Core\Klei\Squish\Flags.cs" />
     <Compile Include="Core\Klei\Squish\Squish.cs" />
+    <Compile Include="Core\Klei\LUAInterpreter.cs" />
     <Compile Include="Core\Menu.cs" />
     <Compile Include="Core\Servers.cs" />
     <Compile Include="Core\Steam\BBCode\Node.cs" />
     <Compile Include="Core\Steam\BBCode\NodeType.cs" />
     <Compile Include="Core\Steam\BBCode\State.cs" />
     <Compile Include="Core\Steam\Client.cs" />
-    <Compile Include="Core\StringBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -89,7 +90,7 @@
     </Compile>
     <Compile Include="UI\Components\BBCodePanel.cs" />
     <Compile Include="UI\Components\Container.cs" />
-    <Compile Include="UI\Components\MenuSpacer.cs" />
+    <Compile Include="UI\Components\WorkshopItem.cs" />
     <Compile Include="UI\Components\WorkspaceTree.xaml.cs">
       <DependentUpon>WorkspaceTree.xaml</DependentUpon>
     </Compile>
@@ -103,6 +104,7 @@
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Steam\BBCode\BBCode.cs" />
+    <Compile Include="UI\Components\ModInfoItem.cs" />
     <Compile Include="UI\Steam\Guard.xaml.cs">
       <DependentUpon>Guard.xaml</DependentUpon>
     </Compile>
@@ -196,6 +198,9 @@
     <Reference Include="MLib, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dirkster.MLib.1.0.10\lib\net4\MLib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
     </Reference>
     <Reference Include="MsgBox, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dirkster.MsgBox.1.4.2\lib\net451\MsgBox.dll</HintPath>
@@ -526,8 +531,10 @@
     <Resource Include="Assets\FileSystem\XML.png" />
     <Resource Include="Assets\FileSystem\Archive.png" />
     <Resource Include="Assets\FileSystem\Unknown.png" />
-    <Content Include="Assets\Vectors\Account.svg" />
+    <Resource Include="Assets\FileSystem\Workshop_Opened.png" />
+    <Resource Include="Assets\FileSystem\Workshop_Closed.png" />
     <Compile Include="Core\I18N.cs" />
+    <Resource Include="Assets\FileSystem\ModInfo.png" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />

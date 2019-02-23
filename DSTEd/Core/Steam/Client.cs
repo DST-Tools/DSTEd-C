@@ -43,7 +43,7 @@ namespace DSTEd.Core.Steam {
                     Thread.Sleep(1000);
                     //if (this.connected) {
                     //Logger.Warn("RUN");
-                        this.GetManager().RunCallbacks();
+                    this.GetManager().RunCallbacks();
                     //}
                 }
             });
@@ -67,8 +67,8 @@ namespace DSTEd.Core.Steam {
 
         public void Connect() {
             //if (!this.connected) {
-                Logger.Warn("CONNECT TRY");
-                this.GetClient().Connect();
+            Logger.Warn("CONNECT TRY");
+            this.GetClient().Connect();
             //}
         }
 
@@ -86,9 +86,9 @@ namespace DSTEd.Core.Steam {
 
         internal void Disconnect() {
             //if (!this.connected) {
-                Logger.Warn("DISCONNECT!");
-                this.connected = false;
-                this.GetClient().Disconnect();
+            Logger.Warn("DISCONNECT!");
+            this.connected = false;
+            this.GetClient().Disconnect();
             //}
         }
     }

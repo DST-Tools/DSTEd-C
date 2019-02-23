@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -11,10 +12,12 @@ using DSTEd.Core.IO;
 namespace DSTEd.UI.Components {
     public partial class WorkspaceTree : UserControl {
         private Core.DSTEd core = null;
+        private Func<FileNode, TreeViewItem> callback = null;
 
-        public WorkspaceTree(FileSystem files, Core.DSTEd core) {
+        public WorkspaceTree(FileSystem files, Core.DSTEd core, Func<FileNode, TreeViewItem> callback) {
             InitializeComponent();
 
+            this.callback = callback;
             this.core = core;
             this.tree.Items.Clear();
 
@@ -25,10 +28,16 @@ namespace DSTEd.UI.Components {
 
         private TreeViewItem Render(FileNode files, TreeView container) {
             TreeViewItem item = new TreeViewItem { Header = files.GetName() };
+            item.FontWeight = FontWeights.Normal;
+
+            if (files.GetName().StartsWith("workshop-")) {
+                item = callback?.Invoke(files);
+            }
 
             if (files.HasSubdirectories()) {
                 foreach (FileNode directory in files.GetSubdirectories()) {
                     TreeViewItem root = this.Render(directory, null);
+                    root.FontWeight = FontWeights.Normal;
 
                     if (container != null) {
                         container.Items.Add(root);
@@ -41,6 +50,10 @@ namespace DSTEd.UI.Components {
             if (files.HasFiles()) {
                 foreach (FileInfo file in files.GetFiles()) {
                     TreeViewItem entry = new TreeViewItem { Header = file.Name };
+
+                    if (file.Name == "modinfo.lua") {
+                        entry = new ModInfoItem { Header = "ModInfo" }; // @ToDo need Translation(?)
+                    }
 
                     entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e) {
                         Logger.Info("ContextMenu: " + file.FullName);

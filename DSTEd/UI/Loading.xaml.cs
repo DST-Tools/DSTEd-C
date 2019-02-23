@@ -48,7 +48,7 @@ namespace DSTEd.UI {
             this.Show();
 
             int complete = this.workers.Count;
-            int position = -1;
+            int position = 0;
 
             Task.Run(() => {
                 Logger.Info("[Loading] working... " + position + " / " + complete + " (Run: " + (this.IsRunning() ? "Yes" : "No") + ")");

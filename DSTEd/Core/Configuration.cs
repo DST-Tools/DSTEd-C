@@ -21,7 +21,7 @@ namespace DSTEd.Core {
 
         public void Load() {
             try {
-                using(StreamReader reader = new StreamReader(this.GetFullPath())) {
+                using (StreamReader reader = new StreamReader(this.GetFullPath())) {
                     this.data = JsonConvert.DeserializeObject<Dictionary<string, string>>(reader.ReadToEnd());
                 }
             } catch (IOException) {
@@ -43,7 +43,7 @@ namespace DSTEd.Core {
         }
 
         public string Get(string name, string defaults) {
-            if(!this.data.ContainsKey(name)) {
+            if (!this.data.ContainsKey(name)) {
                 return defaults;
             }
 

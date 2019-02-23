@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using DSTEd.Core.Klei;
-using DSTEd.Core.Klei.Games;
-using DSTEd.UI;
 using Indieteur.SAMAPI;
 using SteamKit2;
 

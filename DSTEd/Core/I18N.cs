@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Text;
-using System.Threading;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using Newtonsoft.Json;
@@ -28,10 +24,11 @@ namespace DSTEd.Core {
         public override object ProvideValue(IServiceProvider serviceProvider) {
             var service = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
 
-            if (service == null)
+            if (service == null) {
                 return null;
-			
-           return I18N.__(_key);
+            }
+
+            return I18N.__(_key);
         }
     }
 
@@ -42,11 +39,11 @@ namespace DSTEd.Core {
         public static void SetLanguage(string code) {
             if (code == "en_US") {
                 return;
-            } 
+            }
 
             I18N.code = code;
 
-            using ( StreamReader reader = new StreamReader(string.Format("{0}/Languages/{1}.json", AppDomain.CurrentDomain.BaseDirectory, I18N.code))) {
+            using (StreamReader reader = new StreamReader(string.Format("{0}/Languages/{1}.json", AppDomain.CurrentDomain.BaseDirectory, I18N.code))) {
                 I18N.translations = JsonConvert.DeserializeObject<Dictionary<string, object>>(reader.ReadToEnd());
             }
         }

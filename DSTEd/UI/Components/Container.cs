@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace DSTEd.UI.Components {
     public class Container : Panel {
+        public Container() : base() {
+            this.Background = new SolidColorBrush(Colors.Transparent);
+        }
+
         public HorizontalAlignment HorizontalContentAlignment {
             get {
                 return (HorizontalAlignment) GetValue(HorizontalContentAlignmentProperty);

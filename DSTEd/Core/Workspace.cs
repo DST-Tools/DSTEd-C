@@ -82,6 +82,19 @@ namespace DSTEd.Core {
             return visible;
         }
 
+        public Document GetDocument(string path) {
+            Document existing = null;
+
+            foreach (KeyValuePair<string, Document> entry in this.documents) {
+                if (entry.Key == path || entry.Value.GetFile() == path) {
+                    existing = entry.Value;
+                    break;
+                }
+            }
+
+            return existing;
+        }
+
         public void OpenDocument(string file) {
             if (this.ExistingDocument(file)) {
                 this.ShowDocument(file);
@@ -94,6 +107,10 @@ namespace DSTEd.Core {
                 case ".tex":
                     type = Document.Editor.TEXTURE;
                     break;
+            }
+
+            if (file.EndsWith("modinfo.lua")) {
+                type = Document.Editor.MODINFO;
             }
 
             Document document = new Document(this.GetCore(), type);
@@ -143,7 +160,6 @@ namespace DSTEd.Core {
         public void OnChanged(Document document, Document.State state) {
             Logger.Info("[Workspace] Changed document: " + document.GetName() + " >> " + state);
 
-            // Forward to IDE-UI
             this.core.GetIDE().GetMenu().Update();
             this.core.GetIDE().OnChanged(document, state);
         }

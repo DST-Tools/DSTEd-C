@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
@@ -16,6 +17,8 @@ namespace DSTEd.Core.Contents.Editors {
             this.SyntaxHighlighting = LoadSyntax(Path.GetExtension(this.document.GetFile()));
             this.Text = document.GetFileContent();
             this.Document.UpdateFinished += new EventHandler(OnChange);
+
+            new XmlFoldingStrategy().UpdateFoldings(FoldingManager.Install(this.TextArea), this.Document);
         }
 
         private IHighlightingDefinition LoadSyntax(string extension) {

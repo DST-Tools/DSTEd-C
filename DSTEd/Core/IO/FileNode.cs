@@ -42,7 +42,5 @@ namespace DSTEd.Core.IO {
         public bool HasFiles() {
             return this.files.Count > 0;
         }
-
-
     }
 }

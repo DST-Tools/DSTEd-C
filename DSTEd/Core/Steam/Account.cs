@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -41,7 +40,7 @@ namespace DSTEd.Core.Steam {
             Logger.Info("STEAM_KEY", GetKey());
             Logger.Info("STEAM_HASH", GetHash());
 
-            this.GetClient().GetManager().Subscribe<SteamUser.LoggedOnCallback>(delegate(SteamUser.LoggedOnCallback c) {
+            this.GetClient().GetManager().Subscribe<SteamUser.LoggedOnCallback>(delegate (SteamUser.LoggedOnCallback c) {
                 Logger.Info("LoggedOnCallback");
                 Console.WriteLine("{0} / {1}", c.Result, c.ExtendedResult);
 
@@ -81,25 +80,25 @@ namespace DSTEd.Core.Steam {
                 callback(null, this.logged_in);
             });
 
-            this.GetClient().GetManager().Subscribe<SteamUser.LoginKeyCallback>(delegate(SteamUser.LoginKeyCallback c) {
+            this.GetClient().GetManager().Subscribe<SteamUser.LoginKeyCallback>(delegate (SteamUser.LoginKeyCallback c) {
                 Logger.Info("LoginKeyCallback");
                 Properties.Settings.Default.STEAM_KEY = c.LoginKey;
                 this.GetClient().GetUserHandler().AcceptNewLoginKey(c);
                 this.GetClient().GetUserHandler().LogOff();
             });
 
-            this.GetClient().GetManager().Subscribe<SteamUser.LoggedOffCallback>(delegate(SteamUser.LoggedOffCallback c) {
+            this.GetClient().GetManager().Subscribe<SteamUser.LoggedOffCallback>(delegate (SteamUser.LoggedOffCallback c) {
                 Console.WriteLine($"LoggedOffCallback - {c.Result}");
                 this.GetClient().Disconnect();
                 this.logged_in = false;
                 callback(null, this.logged_in);
             });
 
-            this.GetClient().GetManager().Subscribe<SteamUser.AccountInfoCallback>(delegate(SteamUser.AccountInfoCallback c) {
+            this.GetClient().GetManager().Subscribe<SteamUser.AccountInfoCallback>(delegate (SteamUser.AccountInfoCallback c) {
                 Console.WriteLine($"AccountInfoCallback - {c.AccountFlags} {c.PersonaName} {c.CountAuthedComputers}");
             });
 
-            this.GetClient().GetManager().Subscribe<SteamUser.UpdateMachineAuthCallback>(delegate(SteamUser.UpdateMachineAuthCallback c) {
+            this.GetClient().GetManager().Subscribe<SteamUser.UpdateMachineAuthCallback>(delegate (SteamUser.UpdateMachineAuthCallback c) {
                 Console.WriteLine("UpdateMachineAuthCallback");
 
                 using (var sha = SHA1.Create()) {
