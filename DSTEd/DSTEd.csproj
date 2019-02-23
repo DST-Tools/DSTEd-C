@@ -58,6 +58,7 @@
     <Compile Include="Core\Contents\AvalonDocument.cs" />
     <Compile Include="Core\Contents\Editors\Code.cs" />
     <Compile Include="Core\Contents\Editors\ModInfo.cs" />
+    <Compile Include="Core\Contents\Editors\Properties.cs" />
     <Compile Include="Core\Contents\Editors\TEX.cs" />
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\IO\FileNode.cs" />
@@ -89,6 +90,7 @@
     </Compile>
     <Compile Include="UI\Components\BBCodePanel.cs" />
     <Compile Include="UI\Components\Container.cs" />
+    <Compile Include="UI\Components\TextureItem.cs" />
     <Compile Include="UI\Components\WorkshopItem.cs" />
     <Compile Include="UI\Components\WorkspaceTree.xaml.cs">
       <DependentUpon>WorkspaceTree.xaml</DependentUpon>
@@ -515,7 +517,6 @@
     <Resource Include="Assets\FileSystem\Folder_Opened.png" />
     <Resource Include="Assets\FileSystem\Image.png" />
     <Resource Include="Assets\FileSystem\LUA.png" />
-    <Resource Include="Assets\FileSystem\Bundle.png" />
     <Resource Include="Assets\FileSystem\Text.png" />
     <Resource Include="Assets\FileSystem\XML.png" />
     <Resource Include="Assets\FileSystem\Archive.png" />
@@ -524,6 +525,11 @@
     <Resource Include="Assets\FileSystem\Workshop_Closed.png" />
     <Compile Include="Core\I18N.cs" />
     <Resource Include="Assets\FileSystem\ModInfo.png" />
+    <Resource Include="Assets\Icons\ModInfo.png" />
+    <Resource Include="Assets\FileSystem\KTEX.png" />
+    <Resource Include="Assets\FileSystem\Bundle_Closed.png" />
+    <Resource Include="Assets\FileSystem\Bundle_Opened.png" />
+    <Resource Include="Assets\FileSystem\Assets.png" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />
     <Content Include="Librarys\System.Windows.Interactivity.dll" />

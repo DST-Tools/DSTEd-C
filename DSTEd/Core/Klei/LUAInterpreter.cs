@@ -23,59 +23,93 @@ namespace DSTEd.Core.LUA {
         public ModInfo(Table values) {
             try {
                 this.name = (string) values["name"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"name\" on ModInfo.");
+            }
 
             try {
                 this.version = (string) values["version"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"version\" on ModInfo.");
+            }
 
             try {
                 this.description = (string) values["description"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"description\" on ModInfo.");
+            }
 
             try {
                 this.author = (string) values["author"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"author\" on ModInfo.");
+            }
 
             try {
                 this.forumthread = (string) values["forumthread"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"forumthread\" on ModInfo.");
+            }
 
             try {
                 this.api_version = (int) values["api_version"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"api_version\" on ModInfo.");
+            }
 
             try {
                 this.dont_starve_compatible = (bool) values["dont_starve_compatible"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"dont_starve_compatible\" on ModInfo.");
+            }
 
             try {
                 this.all_clients_require_mod = (bool) values["all_clients_require_mod"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"all_clients_require_mod\" on ModInfo.");
+            }
 
             try {
                 this.dst_compatible = (bool) values["dst_compatible"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"dst_compatible\" on ModInfo.");
+            }
+
+            try {
+                this.reign_of_giants_compatible = (bool) values["reign_of_giants_compatible"];
+            } catch (Exception) {
+                Logger.Warn("Can't find \"reign_of_giants_compatible\" on ModInfo.");
+            }
 
             try {
                 this.standalone = (bool) values["standalone"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"standalone\" on ModInfo.");
+            }
 
             try {
-                this.restart_require = (bool) values["restart_require "];
-            } catch (Exception) { }
+                this.restart_require = (bool) values["restart_require"];
+            } catch (Exception) {
+                Logger.Warn("Can't find \"restart_require\" on ModInfo.");
+            }
 
             try {
                 this.icon_atlas = (string) values["icon_atlas"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"icon_atlas\" on ModInfo.");
+            }
 
             try {
                 this.icon = (string) values["icon"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"icon\" on ModInfo.");
+            }
 
             try {
                 this.server_filter_tags = (string[]) values["server_filter_tags"];
-            } catch (Exception) { }
+            } catch (Exception) {
+                Logger.Warn("Can't find \"server_filter_tags\" on ModInfo.");
+            }
         }
 
         public void SetID(int id) {

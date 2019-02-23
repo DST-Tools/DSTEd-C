@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 using DSTEd.Core.Klei.KTEX;
 using DSTEd.UI.Components;
 
+/*
+ * http://dontstarveapi.com/tutorials/mod-files-and-structure/modicon-xml/
+ */
 namespace DSTEd.Core.Contents.Editors {
     public class TEX : Container {
         private Document document = null;
