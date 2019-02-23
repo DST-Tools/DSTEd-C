@@ -1,7 +1,19 @@
-# DSTEd-C
+# DSTEd (v2)
 C# reimplementation of DSTEd
 
-### Links, Disacusion & Community
+### Contributing
+If you wan't to contribute on DSTEd, feel free to fork the source.
+
+For a good communication about the implementation, please join our Discord-Server (https://discord.gg/7MgGxkB).
+
+For the development process in `C#`, we using `Visual Studio 2017 (Community Edition)`. You can download it directly from **Microsoft**: https://visualstudio.microsoft.com/de/downloads/
+
+### Contributors
+**Bizarrus** (Adrian Preuß, Germany)
+
+**Akarinnnnn**
+
+### Links, Discussion & Community
 **Website:** https://www.DSTEd.org/
 
 **Discord:** https://discord.gg/7MgGxkB
