@@ -64,7 +64,7 @@ namespace ktexlibwrap
 		RGBA^ GetImageArray(unsigned int pitch);
 		void clear();
 		void operator+=(RGBA src);
-		void operator[](RGBA src);
+		void operator[](int order);
 	private:
 		ktexlib::KTEXFileOperation::KTEX* native;
 	};

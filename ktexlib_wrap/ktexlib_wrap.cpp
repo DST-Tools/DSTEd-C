@@ -136,7 +136,7 @@ void ktexlibwrap::KTEX::operator+=(RGBA src)
 	native->PushRGBA(temp);
 }
 
-void ktexlibwrap::KTEX::operator[](RGBA src)
+void ktexlibwrap::KTEX::operator[](int i)
 {
-	throw gcnew System::NotImplementedException();
+	
 }
