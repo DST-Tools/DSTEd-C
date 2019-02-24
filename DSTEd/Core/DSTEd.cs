@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using DSTEd.Core.Klei.Games;
+using DSTEd.Core.Steam;
 using DSTEd.UI;
 
 namespace DSTEd.Core {
@@ -99,6 +100,19 @@ namespace DSTEd.Core {
 
             this.loading.Run("KLEI_MODS", delegate () {
                 Logger.Info("Load mods...");
+                return true;
+            });
+
+            this.loading.Run("STEAM_WORKSHOP", delegate () {
+                Logger.Info("Load mods...");
+
+                this.steam.GetWorkShop().GetPublishedMods(322330, delegate(WorkshopItem[] items) {
+                    Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
+
+                    for (int index = 0; index < items.Length; index++) {
+                        Logger.Info(items[index].ToString());
+                    }
+                });
                 return true;
             });
 
