@@ -76,7 +76,6 @@
     <Compile Include="Core\Steam\BBCode\Node.cs" />
     <Compile Include="Core\Steam\BBCode\NodeType.cs" />
     <Compile Include="Core\Steam\BBCode\State.cs" />
-    <Compile Include="Core\Steam\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -106,12 +105,6 @@
     </Compile>
     <Compile Include="Core\Steam\BBCode\BBCode.cs" />
     <Compile Include="UI\Components\ModInfoItem.cs" />
-    <Compile Include="UI\Steam\Guard.xaml.cs">
-      <DependentUpon>Guard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Steam\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Theme\Avalon\Menu\MenuKeys.cs" />
     <Compile Include="UI\Theme\Avalon\ResourceKeys.cs" />
     <Compile Include="UI\Theme\Dark.cs" />
@@ -247,6 +240,12 @@
       <HintPath>..\packages\SteamStorefrontAPI.1.2.6759.40399\lib\net461\SteamStorefrontAPI.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="SteamworksSharp.Native, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SteamworksSharp.Native.1.0.8\lib\net452\SteamworksSharp.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="SteamworksSharp.Native.Windows_x64, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SteamworksSharp.Native.Windows_x64.1.0.8\lib\net452\SteamworksSharp.Native.Windows_x64.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -374,14 +373,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Loading.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Steam\Guard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Steam\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

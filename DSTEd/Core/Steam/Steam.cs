@@ -11,11 +11,9 @@ namespace DSTEd.Core.Steam {
         private Account account = null;
         private Workshop workshop = null;
         private string path = null;
-        private Client client = null;
         private List<KleiGame> games = new List<KleiGame>();
 
         public Steam() {
-            this.client = new Client();
             this.software = new SteamAppsManager();
             this.account = new Account(this);
             this.workshop = new Workshop();
@@ -69,10 +67,6 @@ namespace DSTEd.Core.Steam {
             if (!this.ValidatePath(this.path) || this.path == null) {
                 //this.path = software.InstallDir;
             }
-        }
-
-        public Client GetClient() {
-            return this.client;
         }
 
         public String GetPath() {

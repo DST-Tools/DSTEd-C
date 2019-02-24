@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using DSTEd.Core.Klei.Games;
 using DSTEd.UI;
-using DSTEd.UI.Steam;
 
 namespace DSTEd.Core {
     public class DSTEd : System.Windows.Application {
@@ -13,7 +12,6 @@ namespace DSTEd.Core {
         private Loading loading = null;
         private Steam.Steam steam = null;
         private Configuration configuration = null;
-        private Login login = null;
 
         public DSTEd() {
             Logger.Info("Start DSTEd v" + GetVersion());
@@ -24,7 +22,6 @@ namespace DSTEd.Core {
             I18N.SetLanguage(this.GetLanguage());
 
             // Init classes
-            this.login = new Login(this);
             this.steam = new Steam.Steam();
             this.ide = new IDE(this);
             this.workspace = new Workspace(this);
@@ -107,10 +104,6 @@ namespace DSTEd.Core {
 
             this.loading.Start();
             this.Run();
-        }
-
-        public Login GetLogin() {
-            return this.login;
         }
 
         public IDE GetIDE() {
