@@ -516,6 +516,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="steam_appid.txt" />
     <Resource Include="Assets\Theme\Dark\DockAnchorableBottom.png" />
     <Resource Include="Assets\Theme\Dark\DockAnchorableLeft.png" />
     <Resource Include="Assets\Theme\Dark\DockAnchorableRight.png" />
@@ -602,11 +603,16 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if not exist "$(TargetDir)Languages" mkdir "$(TargetDir)Languages"
+    <PreBuildEvent>; Copying Language files
+if not exist "$(TargetDir)Languages" mkdir "$(TargetDir)Languages"
 XCOPY "$(ProjectDir)Languages\*.json" "$(TargetDir)Languages" /i /d /y
 
+; Copying external required Librarys
 if not exist "$(TargetDir)Librarys" mkdir "$(TargetDir)Librarys"
-XCOPY "$(ProjectDir)Librarys\*.dll" "$(TargetDir)Librarys" /i /d /y</PreBuildEvent>
+XCOPY "$(ProjectDir)Librarys\*.dll" "$(TargetDir)Librarys" /i /d /y
+
+; Move Steam-AppID to the root folder
+XCOPY "$(ProjectDir)steam_appid.txt" "$(TargetDir)" /i /d /y</PreBuildEvent>
   </PropertyGroup>
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths">
     <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
