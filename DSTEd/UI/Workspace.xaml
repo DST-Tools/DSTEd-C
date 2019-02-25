@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Core="clr-namespace:DSTEd.Core"
         mc:Ignorable="d"
-        Title="{Core:I18N_XAML Workspace}" Height="228" Width="500" Background="#FF2D2D30" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Disabled" Icon="/DSTEd;component/Assets/Logo.ico" WindowStyle="ThreeDBorderWindow">
+        Title="{Core:I18N_XAML Workspace}" Height="250" Width="500" Background="#FF2D2D30" BorderThickness="1" BorderBrush="#FFED5C2D" Margin="0" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ScrollViewer.VerticalScrollBarVisibility="Disabled" Icon="/DSTEd;component/Assets/Logo.ico" WindowStyle="ThreeDBorderWindow">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,47 +18,65 @@
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/TreeView.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/Menu.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/ToolTip.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/CheckBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Width="Auto" Height="Auto">
+    <Grid UseLayoutRounding="False" Grid.IsSharedSizeScope="True">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15" />
-            <ColumnDefinition Width="55" />
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="70" />
-            <ColumnDefinition Width="15" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <WrapPanel Background="#242426" Orientation="Vertical" Grid.ColumnSpan="5">
-            <Label Margin="10,10,0,0" Content="{Core:I18N_XAML Select a Workspace}" Foreground="#FFFFFF" FontSize="10" FontWeight="Bold" />
-            <Grid Margin="15,0,0,0">
+        <Grid Background="#FF242425">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Margin="10,10,0,0" Content="{Core:I18N_XAML 'Select a Workspace'}" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" />
+            <Grid Grid.Row="1" Margin="15,0,0,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Foreground="#FFFFFF" FontSize="9" Text="{Core:I18N_XAML 'DSTEd stores your projects in your installed game.'}" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#FFFFFF" FontSize="9" Text="{Core:I18N_XAML 'Please select your installed '}" />
-                <TextBlock Grid.Row="1" Grid.Column="1" Foreground="#FFFFFF" Margin="5,0,5,0" FontWeight="Bold" FontSize="9" Text="{Core:I18N_XAML 'Dont Starve Together'}" />
-                <TextBlock Grid.Row="1" Grid.Column="2" Foreground="#FFFFFF" FontSize="9" Text="{Core:I18N_XAML ' directory.'}" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Foreground="#FFFFFF" FontSize="12" Text="{Core:I18N_XAML 'DSTEd stores your projects in your installed game.'}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#FFFFFF" FontSize="12" Text="{Core:I18N_XAML 'Please select your installed'}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Foreground="#FFFFFF" FontWeight="Bold" FontSize="12" Text="{Core:I18N_XAML 'Dont Starve Together'}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Foreground="#FFFFFF" FontSize="12" Text="{Core:I18N_XAML ' directory.'}" />
             </Grid>
-        </WrapPanel>
-        <Label Content="{Core:I18N_XAML Workspace:}" Foreground="#FFFFFF" FontSize="9" Grid.Row="2" Grid.Column="1" />
-        <TextBox Text="" Name="path" Grid.Row="2" Grid.Column="2" />
-        <Button Content="{Core:I18N_XAML Browse}" Grid.Row="2" Grid.Column="3" Click="OnBrowse" />
-        <CheckBox Name="save" Grid.Row="4" Grid.Column="2" Content="{Core:I18N_XAML Use this as the default and do not ask again.}" />
-        <Button Grid.Row="5" Grid.Column="2" Content="{Core:I18N_XAML OK}" Click="OnSave" HorizontalAlignment="Center" />
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="10,10,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Content="{Core:I18N_XAML 'Workspace:'}" Foreground="#FFFFFF" FontSize="12" />
+            <TextBox Grid.Column="1" Text="" Name="path" />
+            <Button Grid.Column="2" Content="{Core:I18N_XAML 'Browse'}" Click="OnBrowse" />
+            <CheckBox Grid.Row="2" Margin="0,5,0,0" Grid.Column="1" Grid.ColumnSpan="2" Name="save" Content="{Core:I18N_XAML 'Use this as the default and do not ask again.'}" />
+        </Grid>
+
+        <DockPanel x:Name="buttons" Grid.Row="2" Background="#FF242425">
+            <WrapPanel Margin="10,10,10,10"  UseLayoutRounding="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="{Core:I18N_XAML 'OK'}" Click="OnSave" HorizontalAlignment="Center" />
+            </WrapPanel>
+        </DockPanel>
     </Grid>
 </Window>
