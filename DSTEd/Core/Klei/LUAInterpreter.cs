@@ -19,8 +19,14 @@ namespace DSTEd.Core.LUA {
         private bool standalone;
         private bool restart_require;
         private string[] server_filter_tags;
+        private Boolean is_broken = false;
 
         public ModInfo(Table values) {
+            if (values == null) {
+                this.is_broken = true;
+                return;
+            }
+
             try {
                 this.name = (string) values["name"];
             } catch (Exception) {
@@ -112,6 +118,10 @@ namespace DSTEd.Core.LUA {
             }
         }
 
+        public Boolean IsBroken() {
+            return this.is_broken;
+        }
+
         public void SetID(int id) {
             this.id = id;
         }
@@ -183,14 +193,26 @@ namespace DSTEd.Core.LUA {
     }
 
     class LUAInterpreter {
-        public static Script Run(string lua) {
-            Script script = new Script();
-            script.DoString(lua);
-            return script;
+        public static Script Run(string lua, Action<SyntaxErrorException> callback) {
+            try {
+                Script script = new Script();
+                script.DoString(lua);
+                return script;
+            } catch (SyntaxErrorException e) {
+                callback?.Invoke(e);
+            }
+
+            return null;
         }
 
-        public static ModInfo GetModInfo(string lua) {
-            return new ModInfo(LUAInterpreter.Run(lua).Globals);
+        public static ModInfo GetModInfo(string lua, Action<SyntaxErrorException> callback) {
+            Script result = LUAInterpreter.Run(lua, callback);
+
+            if(result == null) {
+                return new ModInfo(null);
+            }
+
+            return new ModInfo(result.Globals);
         }
     }
 }

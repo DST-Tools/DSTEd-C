@@ -62,7 +62,7 @@ namespace DSTEd.Core {
             this.file = file;
 
             try {
-                using (StreamReader reader = new StreamReader(this.GetFile())) {
+                using (StreamReader reader = new StreamReader(this.GetFile(), true)) {
                     this.file_content = reader.ReadToEnd();
                 }
             } catch (IOException) {
