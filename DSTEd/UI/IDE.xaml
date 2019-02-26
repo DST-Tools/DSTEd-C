@@ -25,6 +25,7 @@
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/ComboBox.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/TreeView.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/Menu.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/CheckBox.xaml"/>
                 <!--<ResourceDictionary Source="/DSTEd;component/UI/Theme/ProgressBar.xaml"/>-->
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/ToolTip.xaml"/>
             </ResourceDictionary.MergedDictionaries>
