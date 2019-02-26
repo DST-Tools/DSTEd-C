@@ -79,6 +79,29 @@ namespace DSTEd.Core.Contents.Editors {
             this.AddChild(this.container);
         }
 
+        public void Disabled(string message) {
+            this.container.RowDefinitions.Add(new RowDefinition());
+
+            Grid disabled = new Grid();
+            Grid.SetColumn(disabled, 0);
+            Grid.SetColumnSpan(disabled, 2);
+            Grid.SetRow(disabled, row++);
+
+            Label title = new Label();
+            title.Foreground = new SolidColorBrush(Colors.White);
+            title.Background = new SolidColorBrush(Color.FromArgb(50, 0, 0, 0));
+            title.HorizontalAlignment = HorizontalAlignment.Center;
+            title.FontSize = 12;
+            title.Padding = new Thickness(20, 20, 20, 20);
+            title.Margin = new Thickness(0, 20, 0, 0);
+            title.Content = message;
+            Grid.SetColumn(title, 1);
+            Grid.SetRow(title, 0);
+            disabled.Children.Add(title);
+
+            this.container.Children.Add(disabled);
+        }
+
         private void CreateHeader() {
             this.container.RowDefinitions.Add(new RowDefinition());
 
@@ -130,7 +153,6 @@ namespace DSTEd.Core.Contents.Editors {
             Grid.SetColumnSpan(description, 2);
             Grid.SetRow(description, 1);
             header.Children.Add(description);
-
 
             this.container.Children.Add(header);
         }
@@ -187,7 +209,7 @@ namespace DSTEd.Core.Contents.Editors {
                     this.AddLink(name, (string) value);
                     break;
                 case Type.STRINGLIST:
-                    this.AddList(name, (string[]) value);
+                    this.AddList(name, (List<string>) value);
                     break;
                 case Type.YESNO:
                     this.AddBoolean(name, (Boolean) value, I18N.__("Yes"), I18N.__("No"));
@@ -289,7 +311,7 @@ namespace DSTEd.Core.Contents.Editors {
             this.container.Children.Add(input);
         }
 
-        private void AddList(string name, string[] value) {
+        private void AddList(string name, List<string> value) {
             this.AddInput(name, value == null ? "" : string.Join(", ", value));
         }
 

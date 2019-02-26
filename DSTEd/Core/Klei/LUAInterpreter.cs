@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MoonSharp.Interpreter;
 
 namespace DSTEd.Core.LUA {
@@ -18,104 +19,84 @@ namespace DSTEd.Core.LUA {
         private bool dst_compatible;
         private bool standalone;
         private bool restart_require;
-        private string[] server_filter_tags;
+        private List<string> server_filter_tags;
         private Boolean is_broken = false;
 
+        /*
+         * @ToDo
+         * - client_only_mod (bool)
+         * - configuration_options (dynamic)
+         * - priority (int)
+         * - dst_api_version (int)
+         * - shipwrecked_compatible (bool)
+         * 
+         */
         public ModInfo(Table values) {
             if (values == null) {
                 this.is_broken = true;
                 return;
             }
 
-            try {
-                this.name = (string) values["name"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"name\" on ModInfo.");
-            }
+            foreach(DynValue key in values.Keys) {
+                switch (key.String) {
+                    case "name":
+                        this.name = (string) values[key.String];
+                        break;
+                    case "version":
+                        this.version = (string) values[key.String];
+                        break;
+                    case "description":
+                        this.description = (string) values[key.String];
+                        break;
+                    case "author":
+                        this.author = (string) values[key.String];
+                    break;
+                    case "forumthread":
+                        this.forumthread = (string) values[key.String];
+                    break;
+                    case "api_version":
+                        this.api_version = Convert.ToInt32((double) values[key.String]);
+                    break;
+                    case "dont_starve_compatible":
+                        this.dont_starve_compatible = (Boolean) values[key.String];
+                    break;
+                    case "all_clients_require_mod":
+                        this.all_clients_require_mod = (Boolean) values[key.String];
+                    break;
+                    case "dst_compatible":
+                        this.dst_compatible = (Boolean) values[key.String];
+                    break;
+                    case "reign_of_giants_compatible":
+                        this.reign_of_giants_compatible = (Boolean) values[key.String];
+                    break;
+                    case "standalone":
+                        this.standalone = (Boolean) values[key.String];
+                    break;
+                    case "restart_require":
+                        this.restart_require = (Boolean) values[key.String];
+                    break;
+                    case "icon_atlas":
+                        this.icon_atlas = (string) values[key.String];
+                    break;
+                    case "icon":
+                        this.icon = (string) values[key.String];
+                    break;
+                    case "server_filter_tags":
+                        List<string> list = new List<string>();
+                        Table entries = (Table) values[key.String];
 
-            try {
-                this.version = (string) values["version"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"version\" on ModInfo.");
-            }
+                        foreach (TablePair a in entries.Pairs) {
+                            list.Add((string) a.Value.String);
+                        }
 
-            try {
-                this.description = (string) values["description"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"description\" on ModInfo.");
+                        this.server_filter_tags = list;
+                    break;
+                   /* default:
+                        Logger.Debug("Unknown LUA-Variable: " + key.String);
+                        break;*/
+                }
             }
-
-            try {
-                this.author = (string) values["author"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"author\" on ModInfo.");
-            }
-
-            try {
-                this.forumthread = (string) values["forumthread"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"forumthread\" on ModInfo.");
-            }
-
-            try {
-                this.api_version = (int) values["api_version"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"api_version\" on ModInfo.");
-            }
-
-            try {
-                this.dont_starve_compatible = (bool) values["dont_starve_compatible"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"dont_starve_compatible\" on ModInfo.");
-            }
-
-            try {
-                this.all_clients_require_mod = (bool) values["all_clients_require_mod"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"all_clients_require_mod\" on ModInfo.");
-            }
-
-            try {
-                this.dst_compatible = (bool) values["dst_compatible"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"dst_compatible\" on ModInfo.");
-            }
-
-            try {
-                this.reign_of_giants_compatible = (bool) values["reign_of_giants_compatible"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"reign_of_giants_compatible\" on ModInfo.");
-            }
-
-            try {
-                this.standalone = (bool) values["standalone"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"standalone\" on ModInfo.");
-            }
-
-            try {
-                this.restart_require = (bool) values["restart_require"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"restart_require\" on ModInfo.");
-            }
-
-            try {
-                this.icon_atlas = (string) values["icon_atlas"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"icon_atlas\" on ModInfo.");
-            }
-
-            try {
-                this.icon = (string) values["icon"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"icon\" on ModInfo.");
-            }
-
-            try {
-                this.server_filter_tags = (string[]) values["server_filter_tags"];
-            } catch (Exception) {
-                Logger.Warn("Can't find \"server_filter_tags\" on ModInfo.");
-            }
+            
         }
 
         public Boolean IsBroken() {
@@ -187,7 +168,7 @@ namespace DSTEd.Core.LUA {
             return this.restart_require;
         }
 
-        public string[] GetTags() {
+        public List<string> GetTags() {
             return this.server_filter_tags;
         }
     }

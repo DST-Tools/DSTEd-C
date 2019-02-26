@@ -28,9 +28,9 @@ namespace DSTEd.Core.Contents.Editors {
         }
 
         private void CreatePropertiesEditor() {
-            try {
-                Properties properties = new Properties();
+            Properties properties = new Properties();
 
+            try {
                 LUA.ModInfo info = LUAInterpreter.GetModInfo(this.document.GetFileContent(), delegate(SyntaxErrorException e) {
                     throw e;
                 });
@@ -63,12 +63,6 @@ namespace DSTEd.Core.Contents.Editors {
                 properties.AddEntry("standalone", I18N.__("Standalone"), Properties.Type.YESNO, info.ModsAllowed());
                 properties.AddEntry("all_clients_require_mod", I18N.__("All Clients Required"), Properties.Type.YESNO, info.IsRequired());
                 properties.AddEntry("restart_require", I18N.__("Restart Required"), Properties.Type.YESNO, info.MustRestart());
-
-                TabItem item = new TabItem();
-                item.Header = I18N.__("Editor");
-                item.Content = properties;
-
-                this.AddChild(item);
             } catch(SyntaxErrorException e) {
                 string message = e.DecoratedMessage;
 
@@ -85,7 +79,16 @@ namespace DSTEd.Core.Contents.Editors {
                 Dialog.Open("The file is broken:\nmodinfo.lua on " + message + "\n\nPlease fix the problem. The ModInfo editor is deactivated and the view is changed to Code Editor.", I18N.__("Problem - Broken file"), Dialog.Buttons.OK, Dialog.Icon.Error, delegate (Dialog.Result result) {
                     return true;
                 });
+
+                properties.Disabled(string.Format(I18N.__("The ModInfo editor is deactivated due to an error.\n\n\n{0}"), message));
+                this.SelectedIndex = 1;
             }
+
+            TabItem item = new TabItem();
+            item.Header = I18N.__("Editor");
+            item.Content = properties;
+
+            this.AddChild(item);
         }
 
         private void CreateSourceEditor() {
