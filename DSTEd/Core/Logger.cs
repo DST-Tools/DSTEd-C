@@ -34,5 +34,9 @@ namespace DSTEd.Core {
         public static void Warn(params object[] args) {
             Call("WARN", args);
         }
+
+        public static void Debug(params object[] args) {
+            Call("DEBUG", args);
+        }
     }
 }
