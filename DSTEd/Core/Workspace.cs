@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Windows;
-using DSTEd.Core;
 
 namespace DSTEd.Core {
     public class Workspace {
@@ -11,6 +9,7 @@ namespace DSTEd.Core {
         private DSTEd core = null;
         private string path = "C:\\Program Files\\";
         private Dictionary<string, Document> documents = null;
+        private Document welcome = null;
 
         public Workspace(DSTEd core) {
             this.core = core;
@@ -49,9 +48,51 @@ namespace DSTEd.Core {
         }
 
         public void CreateWelcome() {
-            Document welcome = new Document(this.core, Document.Editor.NONE);
-            welcome.SetTitle(I18N.__("Welcome"));
-            this.AddDocument(welcome);
+            this.welcome = new Document(this.core, Document.Editor.NONE);
+            this.welcome.SetTitle(I18N.__("Welcome"));
+            this.welcome.SetCloseable(false);
+            this.AddDocument(this.welcome);
+        }
+
+        public Boolean HasWelcome() {
+            Boolean existing = false;
+
+            foreach (KeyValuePair<string, Document> entry in this.documents) {
+                if (entry.Value == this.welcome) {
+                    existing = true;
+                    break;
+                }
+            }
+
+            return existing;
+        }
+
+        public Boolean ToggleWelcome() {
+            Boolean visible = false;
+
+            if (this.HasWelcome()) {
+                visible = false;
+                this.RemoveDocument(this.welcome);
+            } else {
+                visible = true;
+                this.AddDocument(this.welcome);
+                this.core.GetIDE().SetActiveDocument(this.welcome);
+            }
+
+            return visible;
+        }
+
+        public Document GetDocument(string path) {
+            Document existing = null;
+
+            foreach (KeyValuePair<string, Document> entry in this.documents) {
+                if (entry.Key == path || entry.Value.GetFile() == path) {
+                    existing = entry.Value;
+                    break;
+                }
+            }
+
+            return existing;
         }
 
         public void OpenDocument(string file) {
@@ -66,6 +107,10 @@ namespace DSTEd.Core {
                 case ".tex":
                     type = Document.Editor.TEXTURE;
                     break;
+            }
+
+            if (file.EndsWith("modinfo.lua")) {
+                type = Document.Editor.MODINFO;
             }
 
             Document document = new Document(this.GetCore(), type);
@@ -96,16 +141,26 @@ namespace DSTEd.Core {
             return existing;
         }
 
+        public void RemoveDocument(Document document) {
+            document.Remove();
+            this.documents.Remove(document.GetHash());
+        }
+
         public void AddDocument(Document document) {
             document.OnChange(this.OnChanged);
-            this.documents.Add(document.GetHash(), document);
-            document.Init();
+
+            if (this.documents.ContainsKey(document.GetHash())) {
+                this.core.GetIDE().SetActiveDocument(document);
+            } else {
+                this.documents.Add(document.GetHash(), document);
+                document.Init();
+            }
         }
 
         public void OnChanged(Document document, Document.State state) {
             Logger.Info("[Workspace] Changed document: " + document.GetName() + " >> " + state);
 
-            // Forward to IDE-UI
+            this.core.GetIDE().GetMenu().Update();
             this.core.GetIDE().OnChanged(document, state);
         }
 

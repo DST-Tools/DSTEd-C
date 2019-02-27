@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using DSTEd.Core;
 using DSTEd.Core.Contents;
 using DSTEd.Core.IO;
-using DSTEd.Core.Klei;
 using DSTEd.UI.Components;
 using DSTEd.UI.Theme;
 using Xceed.Wpf.AvalonDock;
@@ -24,10 +22,18 @@ namespace DSTEd.UI {
             this.Closing += this.IDE_Closing;
         }
 
+        public void UpdateWelcome(bool state) {
+            this.VIEW_WELCOME.IsChecked = state;
+        }
+
         public void Init() {
             string path = this.GetCore().GetSteam().GetGame().GetPath();
-            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore());
-            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), this.GetCore());
+            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore(), delegate (FileNode file) {
+                return new WorkshopItem(this.GetCore(), file);
+            });
+
+            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), this.GetCore(), null);
+            this.menu.Init();
         }
 
         public System.Windows.Controls.MenuItem GetTools() {
@@ -38,12 +44,20 @@ namespace DSTEd.UI {
             return this.menu;
         }
 
+        public Boolean IsMenuAvailable() {
+            return this.menu != null;
+        }
+
         public Core.DSTEd GetCore() {
             return this.core;
         }
 
         private void OnLayoutRootPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             var activeContent = ((LayoutRoot) sender).ActiveContent;
+
+            if (this.IsMenuAvailable()) {
+                this.GetMenu().Update();
+            }
 
             if (e.PropertyName == "ActiveContent") {
                 Logger.Info(string.Format("ActiveContent-> {0}", activeContent));
@@ -58,27 +72,17 @@ namespace DSTEd.UI {
 
         }
 
-        private void OnShowWinformsWindow(object sender, RoutedEventArgs e) {
-
-        }
-        
-        private void OnShowToolWindow1(object sender, RoutedEventArgs e) {
-
-        }
-
         private void dockManager_DocumentClosing(object sender, DocumentClosingEventArgs e) {
             Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                this.GetMenu().Update();
+
                 if (result == Dialog.Result.Yes) {
                     return true;
                 }
-                // @ToDo check closing document to fire REMOVED event
+
                 e.Cancel = true;
                 return true;
             });
-        }
-
-        private void OnDumpToConsole(object sender, RoutedEventArgs e) {
-
         }
 
         private void OnReloadManager(object sender, RoutedEventArgs e) {
@@ -98,6 +102,8 @@ namespace DSTEd.UI {
 
         private void OnToolWindow1Hiding(object sender, System.ComponentModel.CancelEventArgs e) {
             Dialog.Open("Are you sure you want to close this tool?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+                this.GetMenu().Update();
+
                 if (result == Dialog.Result.Yes) {
                     return true;
                 }
@@ -153,9 +159,21 @@ namespace DSTEd.UI {
                     }
                     break;
                 case Document.State.REMOVED:
-                    // @ToDo
+                    foreach (LayoutDocument entry in this.editors.Children) {
+                        if (entry.GetType() == typeof(AvalonDocument)) {
+                            AvalonDocument doc = (AvalonDocument) entry;
+
+                            if (doc.GetDocument() == document) {
+                                this.editors.Children.Remove(doc);
+                                this.GetMenu().Update();
+                                break;
+                            }
+                        }
+                    }
                     break;
             }
+
+            this.GetMenu().Update();
         }
 
         private void IDE_Closing(object sender, System.ComponentModel.CancelEventArgs e) {

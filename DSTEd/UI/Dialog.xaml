@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Component="clr-namespace:DSTEd.UI.Components"
         mc:Ignorable="d"
-        Title="Dialog" Icon="/DSTEd;component/Assets/Logo.ico" Height="200" Width="400" Background="#FF303030" BorderBrush="#FFF15F1B" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Dialog" Icon="/DSTEd;component/Assets/Logo.ico" MinHeight="150" Height="150" Width="400" Background="#FF303030" BorderBrush="#FFF15F1B" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" VerticalContentAlignment="Stretch" SizeToContent="Height">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Grid.IsSharedSizeScope="True" UseLayoutRounding="False">
+    <Grid UseLayoutRounding="False" Grid.IsSharedSizeScope="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="1*"/>
@@ -32,13 +32,15 @@
             <RowDefinition/>
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
-        <Image Name="icon" />
-        <Label Name="title" Content="Title" Foreground="White" FontWeight="Bold" FontSize="12" Grid.Column="1" />
-        <Label Name="message" Content="Message" Foreground="White" FontSize="10" Grid.Row="1" Grid.Column="1" />
-        <Component:Container HorizontalContentAlignment="Center" x:Name="buttons" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#FF242425">
-            <Button Name="button_left" />
-            <Button Name="button_middle" />
-            <Button Name="button_right" />
-        </Component:Container>
+        <Image Name="icon" Grid.RowSpan="2" Margin="25,25,10,20" VerticalAlignment="Top" />
+        <Label Name="title" Content="Title" Foreground="White" FontWeight="Bold" FontSize="16" Grid.Column="1" Margin="0,20,20,0" />
+        <TextBlock Name="message" TextWrapping="Wrap" Text="Message" Foreground="White" FontSize="12" Grid.Row="1" Grid.Column="1" Margin="5,0,20,20" />
+        <DockPanel x:Name="buttons" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#FF242425">
+            <WrapPanel UseLayoutRounding="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="button_left" />
+                <Button Name="button_middle" />
+                <Button Name="button_right" />
+            </WrapPanel>
+        </DockPanel>
     </Grid>
 </Window>

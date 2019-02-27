@@ -25,6 +25,7 @@
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/ComboBox.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/TreeView.xaml"/>
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/Menu.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/CheckBox.xaml"/>
                 <!--<ResourceDictionary Source="/DSTEd;component/UI/Theme/ProgressBar.xaml"/>-->
                 <ResourceDictionary Source="/DSTEd;component/UI/Theme/ToolTip.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -85,7 +86,9 @@
                 <MenuItem Name="SEARCH_FIND" Header="{Core:I18N_XAML Find...}" IsEnabled="False" Click="OnMenu" />
                 <MenuItem Name="SEARCH_FIND_NEXT" Header="{Core:I18N_XAML Find Next}" IsEnabled="False" Click="OnMenu" />
             </MenuItem>
-            <MenuItem Name="VIEW" Header="{Core:I18N_XAML View}" Grid.Column="3" Click="OnMenu" />
+            <MenuItem Name="VIEW" Header="{Core:I18N_XAML View}" Grid.Column="3">
+                <MenuItem Name="VIEW_WELCOME" Header="{Core:I18N_XAML Welcome}" Click="OnMenu" IsCheckable="true" IsChecked="False" />
+            </MenuItem>
             <MenuItem Header="{Core:I18N_XAML Debug}" Grid.Column="4">
                 <MenuItem Name="DEBUG_RUN_DST" Header="{Core:I18N_XAML Run DST}" Click="OnMenu" />
             </MenuItem>

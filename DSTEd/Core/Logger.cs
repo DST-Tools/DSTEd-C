@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 
 namespace DSTEd.Core {
     public static class Logger {
         public static void Call(string type, object[] args) {
             string[] parameters = new string[args.Length];
 
-            for(int index = 0; index < args.Length; index++) {
+            for (int index = 0; index < args.Length; index++) {
                 object value = args[index];
 
                 if (value == null) {
@@ -34,6 +33,10 @@ namespace DSTEd.Core {
 
         public static void Warn(params object[] args) {
             Call("WARN", args);
+        }
+
+        public static void Debug(params object[] args) {
+            Call("DEBUG", args);
         }
     }
 }

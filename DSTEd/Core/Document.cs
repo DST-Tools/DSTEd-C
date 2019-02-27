@@ -15,7 +15,8 @@ namespace DSTEd.Core {
         public enum Editor {
             NONE,
             CODE,
-            TEXTURE
+            TEXTURE,
+            MODINFO
         }
 
         private string title = null;
@@ -25,6 +26,7 @@ namespace DSTEd.Core {
         private object content = null;
         private string file_content = null;
         private DSTEd core;
+        private Boolean is_closeable = true;
 
         public Document(DSTEd core, Editor type) {
             this.core = core;
@@ -33,6 +35,14 @@ namespace DSTEd.Core {
 
         public string GetHash() {
             return Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}-{1}", this.GetTitle(), this.GetFile()))));
+        }
+
+        public Boolean IsCloseable() {
+            return this.is_closeable;
+        }
+
+        public void SetCloseable(Boolean state) {
+            this.is_closeable = state;
         }
 
         public DSTEd GetCore() {
@@ -52,7 +62,7 @@ namespace DSTEd.Core {
             this.file = file;
 
             try {
-                using (StreamReader reader = new StreamReader(this.GetFile())) {
+                using (StreamReader reader = new StreamReader(this.GetFile(), true)) {
                     this.file_content = reader.ReadToEnd();
                 }
             } catch (IOException) {
@@ -83,6 +93,10 @@ namespace DSTEd.Core {
             this.callback_changed?.Invoke(this, State.CHANGED);
         }
 
+        public void Remove() {
+            this.callback_changed?.Invoke(this, State.REMOVED);
+        }
+
         public void OnChange(Action<Document, State> callback) {
             this.callback_changed = callback;
         }
@@ -97,6 +111,9 @@ namespace DSTEd.Core {
                     break;
                 case Editor.TEXTURE:
                     this.content = new Contents.Editors.TEX(this);
+                    break;
+                case Editor.MODINFO:
+                    this.content = new Contents.Editors.ModInfo(this);
                     break;
             }
 

@@ -150,7 +150,7 @@ namespace DSTEd.UI {
             }
 
             if (message != null) {
-                this.message.Content = message;
+                this.message.Text = message;
             }
 
             switch (icon) {
@@ -181,6 +181,11 @@ namespace DSTEd.UI {
                 case Dialog.Icon.Warning:
                     this.icon.Source = new BitmapImage(new Uri("/DSTEd;component/Assets/Dialog/Warning.png", UriKind.Relative));
                     break;
+            }
+
+            if (icon != Dialog.Icon.None) {
+                this.icon.Width = 48;
+                this.icon.Height = 48;
             }
 
             switch (buttons) {

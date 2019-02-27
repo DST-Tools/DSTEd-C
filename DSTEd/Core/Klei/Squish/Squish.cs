@@ -50,10 +50,11 @@ namespace Core.Klei.Squish {
         private static DecompressImageDelegate DecompressImageFunction;
 
         static Squish() {
-            if (IntPtr.Size == 8)
+            if (IntPtr.Size == 8) {
                 Getx64Delegates();
-            else
+            } else {
                 Getx86Delegates();
+            }
         }
 
         // Get function pointers from x86 assembly

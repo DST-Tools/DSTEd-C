@@ -68,6 +68,7 @@
 	"© 2017 Adrian Preuß": "© 2017 Adrian Preuß",
 	"All Rights Reserved.": "Alle Rechte vorbehalten.",
 
+	"DST_TOOLS": "Don't Starve Together Tools",
 	"FMOD_DESIGNER": "FMod Designer",
 	"SPRITER": "Spriter",
 	"TILED": "Tiled",
@@ -98,5 +99,26 @@
 
 	"Client": "Client",
 	"Mod Tools": "Mod Tools",
-	"Server": "Server"
+	"Server": "Server",
+
+	"ModInfo Editor": "ModInfo Editor",
+	"With the ModInfo Editor of DSTEd you can easily edit the modinfo.lua of your mods. To do this, select the specified values of the individual properties to change the configuration of the mod.": "Mit dem ModInfo Editor von DSTEd kannst du die modinfo.lua deiner Mods auf einfachem Weg bearbeiten. Wähle hierzu die angegebenen Werte der einzelnen Eigenschaften aus um die Konfiguration des Mods zu verändern.",
+	"Informations": "Informationen",
+	"Name": "Name",
+	"Version": "Version",
+	"Description": "Beschreibung",
+	"Author": "Autor",
+	"Forum-Thread": "Foren-Thread",
+	"Tags": "Stichworte",
+	"Assets": "Assets",
+	"Icon (Atlas)": "Symbol (Atlas)",
+	"Icon (Texture)": "Symbol (Textur)",
+	"Requirements": "Anforderungen",
+	"API Version": "API Version",
+	"Don't Starve": "Don't Starve",
+	"Don't Starve Together": "Don't Starve Together",
+	"Reign of Giants": "Reign of Giants",
+	"Standalone": "Standalone",
+	"All Clients Required": "All Clients Required",
+	"Restart Required": "Neustart benötigt"
 }

@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 using DSTEd.Core.Klei.KTEX;
 using DSTEd.UI.Components;
 
+/*
+ * http://dontstarveapi.com/tutorials/mod-files-and-structure/modicon-xml/
+ */
 namespace DSTEd.Core.Contents.Editors {
     public class TEX : Container {
         private Document document = null;
@@ -27,13 +30,13 @@ namespace DSTEd.Core.Contents.Editors {
         }
 
         private ImageBrush CreateBackground() {
-            ImageBrush brush    = new ImageBrush();
-            brush.Stretch       = Stretch.None;
-            brush.Viewport      = new Rect(0, 0, 120, 120);
-            brush.TileMode      = TileMode.FlipXY;
+            ImageBrush brush = new ImageBrush();
+            brush.Stretch = Stretch.None;
+            brush.Viewport = new Rect(0, 0, 120, 120);
+            brush.TileMode = TileMode.FlipXY;
             brush.ViewportUnits = BrushMappingMode.Absolute;
-            System.Windows.Controls.Image image         = new System.Windows.Controls.Image();
-            image.Source        = new BitmapImage(new Uri("pack://application:,,,/DSTEd;component/Assets/Raster.png"));
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(new Uri("pack://application:,,,/DSTEd;component/Assets/Raster.png"));
             brush.ImageSource = image.Source;
             return brush;
         }
@@ -75,10 +78,10 @@ namespace DSTEd.Core.Contents.Editors {
 
                     // EArgs.Size = mipmap.Width + "x" + mipmap.Height;
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 this.CreateLabel(I18N.__("Texture can't load: ") + e.Message);
             }
-            
+
         }
     }
 }
