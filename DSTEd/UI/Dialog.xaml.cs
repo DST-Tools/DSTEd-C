@@ -139,6 +139,9 @@ namespace DSTEd.UI {
                     this.Closing -= this.DialogFactory_Closing;
                     base.Close();
                 }
+            } else {
+                this.Closing -= this.DialogFactory_Closing;
+                base.Close();
             }
         }
 
