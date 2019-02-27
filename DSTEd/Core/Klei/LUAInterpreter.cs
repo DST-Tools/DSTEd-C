@@ -3,6 +3,92 @@ using System.Collections.Generic;
 using MoonSharp.Interpreter;
 
 namespace DSTEd.Core.LUA {
+    class OptionsEntry {
+        private string description;
+        private string hover;
+        private object data;
+
+        public OptionsEntry(TablePair data) {
+            Console.WriteLine(data.ToString());
+        }
+
+        public string GetDescription() {
+            return this.description;
+        }
+
+        public string GetHover() {
+            return this.hover;
+        }
+
+        public object GetData() {
+            return this.data;
+        }
+    }
+
+    class Options {
+        private string name;
+        private string label;
+        private string longlabel;
+        private string hover;
+        private object defaults;
+        private List<OptionsEntry> options;
+
+        public Options(IEnumerable<TablePair> pairs) {
+            foreach (TablePair entry in pairs) {
+                switch (entry.Key.String) {
+                    case "name":
+                        this.name = entry.Value.String;
+                        break;
+                    case "label":
+                        this.label = entry.Value.String;
+                        break;
+                    case "longlabel":
+                        this.longlabel = entry.Value.String;
+                        break;
+                    case "hover":
+                        this.hover = entry.Value.String;
+                        break;
+                    case "default":
+                        this.defaults = entry.Value.ToObject();
+                        break;
+                    case "options":
+                        this.options = new List<OptionsEntry>();
+
+                        foreach (TablePair sub in entry.Value.Table.Pairs) {
+                            this.options.Add(new OptionsEntry(sub));
+                        }
+                        break;
+                }
+            }
+        }
+
+        public string GetName() {
+            return this.name;
+        }
+
+        public string GetLabel() {
+            return this.label;
+        }
+
+        public string GetLongLabel() {
+            return this.longlabel;
+        }
+
+        public string GetHover() {
+            return this.hover;
+        }
+
+        public object GetDefaults() {
+            return this.defaults;
+        }
+
+        public List<OptionsEntry> GetOptions() {
+            return this.options;
+        }
+
+
+    }
+
     class ModInfo {
         private int id;
         private string name = null;
@@ -12,23 +98,23 @@ namespace DSTEd.Core.LUA {
         private string forumthread = null;
         private string icon_atlas = null;
         private string icon = null;
+        private int priority;
         private int api_version;
+        private int dst_api_version;
         private bool dont_starve_compatible;
         private bool reign_of_giants_compatible;
         private bool all_clients_require_mod;
+        private bool client_only_mod;
+        private bool shipwrecked_compatible;
         private bool dst_compatible;
         private bool standalone;
         private bool restart_require;
         private List<string> server_filter_tags;
         private Boolean is_broken = false;
-
+        private List<Options> options = null;
         /*
          * @ToDo
-         * - client_only_mod (bool)
-         * - configuration_options (dynamic)
-         * - priority (int)
-         * - dst_api_version (int)
-         * - shipwrecked_compatible (bool)
+         * - version_compatible
          * 
          */
         public ModInfo(Table values) {
@@ -37,7 +123,7 @@ namespace DSTEd.Core.LUA {
                 return;
             }
 
-            foreach(DynValue key in values.Keys) {
+            foreach (DynValue key in values.Keys) {
                 switch (key.String) {
                     case "name":
                         this.name = (string) values[key.String];
@@ -50,37 +136,49 @@ namespace DSTEd.Core.LUA {
                         break;
                     case "author":
                         this.author = (string) values[key.String];
-                    break;
+                        break;
                     case "forumthread":
                         this.forumthread = (string) values[key.String];
-                    break;
+                        break;
                     case "api_version":
                         this.api_version = Convert.ToInt32((double) values[key.String]);
-                    break;
+                        break;
+                    case "priority":
+                        this.priority = Convert.ToInt32((double) values[key.String]);
+                        break;
+                    case "dst_api_version":
+                        this.dst_api_version = Convert.ToInt32((double) values[key.String]);
+                        break;
                     case "dont_starve_compatible":
                         this.dont_starve_compatible = (Boolean) values[key.String];
-                    break;
+                        break;
                     case "all_clients_require_mod":
                         this.all_clients_require_mod = (Boolean) values[key.String];
-                    break;
+                        break;
                     case "dst_compatible":
                         this.dst_compatible = (Boolean) values[key.String];
-                    break;
+                        break;
                     case "reign_of_giants_compatible":
                         this.reign_of_giants_compatible = (Boolean) values[key.String];
-                    break;
+                        break;
                     case "standalone":
                         this.standalone = (Boolean) values[key.String];
-                    break;
+                        break;
                     case "restart_require":
                         this.restart_require = (Boolean) values[key.String];
-                    break;
+                        break;
+                    case "client_only_mod":
+                        this.client_only_mod = (Boolean) values[key.String];
+                        break;
+                    case "shipwrecked_compatible":
+                        this.shipwrecked_compatible = (Boolean) values[key.String];
+                        break;
                     case "icon_atlas":
                         this.icon_atlas = (string) values[key.String];
-                    break;
+                        break;
                     case "icon":
                         this.icon = (string) values[key.String];
-                    break;
+                        break;
                     case "server_filter_tags":
                         List<string> list = new List<string>();
                         Table entries = (Table) values[key.String];
@@ -90,13 +188,20 @@ namespace DSTEd.Core.LUA {
                         }
 
                         this.server_filter_tags = list;
-                    break;
-                   /* default:
-                        Logger.Debug("Unknown LUA-Variable: " + key.String);
-                        break;*/
+                        break;
+                    case "configuration_options":
+                        this.options = new List<Options>();
+
+                        foreach (TablePair a in ((Table) values[key.String]).Pairs) {
+                            this.options.Add(new Options(a.Value.Table.Pairs));
+                        }
+                        break;
+                        /* default:
+                             Logger.Debug("Unknown LUA-Variable: " + key.String);
+                             break;*/
                 }
             }
-            
+
         }
 
         public Boolean IsBroken() {
@@ -109,6 +214,14 @@ namespace DSTEd.Core.LUA {
 
         public int GetID() {
             return this.id;
+        }
+
+        public List<Options> GetOptions() {
+            return this.options;
+        }
+
+        public int GetPriority() {
+            return this.priority;
         }
 
         public string GetName() {
@@ -144,6 +257,11 @@ namespace DSTEd.Core.LUA {
             return this.api_version;
         }
 
+        public int GetDSTAPIVersion() {
+            // @ToDo enum?
+            return this.dst_api_version;
+        }
+
         public bool IsDS() {
             return this.dont_starve_compatible;
         }
@@ -156,8 +274,16 @@ namespace DSTEd.Core.LUA {
             return this.reign_of_giants_compatible;
         }
 
+        public bool IsSW() {
+            return this.shipwrecked_compatible;
+        }
+
         public bool IsRequired() {
             return this.all_clients_require_mod;
+        }
+
+        public bool IsOnlyClient() {
+            return this.client_only_mod;
         }
 
         public bool ModsAllowed() {
@@ -172,6 +298,7 @@ namespace DSTEd.Core.LUA {
             return this.server_filter_tags;
         }
     }
+
 
     class LUAInterpreter {
         public static Script Run(string lua, Action<SyntaxErrorException> callback) {
@@ -189,7 +316,7 @@ namespace DSTEd.Core.LUA {
         public static ModInfo GetModInfo(string lua, Action<SyntaxErrorException> callback) {
             Script result = LUAInterpreter.Run(lua, callback);
 
-            if(result == null) {
+            if (result == null) {
                 return new ModInfo(null);
             }
 

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using DSTEd.UI;
 
 namespace DSTEd.Core.Contents.Editors {
     class Selection {
@@ -60,23 +61,28 @@ namespace DSTEd.Core.Contents.Editors {
             TEXT,
             ATLAS,
             KTEX,
-            INTEGER,
+            NUMBER,
             URL,
             STRINGLIST,
             SELECTION,
-            YESNO
+            YESNO,
+            ENTRIES,
+            BUTTON
         };
 
-        public Properties() {
+        public Properties(string title, string icon, string description) {
             this.container = new Grid();
             ColumnDefinition left = new ColumnDefinition();
+            ColumnDefinition middle = new ColumnDefinition();
             ColumnDefinition right = new ColumnDefinition();
             left.Width = GridLength.Auto;
-            right.Width = new GridLength(1, GridUnitType.Star);
+            middle.Width = new GridLength(1, GridUnitType.Star);
+            right.Width = GridLength.Auto;
             this.container.ColumnDefinitions.Add(left);
+            this.container.ColumnDefinitions.Add(middle);
             this.container.ColumnDefinitions.Add(right);
             this.container.VerticalAlignment = VerticalAlignment.Top;
-            this.CreateHeader();
+            this.CreateHeader(title, icon, description);
             this.AddChild(this.container);
         }
 
@@ -103,7 +109,7 @@ namespace DSTEd.Core.Contents.Editors {
             this.container.Children.Add(disabled);
         }
 
-        private void CreateHeader() {
+        private void CreateHeader(string header_title, string header_icon, string header_description) {
             this.container.RowDefinitions.Add(new RowDefinition());
 
             Grid header = new Grid();
@@ -117,7 +123,7 @@ namespace DSTEd.Core.Contents.Editors {
             header.RowDefinitions.Add(new RowDefinition());
             header.RowDefinitions.Add(new RowDefinition());
             Grid.SetColumn(header, 0);
-            Grid.SetColumnSpan(header, 2);
+            Grid.SetColumnSpan(header, 3);
             Grid.SetRow(header, row++);
 
             // Image
@@ -125,7 +131,7 @@ namespace DSTEd.Core.Contents.Editors {
             image.Width = 48;
             image.Height = 48;
             image.Margin = new Thickness(10, 10, 0, 0);
-            image.Source = new BitmapImage(new Uri(@"pack://application:,,,/DSTEd;component/Assets/Icons/ModInfo.png", UriKind.Absolute));
+            image.Source = new BitmapImage(new Uri(@"pack://application:,,,/DSTEd;component/Assets/Icons/" + header_icon  + ".png", UriKind.Absolute));
             Grid.SetColumn(image, 0);
             Grid.SetRow(image, 0);
             header.Children.Add(image);
@@ -137,7 +143,7 @@ namespace DSTEd.Core.Contents.Editors {
             title.Padding = new Thickness(0, 0, 0, 0);
             title.Margin = new Thickness(10, 15, 0, 0);
             title.FontWeight = FontWeights.Bold;
-            title.Content = I18N.__("ModInfo Editor");
+            title.Content = header_title;
             Grid.SetColumn(title, 1);
             Grid.SetRow(title, 0);
             header.Children.Add(title);
@@ -149,7 +155,7 @@ namespace DSTEd.Core.Contents.Editors {
             description.Margin = new Thickness(30, 10, 10, 10);
             description.TextWrapping = TextWrapping.Wrap;
             description.TextAlignment = TextAlignment.Justify;
-            description.Text = I18N.__("With the ModInfo Editor of DSTEd you can easily edit the modinfo.lua of your mods. To do this, select the specified values of the individual properties to change the configuration of the mod.");
+            description.Text = header_description;
             Grid.SetColumn(description, 0);
             Grid.SetColumnSpan(description, 2);
             Grid.SetRow(description, 1);
@@ -165,13 +171,37 @@ namespace DSTEd.Core.Contents.Editors {
             category.BorderBrush = new SolidColorBrush(Color.FromRgb(237, 92, 45));
             category.BorderThickness = new Thickness(0, 0, 0, 1);
             category.Padding = new Thickness(2, 5, 2, 5);
-            category.Margin = new Thickness(10, 15, 0, 10);
+            category.Margin = new Thickness(10, 15, 10, 10);
             category.FontWeight = FontWeights.Bold;
-            category.Content = name;
+
+            if (name.Length >= 1) {
+                category.Content = name;
+            }
+
             Grid.SetColumn(category, 0);
-            Grid.SetColumnSpan(category, 2);
+            Grid.SetColumnSpan(category, 3);
             Grid.SetRow(category, row++);
             this.container.Children.Add(category);
+        }
+
+        public void AddButton(string name, string text, object data) {
+            this.container.RowDefinitions.Add(new RowDefinition());
+
+            Button button = new Button();
+            button.Name = name;
+            button.Content = text;
+            button.Margin = new Thickness(0, 0, 10, 0);
+            Grid.SetColumn(button, 2);
+            Grid.SetRow(button, row);
+
+            button.Click += new RoutedEventHandler(delegate(object sender, RoutedEventArgs e) {
+                // Open Popup with data
+                Dialog.Open("Currently not implemented", "Problem", Dialog.Buttons.OK, Dialog.Icon.Exclamation);
+            });
+
+            this.container.Children.Add(button);
+
+            ++row;
         }
 
         public void AddEntry(string name, string text, Type type, object value) {
@@ -203,8 +233,8 @@ namespace DSTEd.Core.Contents.Editors {
                 case Type.KTEX:
                     this.AddTexture(name, (string) value);
                     break;
-                case Type.INTEGER:
-                    this.AddNumber(name, (int) value);
+                case Type.NUMBER:
+                    this.AddNumber(name, (object) value);
                     break;
                 case Type.URL:
                     this.AddLink(name, (string) value);
@@ -229,6 +259,7 @@ namespace DSTEd.Core.Contents.Editors {
             input.Text = value;
             input.Margin = new Thickness(0, 0, 10, 0);
             Grid.SetColumn(input, 1);
+            Grid.SetColumnSpan(input, 2);
             Grid.SetRow(input, row);
             this.container.Children.Add(input);
         }
@@ -241,6 +272,7 @@ namespace DSTEd.Core.Contents.Editors {
             list.Items.Add(string_false);
             list.SelectedItem = value ? string_true : string_false;
             Grid.SetColumn(list, 1);
+            Grid.SetColumnSpan(list, 2);
             Grid.SetRow(list, row);
             this.container.Children.Add(list);
         }
@@ -258,6 +290,7 @@ namespace DSTEd.Core.Contents.Editors {
             input.TextWrapping = TextWrapping.WrapWithOverflow;
             Grid.SetColumn(input, 1);
             Grid.SetRow(input, row);
+            Grid.SetColumnSpan(input, 2);
             Grid.SetRowSpan(input, 1);
             this.container.Children.Add(input);
         }
@@ -282,6 +315,7 @@ namespace DSTEd.Core.Contents.Editors {
             browse.Padding = new Thickness(0, 0, 0, 0);
             browse.Content = I18N.__("Browse");
             Grid.SetColumn(browse, 1);
+            Grid.SetColumnSpan(browse, 2);
             panel.Children.Add(browse);
 
             Grid.SetColumn(panel, 1);
@@ -298,7 +332,8 @@ namespace DSTEd.Core.Contents.Editors {
             this.AddPath(name, value, new string[] { ".tex" });
         }
 
-        private void AddNumber(string name, int value) {
+        private void AddNumber(string name, object value) {
+            // Check what value is (type)
             this.AddInput(name, "" + value);
         }
 
@@ -308,6 +343,7 @@ namespace DSTEd.Core.Contents.Editors {
             input.Text = value;
             input.Margin = new Thickness(0, 0, 10, 0);
             Grid.SetColumn(input, 1);
+            Grid.SetColumnSpan(input, 2);
             Grid.SetRow(input, row);
             this.container.Children.Add(input);
         }
@@ -319,7 +355,7 @@ namespace DSTEd.Core.Contents.Editors {
         private void AddSelection(string name, Selection value) {
             ComboBox list = new ComboBox();
             list.Name = name;
-            list.Margin = new Thickness(0, 0, 10, 0);
+            list.Margin = new Thickness(0, 0, 0, 0);
 
             foreach (KeyValuePair<object, string> entry in value.GetItems()) {
                 ComboboxItem item = new ComboboxItem();
@@ -330,6 +366,7 @@ namespace DSTEd.Core.Contents.Editors {
 
             list.SelectedIndex = value.GetSelected();
             Grid.SetColumn(list, 1);
+            Grid.SetColumnSpan(list, 2);
             Grid.SetRow(list, row);
             this.container.Children.Add(list);
         }

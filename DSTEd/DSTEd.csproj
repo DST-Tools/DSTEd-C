@@ -626,6 +626,7 @@
     <Resource Include="Assets\FileSystem\Bundle_Closed.png" />
     <Resource Include="Assets\FileSystem\Bundle_Opened.png" />
     <Resource Include="Assets\FileSystem\Assets.png" />
+    <Resource Include="Assets\Icons\ModOptions.png" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />
     <Content Include="Librarys\Steamworks.NET.dll" />
