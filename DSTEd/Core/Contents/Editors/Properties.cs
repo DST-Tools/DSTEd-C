@@ -23,12 +23,13 @@ namespace DSTEd.Core.Contents.Editors {
             return this.values;
         }
 
-        public object GetSelected() {
-            object selected = null;
+        public int GetSelected() {
+            int selected = -1;
+            int index = 0;
 
             foreach (KeyValuePair<object, string> entry in this.values) {
-                if (entry.Key == this.value) {
-                    selected = entry.Value;
+                if ((int) entry.Key == (int) this.value) {
+                    selected = ++index;
                     break;
                 }
             }
@@ -322,12 +323,12 @@ namespace DSTEd.Core.Contents.Editors {
 
             foreach (KeyValuePair<object, string> entry in value.GetItems()) {
                 ComboboxItem item = new ComboboxItem();
-                item.Value = entry.Key;
+                item.Value = (int) entry.Key;
                 item.Text = entry.Value;
                 list.Items.Add(item);
             }
 
-            list.SelectedItem = value.GetSelected();
+            list.SelectedIndex = value.GetSelected();
             Grid.SetColumn(list, 1);
             Grid.SetRow(list, row);
             this.container.Children.Add(list);
