@@ -8,11 +8,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DSTEd.Core {
     public class Menu {
-        private IDE ide = null;
-
-        public Menu(IDE ide) {
-            this.ide = ide;
-        }
+        public Menu() {}
 
         public void Init() {
             this.Update();
@@ -20,14 +16,10 @@ namespace DSTEd.Core {
 
         public void Update() {
             Application.Current.Dispatcher.Invoke(DispatcherPriority.DataBind, new Action(delegate () {
-                if (this.GetIDE().GetCore().IsWorkspaceReady()) {
-                    this.GetIDE().UpdateWelcome(this.GetIDE().GetCore().GetWorkspace().HasWelcome());
+                if (Boot.Core().IsWorkspaceReady()) {
+                    Boot.Core().GetIDE().UpdateWelcome(Boot.Core().GetWorkspace().HasWelcome());
                 }
             }));
-        }
-
-        public IDE GetIDE() {
-            return this.ide;
         }
 
         public void Handle(string name, MenuItem menu) {
@@ -42,12 +34,12 @@ namespace DSTEd.Core {
                     dialog.AllowNonFileSystemItems = false;
                     dialog.Multiselect = false;
                     dialog.RestoreDirectory = false;
-                    dialog.InitialDirectory = this.GetIDE().GetCore().GetWorkspace().GetPath();
+                    dialog.InitialDirectory = Boot.Core().GetWorkspace().GetPath();
 
                     CommonFileDialogResult value = dialog.ShowDialog();
 
                     if (value == CommonFileDialogResult.Ok) {
-                        this.GetIDE().GetCore().GetWorkspace().OpenDocument(dialog.FileName);
+                        Boot.Core().GetWorkspace().OpenDocument(dialog.FileName);
                     }
                     break;
                 //case "FILE_OPEN_RECENT":
@@ -73,7 +65,7 @@ namespace DSTEd.Core {
                 //case "SEARCH_FIND":
                 //case "SEARCH_FIND_NEXT":
                 case "VIEW_WELCOME":
-                    this.GetIDE().UpdateWelcome(this.GetIDE().GetCore().GetWorkspace().ToggleWelcome());
+                    Boot.Core().GetIDE().UpdateWelcome(Boot.Core().GetWorkspace().ToggleWelcome());
                     break;
                 //case "DEBUG_RUN_DST":
                 //case "TOOLS_STEAM":

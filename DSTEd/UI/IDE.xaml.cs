@@ -11,13 +11,11 @@ using Xceed.Wpf.AvalonDock.Layout;
 namespace DSTEd.UI {
     public partial class IDE : Window {
         private Menu menu = null;
-        private Core.DSTEd core = null;
 
-        public IDE(Core.DSTEd core) {
+        public IDE() {
             InitializeComponent();
-
-            this.core = core;
-            this.menu = new Menu(this);
+            
+            this.menu = new Menu();
             this.dockManager.Theme = new Dark();
             this.Closing += this.IDE_Closing;
         }
@@ -27,12 +25,12 @@ namespace DSTEd.UI {
         }
 
         public void Init() {
-            string path = this.GetCore().GetSteam().GetGame().GetPath();
-            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), this.GetCore(), delegate (FileNode file) {
-                return new WorkshopItem(this.GetCore(), file);
+            string path = Boot.Core().GetSteam().GetGame().GetPath();
+            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), delegate (FileNode file) {
+                return new WorkshopItem(file);
             });
 
-            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), this.GetCore(), null);
+            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), null);
             this.menu.Init();
         }
 
@@ -46,10 +44,6 @@ namespace DSTEd.UI {
 
         public Boolean IsMenuAvailable() {
             return this.menu != null;
-        }
-
-        public Core.DSTEd GetCore() {
-            return this.core;
         }
 
         private void OnLayoutRootPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {

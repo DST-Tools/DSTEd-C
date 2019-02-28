@@ -12,14 +12,12 @@ using DSTEd.Core.IO;
 
 namespace DSTEd.UI.Components {
     public partial class WorkspaceTree : UserControl {
-        private Core.DSTEd core = null;
         private Func<FileNode, TreeViewItem> callback = null;
 
-        public WorkspaceTree(FileSystem files, Core.DSTEd core, Func<FileNode, TreeViewItem> callback) {
+        public WorkspaceTree(FileSystem files, Func<FileNode, TreeViewItem> callback) {
             InitializeComponent();
 
             this.callback = callback;
-            this.core = core;
             this.tree.Items.Clear();
 
             foreach (FileNode directory in files.GetDirectories()) {
@@ -85,7 +83,7 @@ namespace DSTEd.UI.Components {
                     });
 
                     entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e) {
-                        this.GetCore().GetWorkspace().OpenDocument(file.FullName);
+                        Boot.Core().GetWorkspace().OpenDocument(file.FullName);
                     });
 
                     if (!ignore) {
@@ -116,10 +114,6 @@ namespace DSTEd.UI.Components {
             }
 
             return item;
-        }
-
-        public Core.DSTEd GetCore() {
-            return this.core;
         }
     }
 

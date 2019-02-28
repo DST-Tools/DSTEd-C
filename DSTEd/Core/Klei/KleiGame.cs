@@ -7,21 +7,14 @@ using DSTEd.Core.IO;
 namespace DSTEd.Core.Klei {
     public class KleiGame {
         protected int id = -1;
-        private DSTEd core = null;
         protected string name = null;
         protected string path = null;
         protected string executable = null;
         private Boolean is_main = false;
         private FileSystem files = null;
 
-        public KleiGame(DSTEd core) {
-            this.core = core;
-        }
-
-        public DSTEd GetCore() {
-            return this.core;
-        }
-
+        public KleiGame() {}
+        
         public string GetName() {
             return this.name;
         }
@@ -79,13 +72,13 @@ namespace DSTEd.Core.Klei {
 
         public void AddTool(string name, string executable) {
             MenuItem item = AddToolMenu(name, executable);
-            MenuItem tools = this.GetCore().GetIDE().GetTools();
+            MenuItem tools = Boot.Core().GetIDE().GetTools();
             tools.Items.Add(item);
         }
 
         public void AddSubTool(string node, string name, string executable) {
             MenuItem item = AddToolMenu(name, executable);
-            MenuItem tools = this.GetCore().GetIDE().GetTools();
+            MenuItem tools = Boot.Core().GetIDE().GetTools();
             MenuItem found = null;
 
             foreach (MenuItem entry in tools.Items) {

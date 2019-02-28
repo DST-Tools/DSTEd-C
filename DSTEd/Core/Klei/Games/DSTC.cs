@@ -1,6 +1,6 @@
 ﻿namespace DSTEd.Core.Klei.Games {
     class DSTC : KleiGame {
-        public DSTC(DSTEd core) : base(core) {
+        public DSTC() : base() {
             this.id = 322330;
             this.name = I18N.__("Client");
             this.executable = "bin/dontstarve_steam.exe";

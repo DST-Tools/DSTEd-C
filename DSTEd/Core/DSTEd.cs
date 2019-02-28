@@ -15,6 +15,10 @@ namespace DSTEd.Core {
         private Configuration configuration = null;
 
         public DSTEd() {
+
+        }
+
+        public void Start() {
             Logger.Info("Start DSTEd v" + GetVersion());
 
             this.configuration = new Configuration();
@@ -24,8 +28,8 @@ namespace DSTEd.Core {
 
             // Init classes
             this.steam = new Steam.Steam();
-            this.ide = new IDE(this);
-            this.workspace = new Workspace(this);
+            this.ide = new IDE();
+            this.workspace = new Workspace();
             this.loading = new Loading();
 
             // Set the steam path by configuration
@@ -89,9 +93,9 @@ namespace DSTEd.Core {
             });
 
             this.loading.Run("KLEI_GAMES", delegate () {
-                this.steam.LoadGame(new DSTC(this));
-                this.steam.LoadGame(new DSTS(this));
-                this.steam.LoadGame(new DSTM(this));
+                this.steam.LoadGame(new DSTC());
+                this.steam.LoadGame(new DSTS());
+                this.steam.LoadGame(new DSTM());
 
                 this.ide.Init();
 

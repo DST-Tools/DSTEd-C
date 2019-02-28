@@ -1,6 +1,6 @@
 ﻿namespace DSTEd.Core.Klei.Games {
     class DSTM : KleiGame {
-        public DSTM(DSTEd core) : base(core) {
+        public DSTM() : base() {
             this.id = 245850;
             this.name = I18N.__("Mod Tools");
 

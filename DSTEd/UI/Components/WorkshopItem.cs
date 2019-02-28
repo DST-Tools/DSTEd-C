@@ -10,18 +10,12 @@ using MoonSharp.Interpreter;
 namespace DSTEd.UI.Components {
     class WorkshopItem : TreeViewItem {
         private FileNode file = null;
-        private Core.DSTEd core = null;
 
-        public WorkshopItem(Core.DSTEd core, FileNode file) {
-            this.core = core;
+        public WorkshopItem(FileNode file) {
             this.file = file;
             this.FontWeight = FontWeights.Bold;
 
             this.LoadModInfo();
-        }
-
-        public Core.DSTEd GetCore() {
-            return this.core;
         }
 
         private void LoadModInfo() {

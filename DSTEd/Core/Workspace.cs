@@ -6,13 +6,11 @@ using System.IO;
 namespace DSTEd.Core {
     public class Workspace {
         private UI.Workspace window;
-        private DSTEd core = null;
         private string path = "C:\\Program Files\\";
         private Dictionary<string, Document> documents = null;
         private Document welcome = null;
 
-        public Workspace(DSTEd core) {
-            this.core = core;
+        public Workspace() {
             this.window = new UI.Workspace();
             this.documents = new Dictionary<string, Document>();
             this.CreateWelcome();
@@ -48,7 +46,7 @@ namespace DSTEd.Core {
         }
 
         public void CreateWelcome() {
-            this.welcome = new Document(this.core, Document.Editor.NONE);
+            this.welcome = new Document(Document.Editor.NONE);
             this.welcome.SetTitle(I18N.__("Welcome"));
             this.welcome.SetCloseable(false);
             this.AddDocument(this.welcome);
@@ -76,7 +74,7 @@ namespace DSTEd.Core {
             } else {
                 visible = true;
                 this.AddDocument(this.welcome);
-                this.core.GetIDE().SetActiveDocument(this.welcome);
+                Boot.Core().GetIDE().SetActiveDocument(this.welcome);
             }
 
             return visible;
@@ -113,17 +111,17 @@ namespace DSTEd.Core {
                 type = Document.Editor.MODINFO;
             }
 
-            Document document = new Document(this.GetCore(), type);
+            Document document = new Document(type);
             document.Load(file);
             // @ToDo add to RecentFiles
-            this.GetCore().GetWorkspace().AddDocument(document);
+            Boot.Core().GetWorkspace().AddDocument(document);
         }
 
         internal void ShowDocument(string file) {
             foreach (KeyValuePair<string, Document> entry in this.documents) {
                 if (entry.Key == file || entry.Value.GetFile() == file) {
                     // @ToDo check content if its newer and ask for reloading...
-                    this.core.GetIDE().SetActiveDocument(entry.Value);
+                    Boot.Core().GetIDE().SetActiveDocument(entry.Value);
                 }
             }
         }
@@ -150,7 +148,7 @@ namespace DSTEd.Core {
             document.OnChange(this.OnChanged);
 
             if (this.documents.ContainsKey(document.GetHash())) {
-                this.core.GetIDE().SetActiveDocument(document);
+                Boot.Core().GetIDE().SetActiveDocument(document);
             } else {
                 this.documents.Add(document.GetHash(), document);
                 document.Init();
@@ -160,12 +158,8 @@ namespace DSTEd.Core {
         public void OnChanged(Document document, Document.State state) {
             Logger.Info("[Workspace] Changed document: " + document.GetName() + " >> " + state);
 
-            this.core.GetIDE().GetMenu().Update();
-            this.core.GetIDE().OnChanged(document, state);
-        }
-
-        public DSTEd GetCore() {
-            return this.core;
+            Boot.Core().GetIDE().GetMenu().Update();
+            Boot.Core().GetIDE().OnChanged(document, state);
         }
     }
 }

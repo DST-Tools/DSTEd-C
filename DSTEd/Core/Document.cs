@@ -25,11 +25,9 @@ namespace DSTEd.Core {
         private Editor type = Editor.NONE;
         private object content = null;
         private string file_content = null;
-        private DSTEd core;
         private Boolean is_closeable = true;
 
-        public Document(DSTEd core, Editor type) {
-            this.core = core;
+        public Document(Editor type) {
             this.type = type;
         }
 
@@ -43,10 +41,6 @@ namespace DSTEd.Core {
 
         public void SetCloseable(Boolean state) {
             this.is_closeable = state;
-        }
-
-        public DSTEd GetCore() {
-            return this.core;
         }
 
         public void SetTitle(string title) {
