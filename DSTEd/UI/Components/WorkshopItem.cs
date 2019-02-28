@@ -47,7 +47,7 @@ namespace DSTEd.UI.Components {
 
             info.SetID(Int32.Parse(this.file.GetName().Replace("workshop-", "")));
 
-            if (info.IsBroken()) {
+            if (info.IsBroken() && !info.HasName()) {
                 this.Header = this.file.GetName();
             } else {
                 this.Header = info.GetName();

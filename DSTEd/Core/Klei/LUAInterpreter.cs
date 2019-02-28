@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using MoonSharp.Interpreter;
 
 namespace DSTEd.Core.LUA {
@@ -228,6 +229,14 @@ namespace DSTEd.Core.LUA {
             return this.name;
         }
 
+        public Boolean HasName() {
+            return (this.name != null);
+        }
+
+        public void SetName(string name) {
+            this.name = name;
+        }
+
         public string GetVersion() {
             return this.version;
         }
@@ -317,10 +326,26 @@ namespace DSTEd.Core.LUA {
             Script result = LUAInterpreter.Run(lua, callback);
 
             if (result == null) {
-                return new ModInfo(null);
+                ModInfo info = new ModInfo(null);
+                info.SetName(GetModName(lua));
+                return info;
             }
 
             return new ModInfo(result.Globals);
+        }
+
+        public static string GetModName(string lua) {
+            try {
+                Match match = new Regex("name(:?[\\s]+)?=(:?[\\s]+)?\"(.*)\"").Match(lua);
+
+                if (match.Success) {
+                    return match.Groups[match.Groups.Count - 1].Value;
+                }
+            } catch (Exception) {
+                /* Do Nothing */
+            }
+
+            return null;
         }
     }
 }
