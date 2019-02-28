@@ -1,34 +1,61 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DSTEd.Core.IO {
     public class FileSystem {
         private List<FileNode> directories = new List<FileNode>();
+        private Boolean finished = false;
 
         public FileSystem(string path) {
-            this.directories.Add(this.Parse(new DirectoryInfo(path)));
+            Task.Run(async () => {
+                await this.Parse(new DirectoryInfo(path), delegate (FileNode node) {
+                    this.directories.Add(node);
+                    finished = true;
+                });
+            });
         }
 
-        private FileNode Parse(DirectoryInfo directory) {
+        private async Task Parse(DirectoryInfo directory, Action<FileNode> callback) {
             FileNode node = new FileNode(directory);
 
             foreach (DirectoryInfo dir in directory.GetDirectories()) {
-                node.AddSubdirectory(this.Parse(dir));
+                await this.Parse(dir, delegate(FileNode subnode) {
+                    node.AddSubdirectory(subnode);
+                });
             }
 
             foreach (FileInfo file in directory.GetFiles()) {
                 node.AddFile(file);
             }
 
-            return node;
+            callback(node);
         }
 
-        public List<FileNode> GetDirectories() {
-            return this.directories;
+        public void GetDirectories(Action<List<FileNode>> callback) {
+            Task.Run(() => {
+                do {
+                    if (finished) {
+                        break;
+                    }
+                } while (!finished);
+
+                callback(this.directories);
+            });
         }
 
-        public bool HasDirectories() {
-            return this.directories.Count > 0;
+        public void HasDirectories(Action<Boolean> callback) {
+            Task.Run(() => {
+                do {
+                    if (finished) {
+                        break;
+                    }
+                } while (!finished);
+
+                callback(this.directories.Count > 0);
+            });
         }
     }
 }

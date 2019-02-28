@@ -20,9 +20,13 @@ namespace DSTEd.UI.Components {
             this.callback = callback;
             this.tree.Items.Clear();
 
-            foreach (FileNode directory in files.GetDirectories()) {
-                this.Render(directory, this.tree);
-            }
+            files.GetDirectories(delegate(List<FileNode> f) {
+                foreach (FileNode directory in f) {
+                    Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(delegate () {
+                        this.Render(directory, this.tree);
+                    }));
+                }
+            });
         }
 
         private TreeViewItem Render(FileNode files, TreeView container) {
