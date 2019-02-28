@@ -125,6 +125,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="UI\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Components\BBCodePanel.cs" />
     <Compile Include="UI\Components\Container.cs" />
     <Compile Include="UI\Components\TextureItem.cs" />
@@ -451,6 +454,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Components\WorkspaceTree.xaml">
       <SubType>Designer</SubType>

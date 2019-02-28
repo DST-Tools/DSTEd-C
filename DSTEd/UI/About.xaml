@@ -1,0 +1,485 @@
+﻿<Window x:Class="DSTEd.UI.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Component="clr-namespace:DSTEd.UI.Components"
+        xmlns:Core="clr-namespace:DSTEd.Core"
+        mc:Ignorable="d"
+        Title="Dialog" Icon="/DSTEd;component/Assets/Logo.ico" MinHeight="300" Width="520" Background="#FF303030" BorderBrush="#FFF15F1B" Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" VerticalContentAlignment="Stretch" SizeToContent="Height">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabControl.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabItem.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/Button.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/GroupBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TextBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/ComboBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TreeView.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/Menu.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/ToolTip.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid UseLayoutRounding="False" Grid.IsSharedSizeScope="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <Grid Background="#FF252424" Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Margin="10,10,0,0" Content="About DSTEd" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" />
+            <Grid Grid.Row="1" Margin="15,0,15,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Foreground="#FFFFFF" FontSize="12" Text="This software is licensed under OpenSource." />
+                <TextBlock Grid.Row="1" Grid.Column="0" Foreground="#FFFFFF" FontSize="12" Text="© 2017 Adrian Preuß | All Rights Reserved" />
+            </Grid>
+        </Grid>
+        <Border Grid.Row="0" Grid.Column="1" Height="1" BorderThickness="0,0,0,1" Margin="0,117,0,-25" BorderBrush="#ED5C2D"></Border>
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" BorderThickness="0,0,0,0" Foreground="#FFFFFF">
+            <TabItem Header="System Informations" FontSize="14" Foreground="#FFFFFF">
+                <ScrollViewer Margin="10,10,10,10" MaxHeight="200"  Background="#66000000" Padding="10">
+                    <StackPanel Name="system" />
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Licenses" FontSize="14">
+                <ScrollViewer Margin="10,10,10,10" MaxHeight="200">
+                    <StackPanel Background="Transparent">
+                        <TextBlock Foreground="#FFFFFF">
+                            DSTEd using some Third-Party and OpenSource products.
+                            <LineBreak />
+                            <LineBreak /><Bold>NuGet-Packages:</Bold>
+                            <LineBreak />
+                        </TextBlock>
+                        <Expander Header="AvalonDock" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Costura.Fody" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10"  Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2012 Simon Cropp and contributors
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Dirkster.AvalonDock" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10"  Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2017
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Dirkster.AvalonDock.Themes.VS2013" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2017
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Dirkster.MLib" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2017 Dirkster99
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Dirkster.MsgBox" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2017
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Dirkster.MWindowLib" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2017 Dirkster99
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Dirkster.UserNotifications" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2014-2017 Dirk Bahle
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Fody" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) Simon Cropp and contributors
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Indieteur.SteamAppsManAndVDFAPI" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2018 Indieteur
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Newtonsoft.Json" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2007 James Newton-King
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="SteamStorefrontAPI" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            License does not apply to steam binaries.
+                            <LineBreak />
+                            <LineBreak />The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2018 AeonLucid
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="SteamworksSharp.Native" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            The MIT License
+                            <LineBreak />
+                            <LineBreak />Copyright (c) 2018 Michael Kellner
+                            <LineBreak />
+                            <LineBreak />Permission is hereby granted, free of charge, to any person obtaining a copy
+                            <LineBreak />of this software and associated documentation files (the "Software"), to deal
+                            <LineBreak />in the Software without restriction, including without limitation the rights
+                            <LineBreak />to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            <LineBreak />copies of the Software, and to permit persons to whom the Software is
+                            <LineBreak />furnished to do so, subject to the following conditions:
+                            <LineBreak />
+                            <LineBreak />The above copyright notice and this permission notice shall be included in
+                            <LineBreak />all copies or substantial portions of the Software.
+                            <LineBreak />
+                            <LineBreak />THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            <LineBreak />IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            <LineBreak />FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            <LineBreak />AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            <LineBreak />LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            <LineBreak />OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            <LineBreak />THE SOFTWARE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="SteamKit2" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            Copyright (C) 2018 Ryan Stecker &amp; SteamRE Team
+                            <LineBreak />
+                            <LineBreak />This library is free software; you can redistribute it and/or
+                            <LineBreak />modify it under the terms of the GNU Lesser General Public
+                            <LineBreak />License as published by the Free Software Foundation; either
+                            <LineBreak />version 2.1 of the License, or (at your option) any later version.
+                            <LineBreak />
+                            <LineBreak />This library is distributed in the hope that it will be useful,
+                            <LineBreak />but WITHOUT ANY WARRANTY; without even the implied warranty of
+                            <LineBreak />MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+                            <LineBreak />Lesser General Public License for more details.
+                            <LineBreak />
+                            <LineBreak />You should have received a copy of the GNU Lesser General Public
+                            <LineBreak />License along with this library; if not, write to the Free Software
+                            <LineBreak />Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="Polly" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            <LineBreak />New BSD License
+                            <LineBreak />=
+                            <LineBreak />Copyright (c) 2015-2018, App vNext
+                            <LineBreak />All rights reserved.
+                            <LineBreak />
+                            <LineBreak />Redistribution and use in source and binary forms, with or without
+                            <LineBreak />modification, are permitted provided that the following conditions are met:
+                            <LineBreak />    * Redistributions of source code must retain the above copyright
+                            <LineBreak />        notice, this list of conditions and the following disclaimer.
+                            <LineBreak />    * Redistributions in binary form must reproduce the above copyright
+                            <LineBreak />        notice, this list of conditions and the following disclaimer in the
+                            <LineBreak />        documentation and/or other materials provided with the distribution.
+                            <LineBreak />    * Neither the name of App vNext nor the
+                            <LineBreak />        names of its contributors may be used to endorse or promote products
+                            <LineBreak />        derived from this software without specific prior written permission.
+                            <LineBreak />
+                            <LineBreak />THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+                            <LineBreak />ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+                            <LineBreak />WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+                            <LineBreak />DISCLAIMED. IN NO EVENT SHALL &lt;COPYRIGHT HOLDER&gt; BE LIABLE FOR ANY
+                            <LineBreak />DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+                            <LineBreak />(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+                            <LineBreak />LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+                            <LineBreak />ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+                            <LineBreak />(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+                            <LineBreak />SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+                            </TextBlock>
+                        </Expander>
+                        <Expander Header="MoonSharp" Foreground="#FFFFFF">
+                            <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" Margin="10" Background="#66000000" Padding="10">
+                            Copyright (c) 2014-2016, Marco Mastropaolo
+                            <LineBreak />All rights reserved.
+                            <LineBreak />
+                            <LineBreak />Parts of the string library are based on the KopiLua project (https://github.com/NLua/KopiLua)
+                            <LineBreak />Copyright (c) 2012 LoDC
+                            <LineBreak />
+                            <LineBreak />Visual Studio Code debugger code is based on code from Microsoft vscode-mono-debug project (https://github.com/Microsoft/vscode-mono-debug).
+                            <LineBreak />Copyright (c) Microsoft Corporation - released under MIT license.
+                            <LineBreak />
+                            <LineBreak />Remote Debugger icons are from the Eclipse project (https://www.eclipse.org/).
+                            <LineBreak />Copyright of The Eclipse Foundation
+                            <LineBreak />
+                            <LineBreak />The MoonSharp icon is (c) Isaac, 2014-2015
+                            <LineBreak />
+                            <LineBreak />Redistribution and use in source and binary forms, with or without
+                            <LineBreak />modification, are permitted provided that the following conditions are met:
+                            <LineBreak />
+                            <LineBreak />* Redistributions of source code must retain the above copyright notice, this
+                            <LineBreak />  list of conditions and the following disclaimer.
+                            <LineBreak />
+                            <LineBreak />* Redistributions in binary form must reproduce the above copyright notice,
+                            <LineBreak />  this list of conditions and the following disclaimer in the documentation
+                            <LineBreak />  and/or other materials provided with the distribution.
+                            <LineBreak />
+                            <LineBreak />* Neither the name of the {organization} nor the names of its
+                            <LineBreak />  contributors may be used to endorse or promote products derived from
+                            <LineBreak />  this software without specific prior written permission.
+                            <LineBreak />
+                            <LineBreak />THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+                            <LineBreak />AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+                            <LineBreak />IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+                            <LineBreak />DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+                            <LineBreak />FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+                            <LineBreak />DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+                            <LineBreak />SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+                            <LineBreak />CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+                            <LineBreak />OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+                            <LineBreak />OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+                            </TextBlock>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <DockPanel x:Name="buttons" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#FF242425">
+            <WrapPanel UseLayoutRounding="True" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="OK" Click="OnOK" HorizontalAlignment="Center" />
+            </WrapPanel>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -74,7 +74,9 @@ namespace DSTEd.Core {
                 case "HELP_FORUM":
                     Process.Start("https://forums.kleientertainment.com/forums/topic/78739-dsted-the-ide-for-dont-starve-together/");
                     break;
-                //case "HELP_ABOUT":
+                case "HELP_ABOUT":
+                    new About().ShowDialog();
+                break;
                 case "HELP_FEEDBACK":
                     Process.Start("https://github.com/DST-Tools/DSTEd-C/issues");
                     break;
