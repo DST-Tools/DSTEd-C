@@ -114,6 +114,7 @@
     <Compile Include="Core\Klei\Squish\Squish.cs" />
     <Compile Include="Core\Klei\Data\TheSim.cs" />
     <Compile Include="Core\LUACompletion.cs" />
+    <Compile Include="Core\LUA\Loader.cs" />
     <Compile Include="Core\LUA\LUA.cs" />
     <Compile Include="Core\LUA\Parser.cs" />
     <Compile Include="Core\LUA\ParserException.cs" />

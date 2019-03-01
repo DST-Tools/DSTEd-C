@@ -16,7 +16,6 @@ namespace DSTEd.Core {
         private Core.LUA.LUA lua;
 
         public DSTEd() {
-            this.lua = new Core.LUA.LUA();
         }
 
         public void Start() {
@@ -97,7 +96,7 @@ namespace DSTEd.Core {
                 this.steam.LoadGame(new DSTC());
                 this.steam.LoadGame(new DSTS());
                 this.steam.LoadGame(new DSTM());
-
+                this.lua = new Core.LUA.LUA();
                 this.ide.Init();
 
                 return true;

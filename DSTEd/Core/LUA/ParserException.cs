@@ -24,6 +24,20 @@ namespace DSTEd.Core.LUA {
             this.Parse(e.DecoratedMessage);
         }
 
+        public ParserException(InterpreterException e, string reference) {
+            this.message = "Error on Interpreter";
+            this.reference = reference;
+            this.description = e.Message;
+            this.Parse(e.DecoratedMessage);
+        }
+
+        public ParserException(InternalErrorException e, string reference) {
+            this.message = "Internal Error";
+            this.reference = reference;
+            this.description = e.Message;
+            this.Parse(e.DecoratedMessage);
+        }
+
         public string GetMessage() {
             return this.message;
         }
@@ -76,7 +90,11 @@ namespace DSTEd.Core.LUA {
         }
 
         public override string ToString() {
-            return string.Format("[LUA] {0}: {1} on Line {2} with Position {3}:\n\t{4}", this.GetMessage(), this.GetDescription(), this.GetLine(), this.GetPosition(), this.GetReference(true));
+            if (this.GetLine() > 0) {
+                return string.Format("[LUA] {0}: {1} on Line {2} with Position {3}:\n\t{4}", this.GetMessage(), this.GetDescription(), this.GetLine(), this.GetPosition(), this.GetReference(true));
+            }
+
+            return string.Format("[LUA] {0}: {1}", this.GetMessage(), this.GetDescription(), this.GetLine());
         }
     }
 }
