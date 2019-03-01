@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using DSTEd.Core.IO;
 
 namespace DSTEd.Core.Klei {
@@ -37,7 +38,9 @@ namespace DSTEd.Core.Klei {
         }
 
         private void Update() {
-            this.files = new FileSystem(this.GetPath());
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle, new Action(delegate () {
+                this.files = new FileSystem(this.GetPath());
+            }));
         }
 
         public FileSystem GetFiles() {
@@ -71,26 +74,30 @@ namespace DSTEd.Core.Klei {
         }
 
         public void AddTool(string name, string executable) {
-            MenuItem item = AddToolMenu(name, executable);
-            MenuItem tools = Boot.Core().GetIDE().GetTools();
-            tools.Items.Add(item);
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate () {
+                MenuItem item = AddToolMenu(name, executable);
+                MenuItem tools = Boot.Core().GetIDE().GetTools();
+                tools.Items.Add(item);
+            }));
         }
 
         public void AddSubTool(string node, string name, string executable) {
-            MenuItem item = AddToolMenu(name, executable);
-            MenuItem tools = Boot.Core().GetIDE().GetTools();
-            MenuItem found = null;
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate () {
+                MenuItem item = AddToolMenu(name, executable);
+                MenuItem tools = Boot.Core().GetIDE().GetTools();
+                MenuItem found = null;
 
-            foreach (MenuItem entry in tools.Items) {
-                if (entry.Name == node) {
-                    found = entry;
-                    break;
+                foreach (MenuItem entry in tools.Items) {
+                    if (entry.Name == node) {
+                        found = entry;
+                        break;
+                    }
                 }
-            }
 
-            if (found != null) {
-                found.Items.Add(item);
-            }
+                if (found != null) {
+                    found.Items.Add(item);
+                }
+            }));
         }
     }
 }

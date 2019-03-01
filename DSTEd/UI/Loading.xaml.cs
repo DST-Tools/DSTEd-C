@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using DSTEd.Core;
 
 namespace DSTEd.UI {
@@ -21,6 +22,12 @@ namespace DSTEd.UI {
             Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(delegate () {
                 progress.Value = value;
             }));
+        }
+
+        private void OnMove(object sender, MouseEventArgs e) {
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                this.DragMove();
+            }
         }
 
         public void Wait() {
@@ -51,34 +58,31 @@ namespace DSTEd.UI {
             int position = -1;
 
             Task.Run(() => {
-                Logger.Info("[Loading] working... " + position + " / " + complete + " (Run: " + (this.IsRunning() ? "Yes" : "No") + ")");
-
-                while (position + 1 < complete) {
+                do {
                     if (this.IsRunning()) {
                         ++position;
                         var entry = this.workers[position];
                         String name = entry.Key;
                         Func<Boolean> callback = entry.Value;
 
-                        Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(delegate () {
+                        Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate () {
                             if (!callback()) {
                                 this.Wait();
                             }
-
-                            this.SetProgress(position * 100 / complete);
-                            Thread.Sleep(1000);
                         })).Wait();
 
-                        Task.Delay(1000);
+                        this.SetProgress(position * 100 / complete);
+                        Thread.Sleep(300);
                     }
 
                     if (position >= complete) {
                         break;
                     }
-                }
+                } while (position + 1 < complete);
 
-                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.ApplicationIdle, new Action(delegate () {
-                    this.SetProgress(100);
+                this.SetProgress(100);
+
+                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate () {
                     this.callback_success();
                 }));
             });

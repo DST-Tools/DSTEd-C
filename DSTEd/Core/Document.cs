@@ -3,6 +3,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 using DSTEd.UI.Contents;
 
 namespace DSTEd.Core {
@@ -77,13 +79,15 @@ namespace DSTEd.Core {
             this.SetTitle(Path.GetFileName(file));
             this.file = file;
 
-            try {
-                using (StreamReader reader = new StreamReader(this.GetFile(), Encoding.UTF8)) {
-                    this.file_content = reader.ReadToEnd();
-                    this.is_content_loaded = true;
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle, new Action(delegate () {
+                try {
+                    using (StreamReader reader = new StreamReader(this.GetFile(), Encoding.UTF8)) {
+                        this.file_content = reader.ReadToEnd();
+                        this.is_content_loaded = true;
+                    }
+                } catch (IOException) {
                 }
-            } catch (IOException) {
-            }
+            }));
         }
 
         public string GetName() {

@@ -110,13 +110,14 @@ namespace DSTEd.Core {
             this.loading.Run("STEAM_WORKSHOP", delegate () {
                 Logger.Info("Load mods...");
 
-                this.steam.GetWorkShop().GetPublishedMods(322330, delegate(WorkshopItem[] items) {
+                this.steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
                     Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
 
                     for (int index = 0; index < items.Length; index++) {
                         Logger.Info(items[index].ToString());
                     }
                 });
+
                 return true;
             });
 
