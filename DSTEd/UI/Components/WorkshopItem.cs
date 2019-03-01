@@ -4,8 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using DSTEd.Core;
 using DSTEd.Core.IO;
+using DSTEd.Core.Klei.Data;
 using DSTEd.Core.LUA;
-using MoonSharp.Interpreter;
 
 namespace DSTEd.UI.Components {
     class WorkshopItem : TreeViewItem {
@@ -41,8 +41,8 @@ namespace DSTEd.UI.Components {
 
             Logger.Error("[WorkshopItem] OK: " + this.file.GetName());
 
-            ModInfo info = LUAInterpreter.GetModInfo(content, delegate(SyntaxErrorException e) {
-                Logger.Error("[WorkshopItem] ModInfo is broken: " + e.Message + "\n" + e.StackTrace);
+            ModInfo info = Boot.Core().GetLUA().GetModInfo(content, delegate (ParserException e) {
+                Logger.Error("[WorkshopItem] ModInfo is broken: " + e);
             });
 
             info.SetID(Int32.Parse(this.file.GetName().Replace("workshop-", "")));

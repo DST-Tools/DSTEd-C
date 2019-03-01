@@ -13,11 +13,15 @@ using DSTEd.UI.Components;
  * http://dontstarveapi.com/tutorials/mod-files-and-structure/modicon-xml/
  */
 namespace DSTEd.Core.Contents.Editors {
-    public class TEX : Container {
+    public class TEX : Container, DocumentHandler {
         private Document document = null;
         private Canvas canvas = null;
 
         public TEX() {
+
+        }
+
+        public void OnInit() {
 
         }
 

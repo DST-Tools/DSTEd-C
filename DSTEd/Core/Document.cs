@@ -2,9 +2,14 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using DSTEd.UI.Contents;
 
 namespace DSTEd.Core {
+    public interface DocumentHandler {
+        void OnInit();
+    }
+
     public class Document {
         public enum State {
             CREATED,
@@ -26,10 +31,27 @@ namespace DSTEd.Core {
         private object content = null;
         private string file_content = null;
         private Boolean is_closeable = true;
+        private Boolean is_content_created = false;
+        private Boolean is_content_loaded = false;
+        private Boolean is_inited = false;
 
         public Document(Editor type) {
             this.type = type;
-        }
+
+            Task.Run(() => {
+                do {
+                    if(this.is_content_created && this.is_content_loaded && this.is_inited) {
+                        if (this.content != null && typeof(DocumentHandler).IsAssignableFrom(this.content.GetType())) {
+                            ((DocumentHandler) this.content).OnInit();
+                        }
+
+                        break;
+                    }
+
+                    Task.Delay(500);
+                } while (true);
+            });
+    }
 
         public string GetHash() {
             return Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}-{1}", this.GetTitle(), this.GetFile()))));
@@ -56,8 +78,9 @@ namespace DSTEd.Core {
             this.file = file;
 
             try {
-                using (StreamReader reader = new StreamReader(this.GetFile(), true)) {
+                using (StreamReader reader = new StreamReader(this.GetFile(), Encoding.UTF8)) {
                     this.file_content = reader.ReadToEnd();
+                    this.is_content_loaded = true;
                 }
             } catch (IOException) {
             }
@@ -81,8 +104,9 @@ namespace DSTEd.Core {
 
         public void Init() {
             this.callback_changed?.Invoke(this, State.CREATED);
+            this.is_inited = true;
         }
-
+        
         public void UpdateChanges() {
             this.callback_changed?.Invoke(this, State.CHANGED);
         }
@@ -110,6 +134,8 @@ namespace DSTEd.Core {
                     this.content = new Contents.Editors.ModInfo(this);
                     break;
             }
+
+            this.is_content_created = true;
 
             return content;
         }

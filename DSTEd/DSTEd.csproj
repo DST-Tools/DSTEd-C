@@ -101,6 +101,9 @@
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\IO\FileNode.cs" />
     <Compile Include="Core\IO\FileSystem.cs" />
+    <Compile Include="Core\Klei\Data\ModInfo.cs" />
+    <Compile Include="Core\Klei\Data\Options.cs" />
+    <Compile Include="Core\Klei\Data\OptionsEntry.cs" />
     <Compile Include="Core\Klei\Games\DSTC.cs" />
     <Compile Include="Core\Klei\Games\DSTM.cs" />
     <Compile Include="Core\Klei\Games\DSTS.cs" />
@@ -109,7 +112,11 @@
     <Compile Include="Core\Klei\KTEX\KTEX.cs" />
     <Compile Include="Core\Klei\Squish\Flags.cs" />
     <Compile Include="Core\Klei\Squish\Squish.cs" />
-    <Compile Include="Core\Klei\LUAInterpreter.cs" />
+    <Compile Include="Core\Klei\Data\TheSim.cs" />
+    <Compile Include="Core\LUACompletion.cs" />
+    <Compile Include="Core\LUA\LUA.cs" />
+    <Compile Include="Core\LUA\Parser.cs" />
+    <Compile Include="Core\LUA\ParserException.cs" />
     <Compile Include="Core\Menu.cs" />
     <Compile Include="Core\Steam\BBCode\Node.cs" />
     <Compile Include="Core\Steam\BBCode\NodeType.cs" />

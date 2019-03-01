@@ -1,96 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using MoonSharp.Interpreter;
 
-namespace DSTEd.Core.LUA {
-    class OptionsEntry {
-        private string description;
-        private string hover;
-        private object data;
-
-        public OptionsEntry(TablePair data) {
-            Console.WriteLine(data.ToString());
-        }
-
-        public string GetDescription() {
-            return this.description;
-        }
-
-        public string GetHover() {
-            return this.hover;
-        }
-
-        public object GetData() {
-            return this.data;
-        }
-    }
-
-    class Options {
-        private string name;
-        private string label;
-        private string longlabel;
-        private string hover;
-        private object defaults;
-        private List<OptionsEntry> options;
-
-        public Options(IEnumerable<TablePair> pairs) {
-            foreach (TablePair entry in pairs) {
-                switch (entry.Key.String) {
-                    case "name":
-                        this.name = entry.Value.String;
-                        break;
-                    case "label":
-                        this.label = entry.Value.String;
-                        break;
-                    case "longlabel":
-                        this.longlabel = entry.Value.String;
-                        break;
-                    case "hover":
-                        this.hover = entry.Value.String;
-                        break;
-                    case "default":
-                        this.defaults = entry.Value.ToObject();
-                        break;
-                    case "options":
-                        this.options = new List<OptionsEntry>();
-
-                        foreach (TablePair sub in entry.Value.Table.Pairs) {
-                            this.options.Add(new OptionsEntry(sub));
-                        }
-                        break;
-                }
-            }
-        }
-
-        public string GetName() {
-            return this.name;
-        }
-
-        public string GetLabel() {
-            return this.label;
-        }
-
-        public string GetLongLabel() {
-            return this.longlabel;
-        }
-
-        public string GetHover() {
-            return this.hover;
-        }
-
-        public object GetDefaults() {
-            return this.defaults;
-        }
-
-        public List<OptionsEntry> GetOptions() {
-            return this.options;
-        }
-
-
-    }
-
-    class ModInfo {
+namespace DSTEd.Core.Klei.Data {
+    public class ModInfo {
         private int id;
         private string name = null;
         private string version = null;
@@ -305,47 +218,6 @@ namespace DSTEd.Core.LUA {
 
         public List<string> GetTags() {
             return this.server_filter_tags;
-        }
-    }
-
-
-    class LUAInterpreter {
-        public static Script Run(string lua, Action<SyntaxErrorException> callback) {
-            try {
-                Script script = new Script();
-                script.DoString(lua);
-                return script;
-            } catch (SyntaxErrorException e) {
-                callback?.Invoke(e);
-            }
-
-            return null;
-        }
-
-        public static ModInfo GetModInfo(string lua, Action<SyntaxErrorException> callback) {
-            Script result = LUAInterpreter.Run(lua, callback);
-
-            if (result == null) {
-                ModInfo info = new ModInfo(null);
-                info.SetName(GetModName(lua));
-                return info;
-            }
-
-            return new ModInfo(result.Globals);
-        }
-
-        public static string GetModName(string lua) {
-            try {
-                Match match = new Regex("name(:?[\\s]+)?=(:?[\\s]+)?\"(.*)\"").Match(lua);
-
-                if (match.Success) {
-                    return match.Groups[match.Groups.Count - 1].Value;
-                }
-            } catch (Exception) {
-                /* Do Nothing */
-            }
-
-            return null;
         }
     }
 }

@@ -13,9 +13,10 @@ namespace DSTEd.Core {
         private Loading loading = null;
         private Steam.Steam steam = null;
         private Configuration configuration = null;
+        private Core.LUA.LUA lua;
 
         public DSTEd() {
-
+            this.lua = new Core.LUA.LUA();
         }
 
         public void Start() {
@@ -126,6 +127,10 @@ namespace DSTEd.Core {
 
         public IDE GetIDE() {
             return this.ide;
+        }
+
+        public LUA.LUA GetLUA() {
+            return this.lua;
         }
 
         public Steam.Steam GetSteam() {

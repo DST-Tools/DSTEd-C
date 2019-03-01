@@ -52,7 +52,7 @@ namespace DSTEd.Core.Contents.Editors {
         }
     }
 
-    class Properties : ScrollViewer {
+    class Properties : ScrollViewer, DocumentHandler {
         private Grid container = null;
         private int row = 0;
         public enum Type {
@@ -84,6 +84,10 @@ namespace DSTEd.Core.Contents.Editors {
             this.container.VerticalAlignment = VerticalAlignment.Top;
             this.CreateHeader(title, icon, description);
             this.AddChild(this.container);
+        }
+
+        public void OnInit() {
+
         }
 
         public void Disabled(string message) {
