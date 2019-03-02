@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Compression;
 
-namespace DSTEd.Core.Contents.Editors
+namespace DSTEd.Core.IO
 {
     class Zip:IDisposable
     {
