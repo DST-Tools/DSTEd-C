@@ -11,7 +11,7 @@ namespace DSTEd.Core.Klei {
         protected string name = null;
         protected string path = null;
         protected string executable = null;
-        private KleiDebugger debugger;
+        protected KleiDebugger debugger;
         private Boolean is_main = false;
         private FileSystem files = null;
         
