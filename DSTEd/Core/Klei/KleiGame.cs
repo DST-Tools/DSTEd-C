@@ -94,7 +94,7 @@ namespace DSTEd.Core.Klei {
                     }
                     catch(System.ComponentModel.Win32Exception ex)
                     {
-                        Logger.Warn("KleiGame.cs, RunGameLambda\n", ex.Message);
+                        Logger.Warn("KleiGame.cs, RunGameLambda\n", ex.Message);//mainly file notfound.
                     }
                     catch (InvalidOperationException)
                     {
