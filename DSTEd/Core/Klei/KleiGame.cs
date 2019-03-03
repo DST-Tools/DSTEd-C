@@ -11,11 +11,32 @@ namespace DSTEd.Core.Klei {
         protected string name = null;
         protected string path = null;
         protected string executable = null;
+        protected Process AppProcess = null;
+        public class ConsoleIO
+        {
+            public System.IO.StreamReader ConOut;
+            public System.IO.StreamWriter ConIn;
+            public System.IO.StreamReader ConErr;
+        }
+        protected ConsoleIO AppConsole;
+
         private Boolean is_main = false;
         private FileSystem files = null;
 
-        public KleiGame() {}
-        
+
+
+        public KleiGame()
+        {
+            AppConsole = new ConsoleIO();
+
+            AppProcess = new Process();
+            AppProcess.StartInfo.UseShellExecute = false;
+            AppProcess.StartInfo.RedirectStandardInput = true;
+            AppProcess.StartInfo.RedirectStandardOutput = true;
+            AppProcess.StartInfo.RedirectStandardError = true;
+            //AppProcess.StartInfo.CreateNoWindow = true; //for server?
+        }
+
         public string GetName() {
             return this.name;
         }
@@ -61,11 +82,27 @@ namespace DSTEd.Core.Klei {
             item.Header = I18N.__(name);
 
             if (executable != null) {
-                item.Click += new RoutedEventHandler(delegate (object sender, RoutedEventArgs e) {
-                    try {
-                        Process.Start(this.GetPath() + "/" + executable);
-                    } catch {
-                        Logger.Error("Can't open executable: " + this.GetPath() + "/" + executable);
+                item.Click += new RoutedEventHandler(delegate (object sender, RoutedEventArgs e) 
+                {
+                    AppProcess.StartInfo.FileName = System.IO.Path.GetFullPath(this.path + "\\" + this.executable);
+                    try
+                    {
+                        AppProcess.Start();
+                        AppConsole.ConIn = AppProcess.StandardInput;
+                        AppConsole.ConOut = AppProcess.StandardOutput;
+                        AppConsole.ConErr = AppProcess.StandardError;
+                    }
+                    catch(System.ComponentModel.Win32Exception ex)
+                    {
+                        Logger.Warn("KleiGame.cs, RunGameLambda\n", ex.Message);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Logger.Warn("KleiGame.cs, RunGameLambda\n", "Wrong StartInfo");
+                    }
+                    catch (Exception)
+                    {
+                        Logger.Warn("KleiGame.cs, RunGameLambda\n", "unkown error");
                     }
                 });
             }
