@@ -38,17 +38,22 @@ namespace DSTEd.Core.Klei {
 
         public void SendCommand(string LUAcommand)
         {
-            input.WriteLine(LUAcommand);
+            if(readytouse)
+                input.WriteLine(LUAcommand);
         }
 
         public async System.Threading.Tasks.Task<string> Read()
         {
-            return await output.ReadToEndAsync();
+            if(readytouse)
+                return await output.ReadToEndAsync();
+            return null;
         }
 
         public string ReadError()
         {
-            return error.ReadToEnd();
+            if(readytouse)
+                return error.ReadToEnd();
+            return null;
         }
     }
 }
