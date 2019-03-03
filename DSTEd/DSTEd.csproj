@@ -109,6 +109,7 @@
     <Compile Include="Core\Klei\Games\DSTC.cs" />
     <Compile Include="Core\Klei\Games\DSTM.cs" />
     <Compile Include="Core\Klei\Games\DSTS.cs" />
+    <Compile Include="Core\Klei\KleiDebugger.cs" />
     <Compile Include="Core\Klei\KleiGame.cs" />
     <Compile Include="Core\Klei\KleiTools.cs" />
     <Compile Include="Core\Klei\KTEX\KTEX.cs" />

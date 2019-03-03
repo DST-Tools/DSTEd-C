@@ -89,9 +89,7 @@
             <MenuItem Name="VIEW" Header="{Core:I18N_XAML View}" Grid.Column="3">
                 <MenuItem Name="VIEW_WELCOME" Header="{Core:I18N_XAML Welcome}" Click="OnMenu" IsCheckable="true" IsChecked="False" />
             </MenuItem>
-            <MenuItem Header="{Core:I18N_XAML Debug}" Grid.Column="4">
-                <MenuItem Name="DEBUG_RUN_DST" Header="{Core:I18N_XAML Run DST}" Click="OnMenu" />
-            </MenuItem>
+            <MenuItem Name="debug" Header="{Core:I18N_XAML Debug}" Grid.Column="4" />
             <MenuItem Name="tools" Header="{Core:I18N_XAML Tools}" Grid.Column="5" />
             <MenuItem Name="SETTINGS" Header="{Core:I18N_XAML Settings}" Grid.Column="6" Click="OnMenu" />
             <MenuItem Header="{Core:I18N_XAML Help}" Grid.Column="7">

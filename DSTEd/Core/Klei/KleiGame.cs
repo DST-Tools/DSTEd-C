@@ -11,30 +11,16 @@ namespace DSTEd.Core.Klei {
         protected string name = null;
         protected string path = null;
         protected string executable = null;
-        protected Process AppProcess = null;
-        public class ConsoleIO
-        {
-            public System.IO.StreamReader ConOut;
-            public System.IO.StreamWriter ConIn;
-            public System.IO.StreamReader ConErr;
-        }
-        protected ConsoleIO AppConsole;
-
+        private KleiDebugger debugger;
         private Boolean is_main = false;
         private FileSystem files = null;
+        
+        public KleiGame() {
+            this.debugger = new KleiDebugger();
+        }
 
-
-
-        public KleiGame()
-        {
-            AppConsole = new ConsoleIO();
-
-            AppProcess = new Process();
-            AppProcess.StartInfo.UseShellExecute = false;
-            AppProcess.StartInfo.RedirectStandardInput = true;
-            AppProcess.StartInfo.RedirectStandardOutput = true;
-            AppProcess.StartInfo.RedirectStandardError = true;
-            //AppProcess.StartInfo.CreateNoWindow = true; //for server?
+        public KleiDebugger GetDebugger() {
+            return this.debugger;
         }
 
         public string GetName() {
@@ -76,33 +62,58 @@ namespace DSTEd.Core.Klei {
             return this.executable;
         }
 
+        private MenuItem AddDebugMenu(string name, string executable) {
+            MenuItem item = new MenuItem();
+            item.Name = name;
+            item.Header = I18N.__(name);
+
+            if (executable != null) {
+                item.Click += new RoutedEventHandler(delegate (object sender, RoutedEventArgs e) {
+                    this.GetDebugger().Attach(this.path + "\\" + this.executable);
+                });
+            }
+
+            return item;
+        }
+
+        public void AddDebug(string name, string executable) {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate () {
+                MenuItem item = AddDebugMenu(name, executable);
+                MenuItem debug = Boot.Core().GetIDE().GetDebug();
+                debug.Items.Add(item);
+            }));
+        }
+
+        public void AddSubDebug(string node, string name, string executable) {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate () {
+                MenuItem item = AddDebugMenu(name, executable);
+                MenuItem tools = Boot.Core().GetIDE().GetDebug();
+                MenuItem found = null;
+
+                foreach (MenuItem entry in tools.Items) {
+                    if (entry.Name == node) {
+                        found = entry;
+                        break;
+                    }
+                }
+
+                if (found != null) {
+                    found.Items.Add(item);
+                }
+            }));
+        }
+
         private MenuItem AddToolMenu(string name, string executable) {
             MenuItem item = new MenuItem();
             item.Name = name;
             item.Header = I18N.__(name);
 
             if (executable != null) {
-                item.Click += new RoutedEventHandler(delegate (object sender, RoutedEventArgs e) 
-                {
-                    AppProcess.StartInfo.FileName = System.IO.Path.GetFullPath(this.path + "\\" + this.executable);
-                    try
-                    {
-                        AppProcess.Start();
-                        AppConsole.ConIn = AppProcess.StandardInput;
-                        AppConsole.ConOut = AppProcess.StandardOutput;
-                        AppConsole.ConErr = AppProcess.StandardError;
-                    }
-                    catch(System.ComponentModel.Win32Exception ex)
-                    {
-                        Logger.Warn("KleiGame.cs, RunGameLambda\n", ex.Message);//mainly file notfound.
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        Logger.Warn("KleiGame.cs, RunGameLambda\n", "Wrong StartInfo");
-                    }
-                    catch (Exception)
-                    {
-                        Logger.Warn("KleiGame.cs, RunGameLambda\n", "unkown error");
+                item.Click += new RoutedEventHandler(delegate (object sender, RoutedEventArgs e) {
+                    try {
+                        Process.Start(this.GetPath() + "/" + executable);
+                    } catch {
+                        Logger.Error("Can't open executable: " + this.GetPath() + "/" + executable);
                     }
                 });
             }

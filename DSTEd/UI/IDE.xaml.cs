@@ -38,6 +38,10 @@ namespace DSTEd.UI {
             return this.tools;
         }
 
+        public System.Windows.Controls.MenuItem GetDebug() {
+            return this.debug;
+        }
+
         public Menu GetMenu() {
             return this.menu;
         }
