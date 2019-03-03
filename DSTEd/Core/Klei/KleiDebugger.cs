@@ -12,9 +12,6 @@ using Xceed.Wpf.AvalonDock.Layout;
 namespace DSTEd.Core.Klei {
     public class KleiDebugger {
         protected Process process = null;
-        private StackPanel debugger_content;
-        private StackPanel debugger_output;
-        private StackPanel debugger_errors;
 
         public KleiDebugger() {
             this.process = new Process();
@@ -32,32 +29,18 @@ namespace DSTEd.Core.Klei {
             this.process.ErrorDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e) {
                 AddError(e.Data);
             });
-
-            // Bind Debug-UI
-            this.debugger_content = Boot.Core().GetIDE().GetDebugPanel().GetDebugger();
-            this.debugger_output = Boot.Core().GetIDE().GetDebugPanel().GetOutput();
-            this.debugger_errors = Boot.Core().GetIDE().GetDebugPanel().GetErrors();
         }
 
         public void AddOutput(string text) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
-                this.debugger_output.Children.Add(new DebugEntry(text));
-                ((ScrollViewer) this.debugger_output.Parent).ScrollToEnd();
-            }));
+            Boot.Core().GetIDE().GetDebugPanel().AddOutput(text);
         }
 
         public void AddError(string text) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
-                this.debugger_errors.Children.Add(new DebugEntry(text));
-                ((ScrollViewer) this.debugger_errors.Parent).ScrollToEnd();
-            }));
+            Boot.Core().GetIDE().GetDebugPanel().AddError(text);
         }
 
         public void AddDebug(string text) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
-                this.debugger_content.Children.Add(new DebugEntry(text));
-                ((ScrollViewer) this.debugger_content.Parent).ScrollToEnd();
-            }));
+            Boot.Core().GetIDE().GetDebugPanel().AddDebug(text);
         }
 
         public void Attach(string executable) {

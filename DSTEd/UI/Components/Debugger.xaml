@@ -8,9 +8,32 @@
     xmlns:Core="clr-namespace:DSTEd.Core"
     mc:Ignorable="d">
     <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_debug" Title="{Core:I18N_XAML Debugger}">
-        <ScrollViewer>
-            <StackPanel x:Name="debugger_debug" />
-        </ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#333333">
+                <Label Foreground="#FFFFFF" Content="{Core:I18N_XAML 'Target:'}" />
+                <ComboBox Name="target" SelectedIndex="0" MinWidth="80">
+                    <ComboBoxItem Content="Debugger" />
+                    <ComboBoxItem Content="Client" />
+                    <ComboBoxItem Content="Server" />
+                </ComboBox>
+                <Button Name="clear" Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClear">
+                    <StackPanel Orientation="Horizontal" Margin="-8,-4,-6,-4">
+                        <Image Height="16" Width="16" Margin="0,0,2,0" Source="/DSTEd;component/Assets/Icons/Clear.png" />
+                        <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
+                    </StackPanel>
+                </Button>
+                <CheckBox Margin="10,6,0,0" FontSize="11" Name="autoscroll" Content="Autoscroll" IsChecked="{Binding Autoscroll}" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="1">
+                <StackPanel x:Name="debugger_debug" />
+            </ScrollViewer>
+            <TextBox Grid.Row="2" Name="input" />
+        </Grid>
     </avalonDock:LayoutAnchorable>
     <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_output" Title="{Core:I18N_XAML Output}">
         <ScrollViewer>
