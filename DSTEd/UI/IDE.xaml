@@ -6,6 +6,7 @@
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:Core="clr-namespace:DSTEd.Core"
+        xmlns:Components="clr-namespace:DSTEd.UI.Components"
         mc:Ignorable="d"
         Title="DSTEd" Icon="/DSTEd;component/Assets/Logo.ico" Background="#FF2D2D30" Foreground="#FFFFFFFF"
         VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="1"
@@ -124,20 +125,24 @@
             
             <!-- Layout -->
             <avalonDock:LayoutRoot PropertyChanged="OnLayoutRootPropertyChanged">
-                <avalonDock:LayoutPanel Orientation="Horizontal">
+                <avalonDock:LayoutPanel Orientation="Vertical">
+                    <avalonDock:LayoutPanel Orientation="Horizontal">
+                        <!-- Sidebar -->
+                        <avalonDock:LayoutAnchorablePaneGroup DockWidth="200">
+                            <avalonDock:LayoutAnchorablePane>
+                                <avalonDock:LayoutAnchorable x:Name="workspace_mods" ContentId="workspace_mods" Title="{Core:I18N_XAML Mods}" />
+                                <avalonDock:LayoutAnchorable x:Name="workspace_core" ContentId="workspace_core" Title="{Core:I18N_XAML Core}" />
+                            </avalonDock:LayoutAnchorablePane>
+                        </avalonDock:LayoutAnchorablePaneGroup>
 
-                    <!-- Sidebar -->
-                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="200">
-                        <avalonDock:LayoutAnchorablePane>
-                            <avalonDock:LayoutAnchorable x:Name="workspace_mods" ContentId="workspace_mods" Title="{Core:I18N_XAML Mods}" />
-                            <avalonDock:LayoutAnchorable x:Name="workspace_core" ContentId="workspace_core" Title="{Core:I18N_XAML Core}" />
-                        </avalonDock:LayoutAnchorablePane>
-                    </avalonDock:LayoutAnchorablePaneGroup>
-
-                    <!-- Content -->
-                    <avalonDock:LayoutDocumentPaneGroup>
-                        <avalonDock:LayoutDocumentPane x:Name="editors" />
-                    </avalonDock:LayoutDocumentPaneGroup>
+                        <!-- Content -->
+                        <avalonDock:LayoutDocumentPaneGroup>
+                            <avalonDock:LayoutDocumentPane x:Name="editors" />
+                        </avalonDock:LayoutDocumentPaneGroup>
+                    </avalonDock:LayoutPanel>
+                    
+                    <!-- Footer -->
+                    <Components:Debugger x:Name="debugger" />
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>

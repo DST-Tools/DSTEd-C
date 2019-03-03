@@ -9,6 +9,9 @@ namespace DSTEd.Core.Klei.Data {
 
         public OptionsEntry(TablePair data) {
             Console.WriteLine(data.ToString());
+            this.description = "";
+            this.hover = "";
+            this.data = (object) "";
         }
 
         public string GetDescription() {

@@ -11,6 +11,11 @@ namespace DSTEd.Core.Steam {
 
         public Account(Steam steam) {
             this.steam = steam;
+            this.logged_in = false;
+        }
+
+        public Boolean IsLoggedIn() {
+            return this.logged_in;
         }
     }
 }

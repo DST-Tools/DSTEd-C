@@ -127,6 +127,10 @@ namespace DSTEd.UI {
             return this.editors;
         }
 
+        public DSTEd.UI.Components.Debugger GetDebugPanel() {
+            return this.debugger;
+        }
+
         public void SetActiveDocument(Document document) {
             foreach (LayoutDocument entry in this.editors.Children) {
                 if (entry.GetType() == typeof(AvalonDocument)) {

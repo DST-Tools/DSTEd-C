@@ -1,0 +1,25 @@
+﻿<avalonDock:LayoutAnchorablePane
+    xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+    x:Class="DSTEd.UI.Components.Debugger"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:Core="clr-namespace:DSTEd.Core"
+    mc:Ignorable="d">
+    <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_debug" Title="{Core:I18N_XAML Debugger}">
+        <ScrollViewer>
+            <StackPanel x:Name="debugger_debug" />
+        </ScrollViewer>
+    </avalonDock:LayoutAnchorable>
+    <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_output" Title="{Core:I18N_XAML Output}">
+        <ScrollViewer>
+            <StackPanel x:Name="debugger_output" />
+        </ScrollViewer>
+    </avalonDock:LayoutAnchorable>
+    <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_errors" Title="{Core:I18N_XAML Errors}">
+        <ScrollViewer>
+            <StackPanel x:Name="debugger_errors" />
+        </ScrollViewer>
+    </avalonDock:LayoutAnchorable>
+</avalonDock:LayoutAnchorablePane>

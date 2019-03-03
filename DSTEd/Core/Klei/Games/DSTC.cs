@@ -6,8 +6,7 @@
             this.executable = "bin/dontstarve_steam.exe";
             this.SetMainGame();
 
-            this.AddDebug("DST_CLIENT", null);
-            this.AddSubDebug("DST_CLIENT", "RUN_DST", this.executable);
+            this.AddDebug("RUN_DST", this.executable);
         }
     }
 }
