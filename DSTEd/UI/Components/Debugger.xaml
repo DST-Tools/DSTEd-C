@@ -22,13 +22,13 @@
                     <ComboBoxItem Content="Client" />
                     <ComboBoxItem Content="Server" />
                 </ComboBox>
-                <Button Name="clear" Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClear">
+                <Button Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClearDebugger">
                     <StackPanel Orientation="Horizontal" Margin="-8,-4,-6,-4">
                         <Image Height="16" Width="16" Margin="0,0,2,0" Source="/DSTEd;component/Assets/Icons/Clear.png" />
                         <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
                     </StackPanel>
                 </Button>
-                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll" Content="Autoscroll" IsChecked="True" />
+                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_debugger" Content="Autoscroll" IsChecked="True" />
             </StackPanel>
             <ScrollViewer Grid.Row="1">
                 <StackPanel x:Name="debugger_debug" />
@@ -37,13 +37,43 @@
         </Grid>
     </avalonDock:LayoutAnchorable>
     <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_output" Title="{Core:I18N_XAML Output}">
-        <ScrollViewer>
-            <StackPanel x:Name="debugger_output" />
-        </ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#333333">
+                <Button Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClearOutput">
+                    <StackPanel Orientation="Horizontal" Margin="-8,-4,-6,-4">
+                        <Image Height="16" Width="16" Margin="0,0,2,0" Source="/DSTEd;component/Assets/Icons/Clear.png" />
+                        <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_output" Content="Autoscroll" IsChecked="True" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="1">
+                <StackPanel x:Name="debugger_output" />
+            </ScrollViewer>
+        </Grid>
     </avalonDock:LayoutAnchorable>
     <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_errors" Title="{Core:I18N_XAML Errors}">
-        <ScrollViewer>
-            <StackPanel x:Name="debugger_errors" />
-        </ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#333333">
+                <Button Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClearErrors">
+                    <StackPanel Orientation="Horizontal" Margin="-8,-4,-6,-4">
+                        <Image Height="16" Width="16" Margin="0,0,2,0" Source="/DSTEd;component/Assets/Icons/Clear.png" />
+                        <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_errors" Content="Autoscroll" IsChecked="True" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="1">
+                <StackPanel x:Name="debugger_errors" />
+            </ScrollViewer>
+        </Grid>
     </avalonDock:LayoutAnchorable>
 </avalonDock:LayoutAnchorablePane>

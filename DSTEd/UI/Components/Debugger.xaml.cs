@@ -39,7 +39,7 @@ namespace DSTEd.UI.Components {
                 this.debugger_output.Children.Add(new DebugEntry(text));
             }));
 
-            Scroll(this.debugger_output);
+            Scroll(this.debugger_output, this.autoscroll_debugger.IsChecking());
         }
 
         public void AddError(string text) {
@@ -47,7 +47,7 @@ namespace DSTEd.UI.Components {
                 this.debugger_errors.Children.Add(new DebugEntry(text));
             }));
 
-            Scroll(this.debugger_errors);
+            Scroll(this.debugger_errors, this.autoscroll_errors.IsChecking());
         }
 
         public void AddDebug(string text) {
@@ -55,12 +55,12 @@ namespace DSTEd.UI.Components {
                 this.debugger_debug.Children.Add(new DebugEntry(text));
             }));
 
-            Scroll(this.debugger_debug);
+            Scroll(this.debugger_debug, this.autoscroll_output.IsChecking());
         }
 
-        public void Scroll(StackPanel element) {
+        public void Scroll(StackPanel element, Boolean autoscroll) {
             Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
-                if (this.autoscroll.IsChecking()) {
+                if (autoscroll) {
                     ((ScrollViewer) element.Parent).ScrollToVerticalOffset(((ScrollViewer) element.Parent).ScrollableHeight - 0.01);
                 }
             }));
@@ -76,8 +76,16 @@ namespace DSTEd.UI.Components {
             }));
         }
 
-        public void OnClear(object sender, RoutedEventArgs e) {
+        public void OnClearDebugger(object sender, RoutedEventArgs e) {
+            Clear(this.debugger_debug);
+        }
+
+        public void OnClearOutput(object sender, RoutedEventArgs e) {
             Clear(this.debugger_output);
+        }
+
+        public void OnClearErrors(object sender, RoutedEventArgs e) {
+            Clear(this.debugger_errors);
         }
     }
 }
