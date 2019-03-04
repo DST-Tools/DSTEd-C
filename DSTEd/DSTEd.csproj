@@ -140,6 +140,7 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Components\BBCodePanel.cs" />
+    <Compile Include="UI\Components\CheckBox.cs" />
     <Compile Include="UI\Components\Container.cs" />
     <Compile Include="UI\Components\DebugEntry.cs" />
     <Compile Include="UI\Components\Debugger.xaml.cs">

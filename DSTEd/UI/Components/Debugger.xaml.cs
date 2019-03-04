@@ -7,14 +7,9 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DSTEd.UI.Components {
     public partial class Debugger : LayoutAnchorablePane {
-        public bool Autoscroll {
-            get; set;
-        } = true;
-
         public Debugger() {
             InitializeComponent();
 
-            this.autoscroll.DataContext = this;
             this.DockMinHeight = 100;
             this.DockHeight = new GridLength(200);
 
@@ -64,9 +59,11 @@ namespace DSTEd.UI.Components {
         }
 
         public void Scroll(StackPanel element) {
-            if (this.Autoscroll) {
-                ((ScrollViewer) element.Parent).ScrollToEnd();
-            }
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
+                if (this.autoscroll.IsChecking()) {
+                    ((ScrollViewer) element.Parent).ScrollToVerticalOffset(((ScrollViewer) element.Parent).ScrollableHeight - 0.01);
+                }
+            }));
         }
 
         public void Clear(StackPanel element) {

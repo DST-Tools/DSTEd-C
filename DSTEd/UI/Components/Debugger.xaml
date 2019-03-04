@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:Core="clr-namespace:DSTEd.Core"
+    xmlns:Components="clr-namespace:DSTEd.UI.Components"
     mc:Ignorable="d">
     <avalonDock:LayoutAnchorable CanHide="True" ContentId="debugger_debug" Title="{Core:I18N_XAML Debugger}">
         <Grid>
@@ -27,7 +28,7 @@
                         <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
                     </StackPanel>
                 </Button>
-                <CheckBox Margin="10,6,0,0" FontSize="11" Name="autoscroll" Content="Autoscroll" IsChecked="{Binding Autoscroll}" />
+                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll" Content="Autoscroll" IsChecked="True" />
             </StackPanel>
             <ScrollViewer Grid.Row="1">
                 <StackPanel x:Name="debugger_debug" />
