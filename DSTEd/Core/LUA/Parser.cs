@@ -53,29 +53,49 @@ namespace DSTEd.Core.LUA {
 
                 script.Globals["TheSim"] = UserData.Create(sim);
             } catch (ScriptRuntimeException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             } catch (SyntaxErrorException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             } catch (InternalErrorException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             } catch (InterpreterException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             }
             return script;
         }
@@ -96,29 +116,49 @@ namespace DSTEd.Core.LUA {
 
                 return script;
             } catch (ScriptRuntimeException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             } catch (SyntaxErrorException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             } catch (InternalErrorException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             } catch (InterpreterException e) {
+                ParserException exception;
+
                 if (this.lua == null) {
-                    callback?.Invoke(new ParserException(e, lua));
+                    exception = new ParserException(e, lua);
                 } else {
-                    callback?.Invoke(new ParserException(e, this.lua + "\n\n" + lua));
+                    exception = new ParserException(e, this.lua + "\n\n" + lua);
                 }
+
+                callback?.Invoke(exception);
+                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
             }
 
             return null;

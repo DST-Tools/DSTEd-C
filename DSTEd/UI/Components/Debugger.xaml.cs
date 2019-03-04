@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using DSTEd.Core.LUA;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DSTEd.UI.Components {
@@ -86,6 +87,10 @@ namespace DSTEd.UI.Components {
 
         public void OnClearErrors(object sender, RoutedEventArgs e) {
             Clear(this.debugger_errors);
+        }
+
+        internal void AddError(ParserException exception) {
+            AddError(exception.ToString());
         }
     }
 }
