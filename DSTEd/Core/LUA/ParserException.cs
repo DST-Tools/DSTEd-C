@@ -94,7 +94,7 @@ namespace DSTEd.Core.LUA {
                 return string.Format("[LUA] {0}: {1} on Line {2} with Position {3}:\n\t{4}", this.GetMessage(), this.GetDescription(), this.GetLine(), this.GetPosition(), this.GetReference(true));
             }
 
-            return string.Format("[LUA] {0}: {1}", this.GetMessage(), this.GetDescription(), this.GetLine());
+            return string.Format("[LUA] {0}: {1}", this.GetMessage(), this.GetDescription());
         }
     }
 }
