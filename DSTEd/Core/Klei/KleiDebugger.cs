@@ -20,6 +20,8 @@ namespace DSTEd.Core.Klei {
             this.process.StartInfo.RedirectStandardInput = false; // Currently disabled, because the process waiting for an action
             this.process.StartInfo.RedirectStandardOutput = true;
             this.process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.StandardErrorEncoding = new System.Text.UnicodeEncoding();
+            process.StartInfo.StandardErrorEncoding = new System.Text.UnicodeEncoding();
             this.process.EnableRaisingEvents = true;
 
             this.process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e) {
@@ -56,6 +58,9 @@ namespace DSTEd.Core.Klei {
                 try {
                     AddDebug("Start Application...");
                     this.process.Start();
+
+                    //AddDebug("Set encoding as UTF-8");
+                    //process.
 
                     AddDebug("Invoke Output-Proxy");
                     this.process.BeginOutputReadLine();

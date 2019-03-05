@@ -13,6 +13,7 @@ namespace DSTEd.UI.Components {
 
             this.DockMinHeight = 100;
             this.DockHeight = new GridLength(200);
+            //debugger_debug.Children.
 
             this.input.KeyDown += new KeyEventHandler(delegate (object sender, KeyEventArgs e) {
                 if (Keyboard.IsKeyDown(Key.Enter)) {
