@@ -11,6 +11,7 @@ namespace DSTEd.UI.Components {
             this.Text = content;
             this.Padding = new Thickness(5, 2, 5, 2);
             this.ContextMenu = context;
+            
 
             context.Add(I18N.__("Copy"), delegate () {
                 Clipboard.SetText(this.Text);
