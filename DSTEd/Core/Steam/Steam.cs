@@ -83,8 +83,33 @@ namespace DSTEd.Core.Steam {
 
         public void GetNews(Action<List<KeyValue>> callback) {
             using (dynamic steamNews = WebAPI.GetInterface("ISteamNews")) {
-                KeyValue kvNews = steamNews.GetNewsForApp(appid: 322330);
-                callback(kvNews["newsitems"]["newsitem"].Children);
+                try
+                {
+                    KeyValue kvNews = steamNews.GetNewsForApp(appid: 322330);
+                    callback(kvNews["newsitems"]["newsitem"].Children);
+                }
+                catch (System.Net.Http.HttpRequestException e)
+                {
+                    if(e.HResult == -2146233079)//hex will cause some problems........
+                    {
+                        var ProcessList = System.Diagnostics.Process.GetProcesses();
+                        foreach (System.Diagnostics.Process P in ProcessList)
+                        {
+                            if(P.ProcessName == "steamcommunity_302.caddy")
+                            {
+                                //中国特色
+                                Logger.Warn("Steamcommunity302证书出错");
+                                UI.Dialog.Open("获取新闻失败，请到steamcommunity302重新生成代理证书！"
+                                    , "警告", UI.Dialog.Buttons.OK);
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
         }
     }
