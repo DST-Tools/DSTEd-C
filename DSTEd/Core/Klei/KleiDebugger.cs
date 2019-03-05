@@ -20,8 +20,8 @@ namespace DSTEd.Core.Klei {
             this.process.StartInfo.RedirectStandardInput = false; // Currently disabled, because the process waiting for an action
             this.process.StartInfo.RedirectStandardOutput = true;
             this.process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.StandardErrorEncoding = new System.Text.UnicodeEncoding();
-            process.StartInfo.StandardErrorEncoding = new System.Text.UnicodeEncoding();
+			process.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
+			process.StartInfo.StandardErrorEncoding = System.Text.Encoding.UTF8;
             this.process.EnableRaisingEvents = true;
 
             this.process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e) {
