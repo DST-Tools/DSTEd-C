@@ -99,16 +99,18 @@ namespace DSTEd.Core.Steam {
                             if(P.ProcessName == "steamcommunity_302.caddy")
                             {
                                 //中国特色
+                                //no necessary of I18N, only steam users in china use this
                                 Logger.Warn("Steamcommunity302证书出错");
                                 UI.Dialog.Open("获取新闻失败，请到steamcommunity302重新生成代理证书！"
                                     , "警告", UI.Dialog.Buttons.OK);
                                 return;
                             }
                         }
+                        Logger.Warn("Invalid steam SSL Cert.");
                     }
                     else
                     {
-                        throw;
+                        //do nothing.
                     }
                 }
             }
