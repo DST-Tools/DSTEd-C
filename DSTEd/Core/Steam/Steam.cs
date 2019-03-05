@@ -92,6 +92,7 @@ namespace DSTEd.Core.Steam {
                 {
                     if(e.HResult == -2146233079)//hex will cause some problems........
                     {
+                        //this HResult means invalid SSL cert
                         var ProcessList = System.Diagnostics.Process.GetProcesses();
                         foreach (System.Diagnostics.Process P in ProcessList)
                         {
