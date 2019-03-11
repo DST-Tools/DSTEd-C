@@ -6,7 +6,8 @@
             this.executable = "bin/dontstarve_steam.exe";
             this.SetMainGame();
 
-            this.AddDebug("RUN_DST", this.executable);
+            //this.AddDebug("RUN_DST", this.executable);
+			//not supported so far. [Akarinnnnn]:try using another process to run?
         }
     }
 }

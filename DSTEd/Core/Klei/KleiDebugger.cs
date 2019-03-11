@@ -33,6 +33,11 @@ namespace DSTEd.Core.Klei {
             });
         }
 
+		public ProcessStartInfo GetStartInfo()
+		{
+			return process.StartInfo;
+		}
+
         public void AddOutput(string text) {
             Boot.Core().GetIDE().GetDebugPanel().AddOutput(text);
         }
