@@ -38,6 +38,16 @@ namespace DSTEd.Core.Klei {
 			return process.StartInfo;
 		}
 
+		public void SendCommand(string LuaCommand)
+		{
+			process.StandardInput.WriteLine(LuaCommand);
+		}
+
+		public void ForceShutdown()
+		{
+			process.Kill();
+		}
+
         public void AddOutput(string text) {
             Boot.Core().GetIDE().GetDebugPanel().AddOutput(text);
         }

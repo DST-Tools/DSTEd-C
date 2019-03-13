@@ -103,5 +103,16 @@ namespace DSTEd.Core.Klei.Games {
 			if (Argument.tickrate != null)
 				arg += "\"-tickrate \" " + '"' + Argument.tickrate + '"' + " ";
 		}
+
+		#region Commands
+		public void Shutdown()
+		{
+			GetDebugger().SendCommand("ShutDown()");
+		}
+		public void Spawn(string ItemName)
+		{
+			GetDebugger().SendCommand(string.Format("c_spawn({0})",ItemName));
+		}
+		#endregion
 	}
 }
