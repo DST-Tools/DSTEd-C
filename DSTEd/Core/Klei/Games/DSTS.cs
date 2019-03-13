@@ -35,6 +35,21 @@ namespace DSTEd.Core.Klei.Games {
 				tickrate = null;
 			}
 		}
+		private string findrs()
+		{
+			if (Argument.persistent_storage_root != null)
+				return Argument.persistent_storage_root;
+			else
+			{
+				string MyDocuments = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+				if (MyDocuments != null)
+				{
+					return MyDocuments + "\\Klei";
+				}
+				else
+					throw new System.IO.DirectoryNotFoundException("MyDocuments not found, please specify a root storage directory.");
+			}
+		}
 		public DSTS(ARG arg) : base()
 		{
 			Argument = arg;
@@ -46,12 +61,8 @@ namespace DSTEd.Core.Klei.Games {
 		}
 		public void AddMod(string modfoldername)
 		{
-			string rs;
+			string rs = findrs();
 			byte[] buffier = { 0 };
-			if(Argument.persistent_storage_root!= null)
-				rs = Argument.persistent_storage_root;
-			else
-				rs = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "\\Klei";
 			string modoverride = rs + '\\' + Argument.config_dir + '\\' + Argument.cluster + '\\' + Argument.shard + '\\' + "modoverrides.lua";
 
 			using (var file = new System.IO.FileStream(modoverride, System.IO.FileMode.Open))
@@ -68,11 +79,7 @@ namespace DSTEd.Core.Klei.Games {
 		}
 		public void ClearMod()
 		{
-			string rs;
-			if (Argument.persistent_storage_root != null)
-				rs = Argument.persistent_storage_root;
-			else
-				rs = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "\\Klei";
+			string rs = findrs();
 			string modoverride = rs + '\\' + Argument.config_dir + '\\' + Argument.cluster + '\\' + Argument.shard + '\\' + "modoverrides.lua";
 			var w = new System.IO.FileStream(modoverride, System.IO.FileMode.Truncate);
 			var buff = Encoding.UTF8.GetBytes("return\n{\n}");
