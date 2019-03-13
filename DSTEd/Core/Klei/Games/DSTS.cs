@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Text.RegularExpressions;
 
 namespace DSTEd.Core.Klei.Games {
@@ -8,10 +11,35 @@ namespace DSTEd.Core.Klei.Games {
             this.id = 343050;
             this.name = I18N.__("Server");
             this.executable = "bin/dontstarve_dedicated_server_nullrenderer.exe";
-			AddDebug("Run debug server", executable);
-			//add sub menu, with "Restart" and "Shutfown"?
-        }
+			AddDebug("Server", null);
+			AddSubDebug("Server", "Run_debug_server", executable);
+			AddSubDebugv2("Server", "KILL", "ShutDown Debug Server", (object sender, RoutedEventArgs arg) => { Shutdown(); });
+			AddSubDebugv2("Server", "SPAWN", "Spawn an item",
+				(object a, RoutedEventArgs b) =>
+				{
+					//TODO: open a dialog, and ask user for item name.
+				});
+		}
 		
+		private void AddSubDebugv2(string node, string name, string header, RoutedEventHandler function)
+		{
+			var menuItem = new MenuItem
+			{
+				Name = name,
+				Header = I18N.__(header),
+			};
+			menuItem.Click += function;
+			var dbg = Boot.Core().GetIDE().GetDebug();
+			foreach (MenuItem item in dbg.Items)
+			{
+				if(item.Name == node)
+				{
+					item.Items.Add(menuItem);
+					break;
+				}
+			}
+		}
+
 		public struct ARG//persistent_storage_root/cluster/shard
 		{
 			public string cluster;
@@ -54,9 +82,10 @@ namespace DSTEd.Core.Klei.Games {
 			this.id = 343050;
 			this.name = I18N.__("Server");
 			this.executable = "bin/dontstarve_dedicated_server_nullrenderer.exe";
-			AddDebug("Run debug server", executable);
+			AddDebug("Server", null);
 			setarg();
 		}
+		
 		public void AddMod(string modfoldername)
 		{
 			string rs = findrs();
@@ -105,7 +134,11 @@ namespace DSTEd.Core.Klei.Games {
 		#region Commands
 		public void Shutdown()
 		{
-			GetDebugger().SendCommand("ShutDown()");
+			GetDebugger().SendCommand("Shutdown()");
+		}
+		public void SendCommand(string LuaCommand)
+		{
+			GetDebugger().SendCommand(LuaCommand);
 		}
 		public void Spawn(string ItemName)
 		{
