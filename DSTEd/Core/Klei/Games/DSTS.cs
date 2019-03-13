@@ -28,7 +28,7 @@ namespace DSTEd.Core.Klei.Games {
 				this.cluster = cluster;
 				this.shard = shard;
 				this.offline = offline;
-				config_dir = null;
+				config_dir = "Don't Strave Together";
 				backup_log = null;
 				persistent_storage_root = null;
 				maxplayers = null;
@@ -43,9 +43,7 @@ namespace DSTEd.Core.Klei.Games {
 			{
 				string MyDocuments = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
 				if (MyDocuments != null)
-				{
 					return MyDocuments + "\\Klei";
-				}
 				else
 					throw new System.IO.DirectoryNotFoundException("MyDocuments not found, please specify a root storage directory.");
 			}
