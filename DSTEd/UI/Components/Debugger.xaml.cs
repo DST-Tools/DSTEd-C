@@ -18,6 +18,22 @@ namespace DSTEd.UI.Components {
             this.input.KeyDown += new KeyEventHandler(delegate (object sender, KeyEventArgs e) {
                 if (Keyboard.IsKeyDown(Key.Enter)) {
                     AddDebug(this.input.Text);
+					switch (((ComboBoxItem)target.SelectedItem).Content)
+					{
+						case "Server":
+							foreach(var g in Boot.Core().GetSteam().GetGames())
+							{
+								if(g.GetID() == 343050)
+								{
+									((Core.Klei.Games.DSTS)g).SendCommand(input.Text);
+								}
+							}
+							break;
+						case "Debug":
+							//make some DSTEd command? 
+							break;
+					}
+
                     this.input.Text = "";
                     this.input.Focus();
                 }

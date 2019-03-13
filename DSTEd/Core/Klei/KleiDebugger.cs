@@ -17,7 +17,7 @@ namespace DSTEd.Core.Klei {
             this.process = new Process();
             this.process.StartInfo.UseShellExecute = false;
             //this.process.StartInfo.CreateNoWindow = true; //for server?
-            this.process.StartInfo.RedirectStandardInput = false; // Currently disabled, because the process waiting for an action
+            this.process.StartInfo.RedirectStandardInput = true; // Currently disabled, because the process waiting for an action  //enabled 2019/3/14,test success
             this.process.StartInfo.RedirectStandardOutput = true;
             this.process.StartInfo.RedirectStandardError = true;
 			process.StartInfo.StandardOutputEncoding = System.Text.Encoding.UTF8;
@@ -36,6 +36,16 @@ namespace DSTEd.Core.Klei {
 		public ProcessStartInfo GetStartInfo()
 		{
 			return process.StartInfo;
+		}
+
+		public void SendCommand(string LuaCommand)
+		{
+			process.StandardInput.WriteLineAsync(LuaCommand);
+		}
+
+		public void ForceShutdown()
+		{
+			process.Kill();
 		}
 
         public void AddOutput(string text) {
