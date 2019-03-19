@@ -71,7 +71,7 @@ namespace DSTEd.UI {
         }
 
         private void dockManager_DocumentClosing(object sender, DocumentClosingEventArgs e) {
-            Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+			/*Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                 this.GetMenu().Update();
 
                 if (result == Dialog.Result.Yes) {
@@ -80,8 +80,26 @@ namespace DSTEd.UI {
 
                 e.Cancel = true;
                 return true;
-            });
+            });*/
+			Dialog.Open(I18N.__("Save And close?"), "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, SaveDialog);
         }
+
+		private bool SaveDialog(Dialog.Result r)
+		{
+			switch (r)
+			{
+				case Dialog.Result.No:
+					//Do nothing
+					break;
+				case Dialog.Result.Yes:
+					SaveActiveDocument();
+					break;
+				default:
+					//Do nothing too.
+					break;
+			}
+			return true;
+		}
 
         private void OnReloadManager(object sender, RoutedEventArgs e) {
         }
