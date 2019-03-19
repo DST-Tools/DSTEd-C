@@ -18,7 +18,7 @@ namespace DSTEd.UI {
             this.menu = new Menu();
             this.dockManager.Theme = new Dark();
             this.Closing += this.IDE_Closing;
-        }
+		}
 
         public void UpdateWelcome(bool state) {
             this.VIEW_WELCOME.IsChecked = state;
@@ -212,5 +212,10 @@ namespace DSTEd.UI {
         private void IDE_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             Environment.Exit(0);
         }
-    }
+
+		private void SaveExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+		{
+			SaveActiveDocument();
+		}
+	}
 }

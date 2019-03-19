@@ -33,8 +33,13 @@
         </ResourceDictionary>
     </Window.Resources>
     <Window.InputBindings>
-        <KeyBinding Gesture="Ctrl+S" Command="{}"/>
+        <KeyBinding Gesture="Ctrl+S" Command="ApplicationCommands.Save"/>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Core:I18N_XAML SaveAll}"/>
     </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="SaveExecuted"/>
+        <CommandBinding Command=""/>
+    </Window.CommandBindings>
     <Grid x:Name="layoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
