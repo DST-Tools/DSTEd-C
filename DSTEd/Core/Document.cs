@@ -123,6 +123,16 @@ namespace DSTEd.Core {
             this.callback_changed = callback;
         }
 
+		public void SaveDocument()
+		{
+			Logger.Info("Saving file, path:", file);
+			using (var wop = new FileStream(file,FileMode.Truncate))
+			{
+				byte[] buff = Encoding.UTF8.GetBytes(file_content);
+				wop.Write(buff, 0, buff.Length);
+			}
+		}
+
         internal object GetContent() {
             switch (this.type) {
                 case Editor.NONE:

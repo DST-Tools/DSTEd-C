@@ -140,6 +140,37 @@ namespace DSTEd.UI {
             }
         }
 
+		public void SaveActiveDocument()
+		{
+			GetActiveDocument().SaveDocument();
+		}
+
+		public void SaveAllDocument()
+		{
+			foreach (LayoutDocument child in editors.Children)
+			{
+				if(child.GetType() == typeof(AvalonDocument))
+				{
+					AvalonDocument avalondoc = (AvalonDocument)child;
+					avalondoc.GetDocument().SaveDocument();
+				}
+			}
+		}
+
+		public Document GetActiveDocument()
+		{
+			foreach (LayoutDocument child in editors.Children)
+			{
+				if (child.GetType() == typeof(AvalonDocument))
+				{
+					AvalonDocument avalondoc = (AvalonDocument)child;
+					if (avalondoc.IsActive)
+						return avalondoc.GetDocument();
+				}
+			}
+			return null;
+		}
+
         internal void OnChanged(Document document, Document.State state) {
             Logger.Info("[IDE] Changed document: " + document.GetName() + " >> " + state);
 

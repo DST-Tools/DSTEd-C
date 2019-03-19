@@ -32,7 +32,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+S" Command="{}"/>
+    </Window.InputBindings>
     <Grid x:Name="layoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -67,8 +69,8 @@
                     <MenuItem Name="FILE_OPEN_RECENT" Header="{Core:I18N_XAML - No Recent Files -}" Click="OnMenu" IsEnabled="False" />
                 </MenuItem>
                 <Separator/>
-                <MenuItem Name="FILE_SAVE" Header="{Core:I18N_XAML Save}" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="FILE_SAVE_ALL" Header="{Core:I18N_XAML Save All}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="FILE_SAVE" Header="{Core:I18N_XAML Save}" IsEnabled="True" Click="OnMenu"/>
+                <MenuItem Name="FILE_SAVE_ALL" Header="{Core:I18N_XAML Save All}" IsEnabled="True" Click="OnMenu" />
                 <MenuItem Name="FILE_CLOSE" Header="{Core:I18N_XAML Close}" Click="OnMenu" />
                 <MenuItem Name="FILE_CLOSE_ALL" Header="{Core:I18N_XAML Close All}" Click="OnMenu" />
                 <Separator/>
