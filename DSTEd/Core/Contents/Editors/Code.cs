@@ -53,7 +53,8 @@ namespace DSTEd.Core.Contents.Editors {
         }
 
         private void OnChange(object sender, EventArgs e) {
-            this.document.UpdateChanges();
+			document.ChangeContent(Text);//TODO:only change content at saving
+			this.document.UpdateChanges();
         }
 
         private void OnEnter(object sender, TextCompositionEventArgs e) {

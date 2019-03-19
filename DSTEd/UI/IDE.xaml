@@ -14,6 +14,8 @@
         Height="600" Width="800" MinWidth="400" MinHeight="300">
     <Window.Resources>
         <ResourceDictionary>
+            <RoutedUICommand Text="Save All opened doocument" x:Key="SAVE_ALL"/>
+            <!--<RoutedUICommand Text="Save Actived Document" x:Key="SAVE_ACTIVE"/>-->
             <sys:Double x:Key="IconSize">14</sys:Double>
             <ResourceDictionary.MergedDictionaries>
                 <!-- https://github.com/microexs/AvalonDock.Themes.VS2013 -->
@@ -34,11 +36,11 @@
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+S" Command="ApplicationCommands.Save"/>
-        <KeyBinding Gesture="Ctrl+Shift+S" Command="{Core:I18N_XAML SaveAll}"/>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{StaticResource SAVE_ALL}"/>
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Save" Executed="SaveExecuted"/>
-        <CommandBinding Command=""/>
+        <CommandBinding Command="{StaticResource SAVE_ALL}" Executed="SaveAllExecuted"/>
     </Window.CommandBindings>
     <Grid x:Name="layoutRoot">
         <Grid.RowDefinitions>

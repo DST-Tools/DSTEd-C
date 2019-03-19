@@ -115,6 +115,11 @@ namespace DSTEd.Core {
             this.callback_changed?.Invoke(this, State.CHANGED);
         }
 
+		public void ChangeContent(string changed)
+		{
+			file_content = changed;
+		}
+
         public void Remove() {
             this.callback_changed?.Invoke(this, State.REMOVED);
         }

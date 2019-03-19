@@ -142,6 +142,7 @@ namespace DSTEd.UI {
 
 		public void SaveActiveDocument()
 		{
+			//GetActiveDocument().ChangeContent(GetEditors().SelectedContent.)
 			GetActiveDocument().SaveDocument();
 		}
 
@@ -216,6 +217,12 @@ namespace DSTEd.UI {
 		private void SaveExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
 		{
 			SaveActiveDocument();
+			menu.Update();
+		}
+		private void SaveAllExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+		{
+			SaveAllDocument();
+			menu.Update();
 		}
 	}
 }
