@@ -18,7 +18,7 @@ namespace DSTEd.UI {
             this.menu = new Menu();
             this.dockManager.Theme = new Dark();
             this.Closing += this.IDE_Closing;
-        }
+		}
 
         public void UpdateWelcome(bool state) {
             this.VIEW_WELCOME.IsChecked = state;
@@ -71,7 +71,7 @@ namespace DSTEd.UI {
         }
 
         private void dockManager_DocumentClosing(object sender, DocumentClosingEventArgs e) {
-            Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+			/*Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                 this.GetMenu().Update();
 
                 if (result == Dialog.Result.Yes) {
@@ -80,8 +80,26 @@ namespace DSTEd.UI {
 
                 e.Cancel = true;
                 return true;
-            });
+            });*/
+			Dialog.Open(I18N.__("Save And close?"), "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, SaveDialog);
         }
+
+		private bool SaveDialog(Dialog.Result r)
+		{
+			switch (r)
+			{
+				case Dialog.Result.No:
+					//Do nothing
+					break;
+				case Dialog.Result.Yes:
+					SaveActiveDocument();
+					break;
+				default:
+					//Do nothing too.
+					break;
+			}
+			return true;
+		}
 
         private void OnReloadManager(object sender, RoutedEventArgs e) {
         }
@@ -140,6 +158,38 @@ namespace DSTEd.UI {
             }
         }
 
+		public void SaveActiveDocument()
+		{
+			//GetActiveDocument().ChangeContent(GetEditors().SelectedContent.)
+			GetActiveDocument().SaveDocument();
+		}
+
+		public void SaveAllDocument()
+		{
+			foreach (LayoutDocument child in editors.Children)
+			{
+				if(child.GetType() == typeof(AvalonDocument))
+				{
+					AvalonDocument avalondoc = (AvalonDocument)child;
+					avalondoc.GetDocument().SaveDocument();
+				}
+			}
+		}
+
+		public Document GetActiveDocument()
+		{
+			foreach (LayoutDocument child in editors.Children)
+			{
+				if (child.GetType() == typeof(AvalonDocument))
+				{
+					AvalonDocument avalondoc = (AvalonDocument)child;
+					if (avalondoc.IsActive)
+						return avalondoc.GetDocument();
+				}
+			}
+			return null;
+		}
+
         internal void OnChanged(Document document, Document.State state) {
             Logger.Info("[IDE] Changed document: " + document.GetName() + " >> " + state);
 
@@ -181,5 +231,16 @@ namespace DSTEd.UI {
         private void IDE_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             Environment.Exit(0);
         }
-    }
+
+		private void SaveExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+		{
+			SaveActiveDocument();
+			menu.Update();
+		}
+		private void SaveAllExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+		{
+			SaveAllDocument();
+			menu.Update();
+		}
+	}
 }

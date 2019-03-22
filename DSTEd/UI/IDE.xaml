@@ -14,6 +14,8 @@
         Height="600" Width="800" MinWidth="400" MinHeight="300">
     <Window.Resources>
         <ResourceDictionary>
+            <RoutedUICommand Text="Save All opened doocument" x:Key="SAVE_ALL"/>
+            <!--<RoutedUICommand Text="Save Actived Document" x:Key="SAVE_ACTIVE"/>-->
             <sys:Double x:Key="IconSize">14</sys:Double>
             <ResourceDictionary.MergedDictionaries>
                 <!-- https://github.com/microexs/AvalonDock.Themes.VS2013 -->
@@ -32,7 +34,14 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+S" Command="ApplicationCommands.Save"/>
+        <KeyBinding Gesture="Ctrl+Shift+S" Command="{StaticResource SAVE_ALL}"/>
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="SaveExecuted"/>
+        <CommandBinding Command="{StaticResource SAVE_ALL}" Executed="SaveAllExecuted"/>
+    </Window.CommandBindings>
     <Grid x:Name="layoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -67,8 +76,8 @@
                     <MenuItem Name="FILE_OPEN_RECENT" Header="{Core:I18N_XAML - No Recent Files -}" Click="OnMenu" IsEnabled="False" />
                 </MenuItem>
                 <Separator/>
-                <MenuItem Name="FILE_SAVE" Header="{Core:I18N_XAML Save}" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="FILE_SAVE_ALL" Header="{Core:I18N_XAML Save All}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="FILE_SAVE" Header="{Core:I18N_XAML Save}" IsEnabled="True" Click="OnMenu"/>
+                <MenuItem Name="FILE_SAVE_ALL" Header="{Core:I18N_XAML Save All}" IsEnabled="True" Click="OnMenu" />
                 <MenuItem Name="FILE_CLOSE" Header="{Core:I18N_XAML Close}" Click="OnMenu" />
                 <MenuItem Name="FILE_CLOSE_ALL" Header="{Core:I18N_XAML Close All}" Click="OnMenu" />
                 <Separator/>

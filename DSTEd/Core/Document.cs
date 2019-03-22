@@ -115,6 +115,11 @@ namespace DSTEd.Core {
             this.callback_changed?.Invoke(this, State.CHANGED);
         }
 
+		public void ChangeContent(string changed)
+		{
+			file_content = changed;
+		}
+
         public void Remove() {
             this.callback_changed?.Invoke(this, State.REMOVED);
         }
@@ -122,6 +127,16 @@ namespace DSTEd.Core {
         public void OnChange(Action<Document, State> callback) {
             this.callback_changed = callback;
         }
+
+		public void SaveDocument()
+		{
+			Logger.Info("Saving file, path:", file);
+			using (var wop = new FileStream(file,FileMode.Truncate))
+			{
+				byte[] buff = Encoding.UTF8.GetBytes(file_content);
+				wop.Write(buff, 0, buff.Length);
+			}
+		}
 
         internal object GetContent() {
             switch (this.type) {

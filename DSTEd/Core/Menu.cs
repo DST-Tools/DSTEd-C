@@ -24,8 +24,13 @@ namespace DSTEd.Core {
 
         public void Handle(string name, MenuItem menu) {
             switch (name) {
-                //case "FILE_NEW_PROJECT":
-                //case "FILE_NEW_FILE":
+                /*case "FILE_NEW_PROJECT":
+					Dialog.Open();
+					//todo: add sample project file
+					break;*/
+                case "FILE_NEW_FILE":
+
+					break;
                 //case "FILE_NEW_ASSET":
                 case "FILE_OPEN":
                     // @ToDo implement with own style (https://github.com/jkells/folder-browser-dialog-example/blob/master/FolderBrowserDialogEx.cs)
@@ -43,8 +48,12 @@ namespace DSTEd.Core {
                     }
                     break;
                 //case "FILE_OPEN_RECENT":
-                //case "FILE_SAVE":
-                //case "FILE_SAVE_ALL":
+                case "FILE_SAVE":
+					Boot.Core().GetIDE().SaveActiveDocument();
+					break;
+                case "FILE_SAVE_ALL":
+					Boot.Core().GetIDE().SaveAllDocument();
+					break;
                 //case "FILE_CLOSE":
                 //case "FILE_CLOSE_ALL":
                 case "FILE_EXIT":
