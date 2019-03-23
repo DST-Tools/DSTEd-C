@@ -30,14 +30,25 @@ namespace DSTEd.Core.Contents.Editors {
             new XmlFoldingStrategy().UpdateFoldings(FoldingManager.Install(this.TextArea), this.Document);
         }
 
+        public bool IsDocumentEqual(int HashCode)
+        {
+            return document.GetHashCode() == HashCode;
+        }
+
         public void OnInit() {
             Script data = Boot.Core().GetLUA().GetParser().Run(this.document.GetFileContent(), true, delegate(ParserException e) {
                 Logger.Info(e);
-            });
+                //Logger.Info("Parse Lua failure,at ", document.GetFile());//after expanded scrpit was shown
+                //MoonSharp will expand require(), into whole file
 
-            foreach (DynValue key in data.Globals.Keys) {
-                Console.WriteLine("INIT LUA " + key.String);
-            }
+            });
+            
+			if(data!=null)
+			{
+				foreach (DynValue key in data.Globals.Keys) {
+					Console.WriteLine("INIT LUA " + key.String);
+				}
+			}
         }
 
         private IHighlightingDefinition LoadSyntax(string extension) {
@@ -53,7 +64,6 @@ namespace DSTEd.Core.Contents.Editors {
         }
 
         private void OnChange(object sender, EventArgs e) {
-			document.ChangeContent(Text);//TODO:only change content at saving
 			this.document.UpdateChanges();
         }
 

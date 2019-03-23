@@ -131,6 +131,12 @@ namespace DSTEd.Core {
 		public void SaveDocument()
 		{
 			Logger.Info("Saving file, path:", file);
+            
+            if(content is Contents.Editors.Code ce)
+            {
+                file_content = ce.Text;
+            }
+
 			using (var wop = new FileStream(file,FileMode.Truncate))
 			{
 				byte[] buff = Encoding.UTF8.GetBytes(file_content);
