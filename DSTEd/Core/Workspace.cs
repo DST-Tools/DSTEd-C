@@ -119,7 +119,7 @@ namespace DSTEd.Core {
 
         internal void ShowDocument(string file) {
             foreach (KeyValuePair<string, Document> entry in this.documents) {
-                if (entry.Key == file || entry.Value.GetFile() == file) {
+                if (/*entry.Key == file || /*Hashed */entry.Value.GetFile() == file) {
                     // @ToDo check content if its newer and ask for reloading...
                     Boot.Core().GetIDE().SetActiveDocument(entry.Value);
                 }
@@ -127,20 +127,24 @@ namespace DSTEd.Core {
         }
 
         internal bool ExistingDocument(string file) {
-            Boolean existing = false;
+            //Boolean existing = false;
 
             foreach (KeyValuePair<string, Document> entry in this.documents) {
-                if (entry.Key == file || entry.Value.GetFile() == file) {
-                    existing = true;
-                    break;
+                if (entry.Key == file/*hashed key,remove?*/ || entry.Value.GetFile() == file) {
+                    //existing = true;
+                    return true;
+                    //break;
                 }
             }
 
-            return existing;
+            return false;
         }
 
         public void RemoveDocument(Document document) {
-            document.Remove();
+            if (document == null)
+                return;
+			document.Remove();
+			//RemoveDocument(document);
             this.documents.Remove(document.GetHash());
         }
 
