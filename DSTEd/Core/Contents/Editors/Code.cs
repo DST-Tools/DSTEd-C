@@ -17,8 +17,8 @@ namespace DSTEd.Core.Contents.Editors {
     class Code : TextEditor, DocumentHandler {
         private Document document;
         private CompletionWindow completion;
-
-        public Code(Document document) {
+		private static List<LUACompletion> completions = new List<LUACompletion>();
+		public Code(Document document) {
             this.document = document;
             this.ShowLineNumbers = true;
             this.SyntaxHighlighting = LoadSyntax(Path.GetExtension(this.document.GetFile()));
@@ -26,9 +26,22 @@ namespace DSTEd.Core.Contents.Editors {
             this.Document.UpdateFinished += new EventHandler(OnChange);
             this.TextArea.TextEntering += OnEnter;
             this.TextArea.TextEntered += OnEntered;
-
+			completion = new CompletionWindow(this.TextArea);
+			init_basic_completion();
             new XmlFoldingStrategy().UpdateFoldings(FoldingManager.Install(this.TextArea), this.Document);
         }
+		
+        private void init_basic_completion()
+        {
+            completions.Add(new LUACompletion(LUACompletion.Icon.Function, "require()", I18N.__("Include other Lua script")));
+            completions.Add(new LUACompletion(LUACompletion.Icon.Keyword, "if", ""));
+			completions.Add(new LUACompletion(LUACompletion.Icon.Keyword, "else", ""));
+			completions.Add(new LUACompletion(LUACompletion.Icon.Keyword, "end", ""));
+			completions.Add(new LUACompletion(LUACompletion.Icon.Keyword, "true", ""));
+			completions.Add(new LUACompletion(LUACompletion.Icon.Keyword, "false", ""));
+			completions.Add(new LUACompletion(LUACompletion.Icon.Keyword, "function", ""));
+			completions.Add(new LUACompletion(LUACompletion.Icon.Keyword, "local", ""));
+		}
 
         public bool IsDocumentEqual(int HashCode)
         {
@@ -47,6 +60,7 @@ namespace DSTEd.Core.Contents.Editors {
 			{
 				foreach (DynValue key in data.Globals.Keys) {
 					Console.WriteLine("INIT LUA " + key.String);
+                    
 				}
 			}
         }
@@ -77,13 +91,16 @@ namespace DSTEd.Core.Contents.Editors {
 
         private void OnEntered(object sender, TextCompositionEventArgs e) {
             if(e.Text.Length >= 1) {
-                completion = new CompletionWindow(this.TextArea);
                 IList<ICompletionData> data = completion.CompletionList.CompletionData;
-                data.Add(new LUACompletion("Item1", "ABC"));
+				//data.Add(new LUACompletion("Item1", "ABC"));
+				foreach (var cpltions in completions)
+				{
+					data.Add(cpltions);
+				}
                 completion.Show();
                 completion.Closed += delegate {
-                    completion = null;
-                };
+					completion = null;
+				};
             }
         }
     }
