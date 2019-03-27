@@ -87,4 +87,30 @@ namespace DSTEd.Core
             textArea.Document.Replace(completionSegment, this.Text);
         }
     }
+	class FunctionCompleteion :ICompletionData
+	{
+		public string location;
+		public object Description { get; private set; }
+		public System.Windows.Media.ImageSource Image { get; private set; }
+		public object Content { get; private set; }
+		public double Priority { get; set; }
+		public string Text { get; private set; }
+		public FunctionCompleteion(string text,string desc,string loc)//base(text,desc)
+		{
+			Content = desc;
+			Description = desc;
+			Text = text;
+			var bm = new BitmapImage();
+			bm.BeginInit();
+			bm.UriSource = new Uri("");//assemble icon into DSTEd? or copy it into build out?
+			bm.EndInit();
+			Image = bm;
+			location = loc;
+		}
+
+		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
+		{
+			textArea.Document.Replace(completionSegment, Text + "(");
+		}
+	}
 }
