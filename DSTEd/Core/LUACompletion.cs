@@ -49,7 +49,7 @@ namespace DSTEd.Core
         }
 
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs) {
-			textArea.Document.Replace(completionSegment, Text.TrimStart(Text[0]));//.......complex but work
+			textArea.Document.Replace(completionSegment, Text);//.......complex but work
 		}
 
 		public int CompareTo(object obj)
@@ -110,7 +110,7 @@ namespace DSTEd.Core
 
 		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
 		{
-			textArea.Document.Replace(completionSegment, Text.TrimStart(Text[0]));
+			textArea.Document.Replace(completionSegment, Text);
 		}
 
 		public int CompareTo(object obj)

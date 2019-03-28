@@ -52,7 +52,7 @@ namespace DSTEd.Core.Contents.Editors {
         {
             return document.GetHashCode() == HashCode;
         }
-		[STAThread]
+		
         public void OnInit() {
             Script data = Boot.Core().GetLUA().GetParser().Run(this.document.GetFileContent(), true, delegate(ParserException e) {
                 Logger.Info(e);
@@ -121,7 +121,7 @@ namespace DSTEd.Core.Contents.Editors {
 
 		private void inserting(object s,EventArgs Arg)
 		{
-			//completion = new CompletionWindow(TextArea);
+			completion = new CompletionWindow(TextArea);
 			var dataref = completion.CompletionList.CompletionData;
 			if(Arg is TextCompositionEventArgs textarg)
 			{
