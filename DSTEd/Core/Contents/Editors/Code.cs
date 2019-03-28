@@ -16,9 +16,9 @@ using MoonSharp.Interpreter;
 namespace DSTEd.Core.Contents.Editors {
     class Code : TextEditor, DocumentHandler {
         private Document document;
-        private CompletionWindow completion;
-		private static List<LUACompletion> keyword = new List<LUACompletion>();
-		private static List<FunctionCompleteion> funclist = new List<FunctionCompleteion>();
+		private CompletionWindow completion;
+		private static List<KeywordCompleteion> keywords = new List<KeywordCompleteion>();
+		private List<FunctionCompleteion> funclist = new List<FunctionCompleteion>();
 		public Code(Document document) {
             this.document = document;
             this.ShowLineNumbers = true;
@@ -37,17 +37,17 @@ namespace DSTEd.Core.Contents.Editors {
 		}
         private static void init_basic_completion()
         {
-			funclist.Add(new FunctionCompleteion("require", I18N.__("Include other Lua script"), ""));
-            keyword.Add(new LUACompletion(LUACompletion.Icon.Keyword, "if", ""));
-			keyword.Add(new LUACompletion(LUACompletion.Icon.Keyword, "else", ""));
-			keyword.Add(new LUACompletion(LUACompletion.Icon.Keyword, "end", ""));
-			keyword.Add(new LUACompletion(LUACompletion.Icon.Keyword, "true", ""));
-			keyword.Add(new LUACompletion(LUACompletion.Icon.Keyword, "false", ""));
-			keyword.Add(new LUACompletion(LUACompletion.Icon.Keyword, "function", ""));
-			keyword.Add(new LUACompletion(LUACompletion.Icon.Keyword, "local", ""));
+            keywords.Add(new KeywordCompleteion("if", ""));
+			keywords.Add(new KeywordCompleteion("else", ""));
+			keywords.Add(new KeywordCompleteion("end", ""));
+			keywords.Add(new KeywordCompleteion("true", ""));
+			keywords.Add(new KeywordCompleteion("false", ""));
+			keywords.Add(new KeywordCompleteion("function", ""));
+			keywords.Add(new KeywordCompleteion("local", ""));
+			keywords.Add(new KeywordCompleteion("require", "require"));
 		}
 
-        public bool IsDocumentEqual(int HashCode)
+		public bool IsDocumentEqual(int HashCode)
         {
             return document.GetHashCode() == HashCode;
         }
@@ -88,36 +88,61 @@ namespace DSTEd.Core.Contents.Editors {
         private void OnEnter(object sender, TextCompositionEventArgs e) {
             if (e.Text.Length > 0 && completion != null) {
                 if (!char.IsLetterOrDigit(e.Text[0])) {
+					completion = new CompletionWindow(TextArea);
+					completion.CompletionList.InsertionRequested += inserting;
                     completion.CompletionList.RequestInsertion(e);
                 }
             }
         }
 
-        private void OnEntered(object sender, TextCompositionEventArgs e) {
-			if(e.Text[1] == ':')
+		private void inserting(object s,EventArgs Arg)
+		{
+			var dataref = completion.CompletionList.CompletionData;
+			if(Arg is TextCompositionEventArgs textarg)
 			{
-				completion = new CompletionWindow(TextArea);
+				if(textarg.Text[0]==':')
+				{
+					foreach (var F in funclist)
+					{
+						dataref.Add(F);
+					}
+				}
+
+			}
+
+		}
+
+        private void OnEntered(object sender, TextCompositionEventArgs e) {
+			/*completion = new CompletionWindow(TextArea);
+			completion.CompletionList.IsFiltering = true;
+			if (e.Text == ":")
+			{
 				var dataref = completion.CompletionList.CompletionData;
 				foreach (var func in funclist)
 				{
 					//list all functions first......
 					dataref.Add(func);
 				}
+				completion.Show();
+				completion.Closed += delegate
+				 {
+					 completion = null;
+				 };
+				return;
 			}
 
             if(e.Text.Length >= 1) {
-				completion = new CompletionWindow(TextArea);
                 IList<ICompletionData> data = completion.CompletionList.CompletionData;
-				foreach (var cpltions in keyword)
+				foreach (var keyword in keywords)
 				{
-					data.Add(cpltions);
+					data.Add(keyword);
 				}
 				//completion.
                 completion.Show();
                 completion.Closed += delegate {
 					completion = null;
 				};
-            }
+            }*/
         }
     }
 }

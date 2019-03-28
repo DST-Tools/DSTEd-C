@@ -10,57 +10,22 @@ using ICSharpCode.AvalonEdit.Editing;
 
 namespace DSTEd.Core
 {
-    class LUACompletion : ICompletionData {
+    class KeywordCompleteion : ICompletionData {
 
-        public enum Icon
-        {
-            //todo:
-            //add icon ID
-            //like
-            Function = 0,
-            Variable = 1,
-            Keyword = 2,
-        }
 
         public object Description {
             get; set;
         }
 
-        public LUACompletion(string text, string description) {
+        public KeywordCompleteion(string text, string description) {
             this.Text = text;
             this.Description = (object) description;
-
-        }
-
-        private Uri parse_iconuri(Icon id)
-        {
-            Uri ret = null;
-            switch (id)
-            {
-                //todo: find some icon and put them into assets
-                case Icon.Function:
-                    ret = new Uri("", UriKind.Relative);
-                    break;
-                case Icon.Variable:
-                    ret = new Uri("", UriKind.Relative);
-                    break;
-                default:
-					ret = new Uri("", UriKind.Relative);
-                    break;
-            }
-            return ret;
-        }
-
-        public LUACompletion(Icon whichicon, string text, string desc)
-        {
-            Text = text;
-            Description = desc;
-            var img = new BitmapImage();
-            img.BeginInit();
-            img.UriSource = parse_iconuri(whichicon);
-            img.EndInit();
-            Image = img;
-        }
+			var img = new BitmapImage();
+			img.BeginInit();
+			img.UriSource = new Uri("pack://application:,,,/DSTEd;component/Assets/Logo.png");
+			img.EndInit();
+			Image = img;
+		}
         
         public System.Windows.Media.ImageSource Image {
             get;
@@ -84,8 +49,8 @@ namespace DSTEd.Core
         }
 
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs) {
-            textArea.Document.Replace(completionSegment, this.Text);
-        }
+			textArea.Document.Replace(completionSegment, Text.TrimStart(Text[0]));//.......complex but work
+		}
     }
 	class FunctionCompleteion :ICompletionData
 	{
@@ -102,7 +67,7 @@ namespace DSTEd.Core
 			Text = text;
 			var bm = new BitmapImage();
 			bm.BeginInit();
-			bm.UriSource = new Uri("");//assemble icon into DSTEd? or copy it into build out?
+			bm.UriSource = new Uri("pack://application:,,,/DSTEd;component/Assets/Logo.png");
 			bm.EndInit();
 			Image = bm;
 			location = loc;
@@ -110,6 +75,7 @@ namespace DSTEd.Core
 
 		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
 		{
+			//completionSegment.Offset--;
 			textArea.Document.Replace(completionSegment, Text + "(");
 		}
 	}
