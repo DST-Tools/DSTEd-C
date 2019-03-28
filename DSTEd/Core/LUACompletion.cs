@@ -10,7 +10,7 @@ using ICSharpCode.AvalonEdit.Editing;
 
 namespace DSTEd.Core
 {
-    class KeywordCompleteion : ICompletionData {
+    class KeywordCompleteion : ICompletionData, IComparable {
 
 
         public object Description {
@@ -51,8 +51,13 @@ namespace DSTEd.Core
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs) {
 			textArea.Document.Replace(completionSegment, Text.TrimStart(Text[0]));//.......complex but work
 		}
-    }
-	class FunctionCompleteion :ICompletionData
+
+		public int CompareTo(object obj)
+		{
+			return Text.CompareTo(obj);
+		}
+	}
+	class FunctionCompleteion :ICompletionData,IComparable
 	{
 		public string location;
 		public object Description { get; private set; }
@@ -77,6 +82,40 @@ namespace DSTEd.Core
 		{
 			//completionSegment.Offset--;
 			textArea.Document.Replace(completionSegment, Text + "(");
+		}
+
+		public int CompareTo(object obj)
+		{
+			return Text.CompareTo(obj);
+		}
+	}
+	class VariableCompletion : ICompletionData,IComparable
+	{
+		public object Description { get; private set; }
+		public System.Windows.Media.ImageSource Image { get; private set; }
+		public object Content { get; private set; }
+		public double Priority { get; set; }
+		public string Text { get; private set; }
+		public VariableCompletion(string text, string desc)//base(text,desc)
+		{
+			Content = desc;
+			Description = desc;
+			Text = text;
+			var bm = new BitmapImage();
+			bm.BeginInit();
+			bm.UriSource = new Uri("pack://application:,,,/DSTEd;component/Assets/Logo.png");//maybe some icons is needed
+			bm.EndInit();
+			Image = bm;
+		}
+
+		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
+		{
+			textArea.Document.Replace(completionSegment, Text.TrimStart(Text[0]));
+		}
+
+		public int CompareTo(object obj)
+		{
+			return Text.CompareTo(obj);
 		}
 	}
 }

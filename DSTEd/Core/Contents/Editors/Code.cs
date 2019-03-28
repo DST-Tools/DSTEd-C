@@ -19,6 +19,7 @@ namespace DSTEd.Core.Contents.Editors {
 		private CompletionWindow completion;
 		private static List<KeywordCompleteion> keywords = new List<KeywordCompleteion>();
 		private List<FunctionCompleteion> funclist = new List<FunctionCompleteion>();
+		private List<VariableCompletion> varlist = new List<VariableCompletion>();
 		public Code(Document document) {
             this.document = document;
             this.ShowLineNumbers = true;
@@ -28,7 +29,7 @@ namespace DSTEd.Core.Contents.Editors {
             this.TextArea.TextEntering += OnEnter;
             this.TextArea.TextEntered += OnEntered;
 			completion = new CompletionWindow(this.TextArea);
-			//init_basic_completion();
+			OnInit();
             new XmlFoldingStrategy().UpdateFoldings(FoldingManager.Install(this.TextArea), this.Document);
         }
 		static Code()//run once,to initialize basic completions
@@ -37,35 +38,58 @@ namespace DSTEd.Core.Contents.Editors {
 		}
         private static void init_basic_completion()
         {
-            keywords.Add(new KeywordCompleteion("if", ""));
-			keywords.Add(new KeywordCompleteion("else", ""));
-			keywords.Add(new KeywordCompleteion("end", ""));
+            keywords.Add(new KeywordCompleteion("if\n", "if"));
+			keywords.Add(new KeywordCompleteion("else\n", "else"));
+			keywords.Add(new KeywordCompleteion("end\n", "end"));
 			keywords.Add(new KeywordCompleteion("true", ""));
 			keywords.Add(new KeywordCompleteion("false", ""));
 			keywords.Add(new KeywordCompleteion("function", ""));
 			keywords.Add(new KeywordCompleteion("local", ""));
-			keywords.Add(new KeywordCompleteion("require", "require"));
+			keywords.Add(new KeywordCompleteion("require(", "require"));
 		}
 
 		public bool IsDocumentEqual(int HashCode)
         {
             return document.GetHashCode() == HashCode;
         }
-
+		[STAThread]
         public void OnInit() {
             Script data = Boot.Core().GetLUA().GetParser().Run(this.document.GetFileContent(), true, delegate(ParserException e) {
                 Logger.Info(e);
                 //Logger.Info("Parse Lua failure,at ", document.GetFile());//after expanded scrpit was shown
                 //MoonSharp will expand require(), into whole file
-
             });
-            
-			if(data!=null)
+
+			if (data != null)
 			{
-				foreach (DynValue key in data.Globals.Keys) {
-					Console.WriteLine("INIT LUA " + key.String);
-                    
+				foreach (DynValue k in data.Globals.Keys)
+				{
+					DynValue v = data.Globals.Get(k);
+					switch (v.Type)
+					{
+						case DataType.Table:
+						case DataType.Tuple:
+						case DataType.Boolean:
+						case DataType.Number:
+						case DataType.String:
+							var acvar = new VariableCompletion(k.String, "");
+							varlist.Add(acvar);
+							break;
+						case DataType.Function:
+							var acfunc = new FunctionCompleteion(k.String, "", "");//
+							funclist.Add(acfunc);
+							break;
+						case DataType.Nil:
+						case DataType.Void:
+						default:
+							break;
+					}
 				}
+			}
+			else
+			{
+				Logger.Warn("AutoComplete limited, file:", document.GetFile());
+				//UI.Dialog.Open(I18N.__("Because of some errors happened, AutoComplete was being limited."));//cause an exception
 			}
         }
 
@@ -86,7 +110,7 @@ namespace DSTEd.Core.Contents.Editors {
         }
 
         private void OnEnter(object sender, TextCompositionEventArgs e) {
-            if (e.Text.Length > 0 && completion != null) {
+            if (e.Text.Length > 0) {
                 if (!char.IsLetterOrDigit(e.Text[0])) {
 					completion = new CompletionWindow(TextArea);
 					completion.CompletionList.InsertionRequested += inserting;
@@ -97,6 +121,7 @@ namespace DSTEd.Core.Contents.Editors {
 
 		private void inserting(object s,EventArgs Arg)
 		{
+			//completion = new CompletionWindow(TextArea);
 			var dataref = completion.CompletionList.CompletionData;
 			if(Arg is TextCompositionEventArgs textarg)
 			{
@@ -107,9 +132,29 @@ namespace DSTEd.Core.Contents.Editors {
 						dataref.Add(F);
 					}
 				}
-
+				else
+				{
+					foreach (var kw in keywords)
+					{
+						dataref.Add(kw);
+					}
+					foreach (var V in varlist)
+					{
+						dataref.Add(V);
+					}
+					foreach (var F in funclist)
+					{
+						dataref.Add(F);
+					}
+				}
+				completion.Show();
+				completion.Closed += (object lambdasender, EventArgs arg) =>
+				 {
+					 completion = null;
+					 //completion = new CompletionWindow(TextArea);
+				 };
+				//dataref.sort
 			}
-
 		}
 
         private void OnEntered(object sender, TextCompositionEventArgs e) {
@@ -143,6 +188,6 @@ namespace DSTEd.Core.Contents.Editors {
 					completion = null;
 				};
             }*/
-        }
-    }
+			}
+		}
 }

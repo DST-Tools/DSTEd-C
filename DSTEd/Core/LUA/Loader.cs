@@ -23,6 +23,11 @@ namespace DSTEd.Core.LUA {
 
         public override object LoadFile(string file, Table globalContext) {
             return string.Format("print ([[A request to load '{0}' has been made]])", file);
+			/* Lua regex string "%?" main will cause some problems
+			 * but not happened in DST's Lua interpreter????
+			 * sepical version???
+			 */
+			
         }
 
         public override bool ScriptFileExists(string name) {
