@@ -54,12 +54,11 @@ namespace DSTEd.Core.Contents.Editors {
         }
 		
         public void OnInit() {
-            Script data = Boot.Core().GetLUA().GetParser().Run(this.document.GetFileContent(), true, delegate(ParserException e) {
+			Script data = Boot.Core().GetLUA().GetParser().Run(this.document.GetFileContent(), false, delegate(ParserException e) {
                 Logger.Info(e);
-                //Logger.Info("Parse Lua failure,at ", document.GetFile());//after expanded scrpit was shown
-                //MoonSharp will expand require(), into whole file
             });
-
+			/*Script data = new Script();
+			data.DoString(document.GetFileContent());*/
 			if (data != null)
 			{
 				foreach (DynValue k in data.Globals.Keys)
@@ -88,7 +87,7 @@ namespace DSTEd.Core.Contents.Editors {
 			}
 			else
 			{
-				Logger.Warn("AutoComplete limited, file:", document.GetFile());
+				Logger.Warn("AutoComplete was limited, file:", document.GetFile());
 				//UI.Dialog.Open(I18N.__("Because of some errors happened, AutoComplete was being limited."));//cause an exception
 			}
         }
@@ -111,11 +110,11 @@ namespace DSTEd.Core.Contents.Editors {
 
         private void OnEnter(object sender, TextCompositionEventArgs e) {
             if (e.Text.Length > 0) {
-                if (!char.IsLetterOrDigit(e.Text[0])) {
-					completion = new CompletionWindow(TextArea);
-					completion.CompletionList.InsertionRequested += inserting;
-                    completion.CompletionList.RequestInsertion(e);
-                }
+                //if (!char.IsLetterOrDigit(e.Text[0])) {
+				completion = new CompletionWindow(TextArea);
+				completion.CompletionList.InsertionRequested += inserting;
+                completion.CompletionList.RequestInsertion(e);
+				//}
             }
         }
 
