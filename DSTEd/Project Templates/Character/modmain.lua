@@ -60,7 +60,7 @@ GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) en
 
 ----------------------导入自定义StateGraph---------------------------
 ------------------------CUSTOM Stategraph----------------------------
-modimport("scripts/stategraphs/modstategraphs.lua") 
+--modimport("scripts/stategraphs/modstategraphs.lua") 
 ------------------------------END------------------------------------
 
 STRINGS.CHARACTER_TITLES.<NAME> = ""
