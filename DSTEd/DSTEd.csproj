@@ -164,6 +164,9 @@
     </Compile>
     <Compile Include="Core\Steam\BBCode\BBCode.cs" />
     <Compile Include="UI\Components\ModInfoItem.cs" />
+    <Compile Include="UI\ProjectWizard.xaml.cs">
+      <DependentUpon>ProjectWizard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Theme\Avalon\Menu\MenuKeys.cs" />
     <Compile Include="UI\Theme\Avalon\ResourceKeys.cs" />
     <Compile Include="UI\Theme\Dark.cs" />
@@ -182,6 +185,15 @@
     </Resource>
     <EmbeddedResource Include="Core\Contents\Editors\Format\LUA.xshd" />
     <None Include="packages.config" />
+    <None Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\__TEMPORY_ANIMATION.scml" />
+    <None Include="Project Templates\Character\images\avatars\_EXAMPLE.psd" />
+    <None Include="Project Templates\Character\images\avatars\__Fa_EXAMPLE.psd" />
+    <None Include="Project Templates\Character\images\map_icons\_EXAMPLE.psd" />
+    <None Include="Project Templates\Character\images\saveslot_portraits\_EXAMPLE.psd" />
+    <None Include="Project Templates\Character\modinfo.lua" />
+    <None Include="Project Templates\Character\modmain.lua" />
+    <None Include="Project Templates\Character\scripts\prefabs\NAME.lua" />
+    <None Include="Project Templates\Character\scripts\speech_NAME.lua" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -230,6 +242,7 @@
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.1.16.30\lib\net35\Microsoft.VisualStudio.Setup.Configuration.Interop.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -497,6 +510,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\ProjectWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Theme\CheckBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -565,7 +582,11 @@
   <ItemGroup>
     <Resource Include="Assets\Logo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Project Templates\Character\anim\" />
+    <Folder Include="Project Templates\Character\images\inventoryimages\" />
+    <Folder Include="Project Templates\Character\images\selectscreen_portraits\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
@@ -579,6 +600,93 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Project Templates\Character\bigportraits\__NAME.png" />
+    <Resource Include="Project Templates\Character\bigportraits\__NAME_none.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_lower-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_lower-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_lower-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_upper-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_upper-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_upper-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_upper-3.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_lower\arm_upper-4.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_upper\arm_upper-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_upper\arm_upper-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_upper\arm_upper-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_upper\arm_upper-3.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\arm_upper\arm_upper-4.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\cheeks\cheeks-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\cheeks\cheeks-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-10.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-11.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-12.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-13.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-3.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-4.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-5.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-6.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-7.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-8.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\face\face-9.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\foot\foot-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\foot\foot-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\foot\foot-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\foot\foot-3.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\foot\foot-4.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\foot\foot-5.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\foot\foot-6.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hair\hair-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hair\hair-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hair\hair-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hair_hat\hair_hat-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hair_hat\hair_hat-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hair_hat\hair_hat-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-10.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-3.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-4.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-5.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-6.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-7.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-8.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\hand\hand-9.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\headbase\headbase-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\headbase\headbase-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\headbase\headbase-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\headbase_hat\headbase_hat-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\headbase_hat\headbase_hat-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\headbase_hat\headbase_hat-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-3.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-4.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-5.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-6.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-7.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\leg-8.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\leg\torso-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-0.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-1.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-2.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-3.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-4.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-5.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-6.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-7.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-8.png" />
+    <Resource Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\torso\torso-9.png" />
+    <Resource Include="Project Templates\Character\images\avatars\_EXAMPLE.png" />
+    <Resource Include="Project Templates\Character\images\map_icons\_EXAMPLE.png" />
+    <Resource Include="Project Templates\Character\images\map_icons\__NAME.png" />
+    <Resource Include="Project Templates\Character\images\saveslot_portraits\_EXAMPLE.png" />
+    <Resource Include="Project Templates\Character\images\saveslot_portraits\__NAME.png" />
+    <Resource Include="Project Templates\Character\images\saveslot_portraits\__NAME_none.png" />
     <Resource Include="steam_appid.txt" />
     <Resource Include="Assets\Theme\Dark\DockAnchorableBottom.png" />
     <Resource Include="Assets\Theme\Dark\DockAnchorableLeft.png" />
@@ -665,8 +773,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>:: copy default projects
+xcopy "$(ProjectDir)Project Templates" "$(TargetDir)" /E /C /F /L /Y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>:: Copying Language files
@@ -678,7 +786,9 @@ if not exist "$(TargetDir)Librarys" mkdir "$(TargetDir)Librarys"
 XCOPY "$(ProjectDir)Librarys\*.dll" "$(TargetDir)Librarys" /i /d /y
 
 :: Move Steam-AppID to the root folder
-XCOPY "$(ProjectDir)steam_appid.txt" "$(TargetDir)" /i /d /y</PreBuildEvent>
+XCOPY "$(ProjectDir)steam_appid.txt" "$(TargetDir)" /i /d /y
+
+</PreBuildEvent>
   </PropertyGroup>
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths">
     <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
