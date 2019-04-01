@@ -774,7 +774,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>:: copy default projects
-xcopy "$(ProjectDir)Project Templates" "$(TargetDir)" /E /C /F /L /Y</PostBuildEvent>
+xcopy "$(ProjectDir)Project Templates\*" "$(TargetDir)Project Templates\" /E /C /F /L /Y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>:: Copying Language files
