@@ -1,20 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
 namespace DSTEd.UI
 {
-	public delegate void LoadingWorker(uint progress);
+	public delegate void LoadingWorker(uint progress_ref);
+	public class STWorkUnits
+	{
+		public LoadingWorker workers;
+		public uint count;
+		public static STWorkUnits operator+(STWorkUnits target, LoadingWorker worker)
+		{
+			target.workers += worker;
+			target.count++;
+			return target;
+		}
+	}
 	public partial class Loadingv2 : Window
 	{
-		public List<LoadingWorker> workers;
+		public List<STWorkUnits> WorkUnits;
 		public Loadingv2()
 		{
-			//workers += (uint a) => { };
+			progress.Value = 0.0;
 			InitializeComponent();
 		}
-		public double Progress
+		public double Progress//0 to 1
 		{
 			get
 			{
@@ -24,7 +36,7 @@ namespace DSTEd.UI
 			Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render,
 					new Action(() =>
 					{
-						progress.Value = Progress;
+						progress.Value = value * 100;
 					})
 			);
 		}
@@ -38,8 +50,23 @@ namespace DSTEd.UI
 		public void Start()
 		{
 			Show();
-
-
+			uint p = 0;
+			foreach (var U in WorkUnits)
+			{
+				uint count = U.count;
+				uint u_p = 0;
+				U.workers.BeginInvoke(u_p, null, this);
+				while (u_p<count)
+				{
+					Thread.Sleep(100);
+				}
+			}
+			while (p<WorkUnits.Count)
+			{
+				Progress = p / WorkUnits.Count;
+				Thread.Sleep(100);
+			}
+			Close();
 		}
 	}
 }
