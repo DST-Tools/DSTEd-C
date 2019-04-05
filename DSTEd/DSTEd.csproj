@@ -164,6 +164,9 @@
     </Compile>
     <Compile Include="Core\Steam\BBCode\BBCode.cs" />
     <Compile Include="UI\Components\ModInfoItem.cs" />
+    <Compile Include="UI\Loadingv2.xaml.cs">
+      <DependentUpon>Loadingv2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ProjectWizard.xaml.cs">
       <DependentUpon>ProjectWizard.xaml</DependentUpon>
     </Compile>
@@ -507,6 +510,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Loading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Loadingv2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

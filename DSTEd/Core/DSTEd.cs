@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
 using DSTEd.Core.Klei.Games;
 using DSTEd.Core.Steam;
 using DSTEd.UI;
@@ -92,35 +93,50 @@ namespace DSTEd.Core {
                 return true;
             });
 
-            this.loading.Run("KLEI_GAMES", delegate () {
-                this.steam.LoadGame(new DSTC());
-                this.steam.LoadGame(new DSTS());
-                this.steam.LoadGame(new DSTM());
-                this.lua = new Core.LUA.LUA();
-                this.ide.Init();
-
-                return true;
-            });
-
-            this.loading.Run("KLEI_MODS", delegate () {
-                Logger.Info("Load mods...");
-                return true;
-            });
-
-            this.loading.Run("STEAM_WORKSHOP", delegate () {
-                Logger.Info("Load mods...");
-
-                this.steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
-                    Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
-
-                    for (int index = 0; index < items.Length; index++) {
-                        Logger.Info(items[index].ToString());
+            loading.Run("ASYNC_PHASE_1",
+                () =>
+                {
+                    uint i = 0;
+                    void gameloading()
+                    {
+                        steam.LoadGame(new DSTC());//CL
+                        steam.LoadGame(new DSTM());//MT
+                        steam.LoadGame(new DSTS());//SV
+                        lua = new LUA.LUA();
+                        ide.Init();
+                        i++;
                     }
-                });
+                    void modsloading()
+                    {
+                        //do nothing now
+                        i++;
+                    }
+                    void workshoploading()
+                    {
+                        steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
+                            Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
 
-                return true;
-            });
-
+                            for (int index = 0; index < items.Length; index++)
+                            {
+                                Logger.Info(items[index].ToString());
+                            }
+                        });
+                        i++;
+                    }
+                    var thread1 = new Thread(gameloading);
+                    var thread2 = new Thread(modsloading);
+                    var thread3 = new Thread(workshoploading);
+                    thread1.Start();
+                    thread2.Start();
+                    thread3.Start();
+                    while (i < 3)
+                    {
+                        Logger.Info("ASYNC_PHASE_1, finished", i);
+                        Thread.Sleep(100);
+                    }
+                    return true;
+                }
+                );
             this.loading.Start();
             this.Run();
         }

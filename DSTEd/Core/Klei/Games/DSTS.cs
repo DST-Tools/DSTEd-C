@@ -23,22 +23,26 @@ namespace DSTEd.Core.Klei.Games {
 		
 		private void AddSubDebugv2(string node, string name, string header, RoutedEventHandler function)
 		{
-			var menuItem = new MenuItem
-			{
-				Name = name,
-				Header = I18N.__(header),
-			};
-			menuItem.Click += function;
-			var dbg = Boot.Core().GetIDE().GetDebug();
-			foreach (MenuItem item in dbg.Items)
-			{
-				if(item.Name == node)
-				{
-					item.Items.Add(menuItem);
-					break;
-				}
-			}
-		}
+            void add()
+            {
+                var menuItem = new MenuItem
+                {
+                    Name = name,
+                    Header = I18N.__(header),
+                };
+                menuItem.Click += function;
+                var dbg = Boot.Core().GetIDE().GetDebug();
+			    foreach (MenuItem item in dbg.Items)
+			    {
+				    if(item.Name == node)
+				    {
+					    item.Items.Add(menuItem);
+					    break;
+				    }
+			    }
+            }
+            Boot.Instance.GetIDE().Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(add));
+        }
 
 		public struct ARG//persistent_storage_root/cluster/shard
 		{
