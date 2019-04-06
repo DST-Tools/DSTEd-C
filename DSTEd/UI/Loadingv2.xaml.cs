@@ -20,10 +20,9 @@ namespace DSTEd.UI
 	}
 	public partial class Loadingv2 : Window
 	{
-		public List<STWorkUnits> WorkUnits;
+		public STWorkUnits[] WorkUnits;
 		public Loadingv2()
 		{
-			progress.Value = 0.0;
 			InitializeComponent();
 		}
 		public double Progress//0 to 1
@@ -49,21 +48,22 @@ namespace DSTEd.UI
 		}
 		public void Start()
 		{
+			progress.Value = 0.0;
 			Show();
 			uint p = 0;
 			foreach (var U in WorkUnits)
 			{
 				uint count = U.count;
 				uint u_p = 0;
-				U.workers.BeginInvoke(u_p, null, this);
+				U.workers(u_p);
 				while (u_p<count)
 				{
 					Thread.Sleep(100);
 				}
 			}
-			while (p<WorkUnits.Count)
+			while (p<WorkUnits.Length)
 			{
-				Progress = p / WorkUnits.Count;
+				Progress = p / WorkUnits.Length;
 				Thread.Sleep(100);
 			}
 			Close();

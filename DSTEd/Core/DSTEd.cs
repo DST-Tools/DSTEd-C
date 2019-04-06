@@ -9,12 +9,12 @@ namespace DSTEd.Core {
     public class DSTEd : System.Windows.Application {
         private String version = "2.0.0";
         private String language = "en_US";
-        private IDE ide = null;
+        private IDE ide = null;//UI
         private Workspace workspace = null;
-		private Loadingv2 loaderv2 = new Loadingv2();
+		private Loadingv2 loaderv2 = new Loadingv2();//UI
         private Steam.Steam steam = null;
         private Configuration configuration = null;
-        private Core.LUA.LUA lua = new LUA.LUA();
+		private Core.LUA.LUA lua;
 
         public DSTEd() {
         }
@@ -54,7 +54,6 @@ namespace DSTEd.Core {
                 }
 
                 this.workspace.Close(true);
-                
             });
 
             this.workspace.OnClose(delegate (CancelEventArgs e) {
@@ -68,8 +67,9 @@ namespace DSTEd.Core {
                     return true;
                 });
             });
-			///////////////////////V2 Loader///////////////////////////
-			//define workers
+			#region LoaderV2
+
+			# region Define workers
 			void SteamPathInit(uint p)
 			{
 				if (!steam.IsInstalled())
@@ -90,6 +90,7 @@ namespace DSTEd.Core {
 				steam.LoadGame(new DSTC());//CL
 				steam.LoadGame(new DSTM());//MT
 				steam.LoadGame(new DSTS());//SV
+				lua = new LUA.LUA();
 				ide.Init();
 				p++;
 			}
@@ -110,17 +111,29 @@ namespace DSTEd.Core {
 				});
 				p++;
 			}
-			//Add Worker
+			#endregion
+
+			#region Add Worker
 			var steampathinit = new STWorkUnits();
 			steampathinit += SteamPathInit;
 			var asyncloadingphase1 = new STWorkUnits();
 			asyncloadingphase1 += gameloading;
 			asyncloadingphase1 += modsloading;
 			asyncloadingphase1 += workshoploading;
+			#endregion
+
+			#region Push queue
+			loaderv2.WorkUnits = new STWorkUnits[]
+			{
+				steampathinit,
+				asyncloadingphase1
+			};
+			#endregion
+
 			//Start loading;
 			loaderv2.Start();
-			//////////////////Wait for Loading finished////////////////
-            this.Run();
+			#endregion
+			this.Run();
         }
 
         public IDE GetIDE() {
