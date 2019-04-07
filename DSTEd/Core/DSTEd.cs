@@ -112,10 +112,10 @@ namespace DSTEd.Core {
 			#region Push queue
 			loaderv2.WorkUnits = new WorkUnit[]
 			{
-				new WorkUnit{worker = SteamPathInit},
-				new WorkUnit{worker = gameloading,MT = true},
-				new WorkUnit{worker = modsloading,MT = true},
-				new WorkUnit{worker = workshoploading, MT = true}
+				new WorkUnit(SteamPathInit,false),
+				new WorkUnit(gameloading,true),
+				new WorkUnit(modsloading,true),
+				new WorkUnit(workshoploading,true)
 			};
 			#endregion
 

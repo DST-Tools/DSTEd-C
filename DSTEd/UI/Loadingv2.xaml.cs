@@ -3,19 +3,67 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-
 namespace DSTEd.UI
 {
 	public delegate void LoadingWorker();
+	
+#pragma warning disable CS0660 
+#pragma warning disable CS0661 //surpress these warnings
+	struct refuint//it's waste......just for MultiThreading......
+#pragma warning restore CS0661 
+#pragma warning restore CS0660 
+	{
+		public uint v;
+
+		public static bool operator== (refuint l,refuint r)
+		{
+			return l.v == r.v;
+		}
+
+		public static bool operator!= (refuint l,refuint r)
+		{
+			return l.v != r.v;
+		}
+
+		public static refuint operator+(refuint l, refuint r)
+		{
+			return new refuint { v = l.v + r.v };
+		}
+		public static refuint operator++(refuint t)
+		{
+			t.v++;
+			return t;
+		}
+		public static refuint operator-(refuint l, refuint r)
+		{
+			return new refuint { v = l.v - r.v };
+		}
+	}
 	public class WorkUnit
 	{
 		public LoadingWorker worker;
 		public bool MT = false;
-		public bool f = false;
-		public void ThreadFunc()
+		public static bool ST = false;
+		public WorkUnit(LoadingWorker w)
+		{
+			worker = w;
+			this.MT = false;
+		}
+		public WorkUnit(LoadingWorker MTworker,ref uint mt_p)
+		{
+			worker = MTworker;
+		}
+
+		public void STFunc()
 		{
 			worker();
-			f = true;
+		}
+
+		public void MTFunc(object refuint_p)
+		{
+			refuint p = (refuint)refuint_p;
+			worker();
+			p++;
 		}
 	}
 	public partial class Loadingv2 : Window
@@ -50,48 +98,14 @@ namespace DSTEd.UI
 		public void Start()
 		{
 			progress.Value = 0.0;
+			if (WorkUnits.Length == 0)
+				Environment.Exit(10);
 			Show();
-			List<Thread> threads = new List<Thread>(5);
 			foreach (var U in WorkUnits)
 			{
 				switch (U.MT)
 				{
-					case true:
-						threads.Add(new Thread(U.ThreadFunc));
-						break;
-					case false:
-
-						foreach (var t in threads)
-						{
-							t.IsBackground = true;
-							t.Start(p);
-						}
-						while (p<threads.Count)
-						{
-							Progress = p / WorkUnits.Length;
-							Thread.Sleep(300);
-						}
-						threads.Clear();
-
-						U.worker();
-						p++;
-						break;
 				}
-			}
-			foreach (var t in threads)
-			{
-				t.Start(p);
-			}
-			while (p < threads.Count)
-			{
-				Progress = p / WorkUnits.Length;
-				Thread.Sleep(300);
-			}
-			threads.Clear();
-			while (p<WorkUnits.Length)
-			{
-				Progress = p / WorkUnits.Length;
-				Thread.Sleep(100);
 			}
 			Close();
 		}
