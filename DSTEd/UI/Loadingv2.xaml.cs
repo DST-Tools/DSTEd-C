@@ -6,21 +6,22 @@ using System.Windows.Input;
 
 namespace DSTEd.UI
 {
-	public delegate void LoadingWorker(uint progress_ref);
-	public class STWorkUnits
+	public delegate void LoadingWorker();
+	public class WorkUnit
 	{
-		public LoadingWorker workers;
-		public uint count;
-		public static STWorkUnits operator+(STWorkUnits target, LoadingWorker worker)
+		public LoadingWorker worker;
+		public bool MT = false;
+		public bool f = false;
+		public void ThreadFunc()
 		{
-			target.workers += worker;
-			target.count++;
-			return target;
+			worker();
+			f = true;
 		}
 	}
 	public partial class Loadingv2 : Window
 	{
-		public STWorkUnits[] WorkUnits;
+		public WorkUnit[] WorkUnits;
+		volatile private uint p = 0;
 		public Loadingv2()
 		{
 			InitializeComponent();
@@ -50,17 +51,43 @@ namespace DSTEd.UI
 		{
 			progress.Value = 0.0;
 			Show();
-			uint p = 0;
+			List<Thread> threads = new List<Thread>(5);
 			foreach (var U in WorkUnits)
 			{
-				uint count = U.count;
-				uint u_p = 0;
-				U.workers(u_p);
-				while (u_p<count)
+				switch (U.MT)
 				{
-					Thread.Sleep(100);
+					case true:
+						threads.Add(new Thread(U.ThreadFunc));
+						break;
+					case false:
+
+						foreach (var t in threads)
+						{
+							t.IsBackground = true;
+							t.Start(p);
+						}
+						while (p<threads.Count)
+						{
+							Progress = p / WorkUnits.Length;
+							Thread.Sleep(300);
+						}
+						threads.Clear();
+
+						U.worker();
+						p++;
+						break;
 				}
 			}
+			foreach (var t in threads)
+			{
+				t.Start(p);
+			}
+			while (p < threads.Count)
+			{
+				Progress = p / WorkUnits.Length;
+				Thread.Sleep(300);
+			}
+			threads.Clear();
 			while (p<WorkUnits.Length)
 			{
 				Progress = p / WorkUnits.Length;

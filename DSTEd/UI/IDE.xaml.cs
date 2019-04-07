@@ -25,14 +25,26 @@ namespace DSTEd.UI {
             this.VIEW_WELCOME.IsChecked = state;
         }
 
-        public void Init() {
+        public void Init()//INIT not runs in main thread now.
+		{
             string path = Boot.Core().GetSteam().GetGame().GetPath();
-            this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), delegate (FileNode file) {
-                return new WorkshopItem(file);
-            });
+			Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action( ()=>
+			{
+				this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), delegate (FileNode file)
+				{
+					return new WorkshopItem(file);
+				});
 
-            this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), null);
-            this.menu.Init();
+				this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), null);
+			})
+			);
+			Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
+				new Action(
+					() =>
+					{
+						menu.Init();
+					}
+					));
         }
 
         public System.Windows.Controls.MenuItem GetTools() {
@@ -72,16 +84,6 @@ namespace DSTEd.UI {
         }
 
         private void dockManager_DocumentClosing(object sender, DocumentClosingEventArgs e) {
-			/*Dialog.Open("Are you sure you want to close the document?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
-                this.GetMenu().Update();
-
-                if (result == Dialog.Result.Yes) {
-                    return true;
-                }
-
-                e.Cancel = true;
-                return true;
-            });*/
 			bool savedialogfunc(Dialog.Result r)
 			{
 				switch (r)

@@ -70,7 +70,7 @@ namespace DSTEd.Core {
 			#region LoaderV2
 
 			# region Define workers
-			void SteamPathInit(uint p)
+			void SteamPathInit()
 			{
 				if (!steam.IsInstalled())
 				{
@@ -83,23 +83,20 @@ namespace DSTEd.Core {
 						}
 						);
 				}
-				p++;
 			}
-			void gameloading(uint p)
+			void gameloading()
 			{
 				steam.LoadGame(new DSTC());//CL
 				steam.LoadGame(new DSTM());//MT
 				steam.LoadGame(new DSTS());//SV
 				lua = new LUA.LUA();
 				ide.Init();
-				p++;
 			}
-			void modsloading(uint p)
+			void modsloading()
 			{
 				//do nothing now
-				p++;
 			}
-			void workshoploading(uint p)
+			void workshoploading()
 			{
 				steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
 					Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
@@ -109,24 +106,16 @@ namespace DSTEd.Core {
 						Logger.Info(items[index].ToString());
 					}
 				});
-				p++;
 			}
 			#endregion
 
-			#region Add Worker
-			var steampathinit = new STWorkUnits();
-			steampathinit += SteamPathInit;
-			var asyncloadingphase1 = new STWorkUnits();
-			asyncloadingphase1 += gameloading;
-			asyncloadingphase1 += modsloading;
-			asyncloadingphase1 += workshoploading;
-			#endregion
-
 			#region Push queue
-			loaderv2.WorkUnits = new STWorkUnits[]
+			loaderv2.WorkUnits = new WorkUnit[]
 			{
-				steampathinit,
-				asyncloadingphase1
+				new WorkUnit{worker = SteamPathInit},
+				new WorkUnit{worker = gameloading,MT = true},
+				new WorkUnit{worker = modsloading,MT = true},
+				new WorkUnit{worker = workshoploading, MT = true}
 			};
 			#endregion
 
