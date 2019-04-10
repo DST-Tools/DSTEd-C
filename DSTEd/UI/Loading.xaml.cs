@@ -50,20 +50,12 @@ namespace DSTEd.UI {
             this.callback_success = callback;
         }
 
-		//private delegate void WorkerThreadFunction();
-
         public void Start() {
             this.Resume();
             this.Show();
 
             int complete = this.workers.Count;
             int position = -1;
-
-			/*for(int i=0;i<3;i++)
-			{
-				
-				//new Thread(workers[i].Value)
-			}*/
 
             Task.Run(() => {
                 do {

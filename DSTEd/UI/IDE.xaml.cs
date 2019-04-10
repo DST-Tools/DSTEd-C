@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Threading;
 using DSTEd.Core;
 using DSTEd.Core.Contents;
 using DSTEd.Core.IO;
@@ -22,13 +23,13 @@ namespace DSTEd.UI {
 		}
 
         public void UpdateWelcome(bool state) {
-            this.VIEW_WELCOME.IsChecked = state;
+			Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => VIEW_WELCOME.IsChecked = state)); 
         }
 
         public void Init()//INIT not runs in main thread now.
 		{
             string path = Boot.Core().GetSteam().GetGame().GetPath();
-			Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action( ()=>
+			Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action( ()=>
 			{
 				this.workspace_mods.Content = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), delegate (FileNode file)
 				{
@@ -38,13 +39,7 @@ namespace DSTEd.UI {
 				this.workspace_core.Content = new WorkspaceTree(new FileSystem(path + "\\" + "data"), null);
 			})
 			);
-			Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-				new Action(
-					() =>
-					{
-						menu.Init();
-					}
-					));
+			menu.Init();
         }
 
         public System.Windows.Controls.MenuItem GetTools() {

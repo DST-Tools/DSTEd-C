@@ -67,7 +67,6 @@ namespace DSTEd.Core {
                     return true;
                 });
             });
-			#region LoaderV2
 
 			# region Define workers
 			void SteamPathInit()
@@ -108,20 +107,10 @@ namespace DSTEd.Core {
 				});
 			}
 			#endregion
-
-			#region Push queue
-			loaderv2.WorkUnits = new WorkUnit[]
-			{
-				new WorkUnit(SteamPathInit,false),
-				new WorkUnit(gameloading,true),
-				new WorkUnit(modsloading,true),
-				new WorkUnit(workshoploading,true)
-			};
-			#endregion
-
-			//Start loading;
-			loaderv2.Start();
-			#endregion
+			Action[] q1 = { SteamPathInit };
+			Action[] q2 = { gameloading, modsloading, workshoploading };
+			loaderv2.Start(q1, q2);
+			ide.Show();
 			this.Run();
         }
 
