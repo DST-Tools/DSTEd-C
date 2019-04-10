@@ -15,7 +15,7 @@ namespace DSTEd.Core {
         }
 
         public void Update() {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.DataBind, new Action(delegate () {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(delegate () {
                 if (Boot.Core().IsWorkspaceReady()) {
                     Boot.Core().GetIDE().UpdateWelcome(Boot.Core().GetWorkspace().HasWelcome());
                 }
