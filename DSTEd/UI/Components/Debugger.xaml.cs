@@ -30,7 +30,9 @@ namespace DSTEd.UI.Components {
 							}
 							break;
 						case "Debug":
-							//make some DSTEd command? 
+							AddDebug(Boot.Instance.DBGCLI.Execute(input.Text));
+							//command example: 
+							//cl_interp 0.0031
 							break;
 					}
 
