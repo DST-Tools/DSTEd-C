@@ -12,7 +12,6 @@ namespace DSTEd.UI
 		{
 			InitializeComponent();
 		}
-		private Action[][] queueref;
 		private int p = 0;
 		public int Progress//0 to 1
 		{
@@ -26,7 +25,7 @@ namespace DSTEd.UI
 				Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render,
 						new Action(() =>
 						{
-							progress.Value = value / queueref.Length * 100;
+							progress.Value = p != 0 ? (value / p) * 100 : 0;
 						})
 				);
 			}
@@ -40,8 +39,11 @@ namespace DSTEd.UI
 		}
 		public void Start(params Action[][] queue)
 		{
-			queueref = queue;
 			Progress = 0;
+			foreach (var workers in queue)
+			{
+				p += workers.Length;
+			}
 			Show();
 			foreach (Action[] workers in queue)
 			{
