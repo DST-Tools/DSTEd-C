@@ -21,12 +21,13 @@ namespace DSTEd.Core
 		{
 			System.Text.StringBuilder output = new System.Text.StringBuilder(string.Format("{0} command(s) in total\n", commands.Keys.Count));
 			foreach (string name in commands.Keys)
-				output.AppendLine(name);
+				if(name.StartsWith(args != null?args[0]:string.Empty))
+					output.AppendLine(name);
 			return output.ToString();
 		}
 		private string helpfn(params string[] args)
 		{
-			if (helps.TryGetValue(args[1], out string r))
+			if (helps.TryGetValue(args[0], out string r))
 				return r;
 			return string.Empty;
 		}
@@ -53,7 +54,7 @@ namespace DSTEd.Core
 					arg[i] = cmd[i + 1];
 				}
 			}
-			if (commands.TryGetValue(cmd[1], out CommandFunction fn))
+			if (commands.TryGetValue(cmd[0], out CommandFunction fn))
 				return fn(arg);
 			else
 				return "No such command";
