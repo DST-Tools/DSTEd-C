@@ -19,15 +19,21 @@ namespace DSTEd.Core
 
 		private string cvarlist(params string[] args)
 		{
-			System.Text.StringBuilder output = new System.Text.StringBuilder(string.Format("{0} command(s) in total\n", commands.Keys.Count));
+			System.Text.StringBuilder tmp = new System.Text.StringBuilder();
+			uint i = 0;
 			foreach (string name in commands.Keys)
 				if(name.StartsWith(args != null?args[0]:string.Empty))
-					output.AppendLine(name);
+				{
+					tmp.AppendLine(name);
+					i++;
+				}
+			System.Text.StringBuilder output = new System.Text.StringBuilder(string.Format("{0} command(s) in total\n", i));
+			output.Append(tmp);
 			return output.ToString();
 		}
 		private string helpfn(params string[] args)
 		{
-			if (helps.TryGetValue(args[0], out string r))
+			if (helps.TryGetValue(args != null?args[0]:string.Empty, out string r))
 				return r;
 			return string.Empty;
 		}
