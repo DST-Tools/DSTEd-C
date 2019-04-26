@@ -101,6 +101,7 @@
     <Compile Include="Core\Contents\Editors\ModInfo.cs" />
     <Compile Include="Core\Contents\Editors\Properties.cs" />
     <Compile Include="Core\Contents\Editors\TEX.cs" />
+    <Compile Include="Core\DebugCLICore.cs" />
     <Compile Include="Core\Document.cs" />
     <Compile Include="Core\IO\FileNode.cs" />
     <Compile Include="Core\IO\FileSystem.cs" />

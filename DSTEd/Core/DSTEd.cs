@@ -15,8 +15,10 @@ namespace DSTEd.Core {
         private Steam.Steam steam = null;
         private Configuration configuration = null;
 		private Core.LUA.LUA lua;
+		public DebugCLICore DBGCLI;
 
         public DSTEd() {
+			DBGCLI = new DebugCLICore();
         }
 
         public void Start() {
