@@ -18,7 +18,7 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#333333">
                 <Label Foreground="#FFFFFF" Content="{Core:I18N_XAML 'Target:'}" />
                 <ComboBox Name="target" SelectedIndex="0" MinWidth="80">
-                    <ComboBoxItem Content="Debugger" />
+                    <ComboBoxItem Content="Console" />
                     <ComboBoxItem Content="Client" />
                     <ComboBoxItem Content="Server" />
                 </ComboBox>

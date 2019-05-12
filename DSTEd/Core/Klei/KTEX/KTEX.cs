@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using Core.Klei.Squish;
+using System.Windows.Media.Imaging;
 
 namespace DSTEd.Core.Klei.KTEX {
     class KTEX {
@@ -132,16 +133,17 @@ namespace DSTEd.Core.Klei.KTEX {
             }
 
             var imgReader = new BinaryReader(new MemoryStream(argbData));
-
-            Bitmap pt = new Bitmap((int) mipmap.Width, (int) mipmap.Height);
-
+			//BitmapSource.Create(mipmap.Width,mipmap.Height,null,null,System.Windows.Media.PixelFormats.rgba)
+			Bitmap pt = new Bitmap((int) mipmap.Width, (int) mipmap.Height);
+			
             for (int y = 0; y < mipmap.Height; y++) {
                 for (int x = 0; x < mipmap.Width; x++) {
                     byte r = imgReader.ReadByte();
                     byte g = imgReader.ReadByte();
                     byte b = imgReader.ReadByte();
                     byte a = imgReader.ReadByte();
-                    pt.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+					pt.SetPixel(x, mipmap.Height - y - 1, Color.FromArgb(a, r, g, b));//OpenGL scan order(DST PC)
+					
                 }
                 //if (OnProgressUpdate != null) {
                 //OnProgressUpdate(y * 100 / mipmap.Height);

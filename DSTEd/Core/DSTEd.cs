@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading;
 using DSTEd.Core.Klei.Games;
 using DSTEd.Core.Steam;
 using DSTEd.UI;
@@ -8,14 +9,16 @@ namespace DSTEd.Core {
     public class DSTEd : System.Windows.Application {
         private String version = "2.0.0";
         private String language = "en_US";
-        private IDE ide = null;
+        private IDE ide = null;//UI
         private Workspace workspace = null;
-        private Loading loading = null;
+		private Loadingv2 loaderv2 = new Loadingv2();//UI
         private Steam.Steam steam = null;
         private Configuration configuration = null;
-        private Core.LUA.LUA lua;
+		private Core.LUA.LUA lua;
+		public DebugCLICore DBGCLI;
 
         public DSTEd() {
+			DBGCLI = new DebugCLICore();
         }
 
         public void Start() {
@@ -30,7 +33,7 @@ namespace DSTEd.Core {
             this.steam = new Steam.Steam();
             this.ide = new IDE();
             this.workspace = new Workspace();
-            this.loading = new Loading();
+            //this.loading = new Loading();
 
             // Set the steam path by configuration
             this.steam.SetPath(this.configuration.Get("STEAM_PATH", null));
@@ -53,7 +56,6 @@ namespace DSTEd.Core {
                 }
 
                 this.workspace.Close(true);
-                this.loading.Resume();
             });
 
             this.workspace.OnClose(delegate (CancelEventArgs e) {
@@ -68,61 +70,50 @@ namespace DSTEd.Core {
                 });
             });
 
-            this.loading.OnSuccess(delegate () {
-                Logger.Info("Steam path was set on", this.steam.GetPath());
-                this.loading.Close();
-                this.ide.Show();
-            });
+			# region Define workers
+			void SteamPathInit()
+			{
+				if (!steam.IsInstalled())
+				{
+					Logger.Info("Steam is not installed? Ask for Workspace...");
+					Dialog.Open(I18N.__("We can not find the path to STEAM. Please check the workspace settings."), I18N.__("Problem: Steam"), Dialog.Buttons.OK, Dialog.Icon.Warning,
+						delegate (Dialog.Result r)
+						{
+							workspace.Show();
+							return true;
+						}
+						);
+				}
+			}
+			void gameloading()
+			{
+				steam.LoadGame(new DSTC());//CL
+				steam.LoadGame(new DSTM());//MT
+				steam.LoadGame(new DSTS());//SV
+				lua = new LUA.LUA();
+				ide.Init();
+			}
+			void modsloading()
+			{
+				//do nothing now
+			}
+			void workshoploading()
+			{
+				steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
+					Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
 
-            // Adding workers to the loader...
-            this.loading.Run("STEAM_PATH", delegate () {
-                if (!this.steam.IsInstalled()) {
-                    Logger.Info("Steam is not installed? Ask for Workspace...");
-
-                    Dialog.Open(I18N.__("We can not find the path to STEAM. Please check the workspace settings."), I18N.__("Problem: Steam"), Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
-                        this.workspace.Show();
-                        return true;
-                    });
-
-                    return false;
-                }
-
-                this.workspace.SetPath(this.configuration.Get("STEAM_PATH", this.steam.GetPath()));
-                Logger.Info("Steam-Path: " + this.workspace.GetPath());
-                return true;
-            });
-
-            this.loading.Run("KLEI_GAMES", delegate () {
-                this.steam.LoadGame(new DSTC());
-                this.steam.LoadGame(new DSTS());
-                this.steam.LoadGame(new DSTM());
-                this.lua = new Core.LUA.LUA();
-                this.ide.Init();
-
-                return true;
-            });
-
-            this.loading.Run("KLEI_MODS", delegate () {
-                Logger.Info("Load mods...");
-                return true;
-            });
-
-            this.loading.Run("STEAM_WORKSHOP", delegate () {
-                Logger.Info("Load mods...");
-
-                this.steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
-                    Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
-
-                    for (int index = 0; index < items.Length; index++) {
-                        Logger.Info(items[index].ToString());
-                    }
-                });
-
-                return true;
-            });
-
-            this.loading.Start();
-            this.Run();
+					for (int index = 0; index < items.Length; index++)
+					{
+						Logger.Info(items[index].ToString());
+					}
+				});
+			}
+			#endregion
+			Action[] q1 = { SteamPathInit };
+			Action[] q2 = { gameloading, modsloading, workshoploading };
+			loaderv2.Start(q1, q2);
+			ide.Show();
+			this.Run();
         }
 
         public IDE GetIDE() {

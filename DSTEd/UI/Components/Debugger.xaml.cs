@@ -13,9 +13,10 @@ namespace DSTEd.UI.Components {
 
             this.DockMinHeight = 100;
             this.DockHeight = new GridLength(200);
-            //debugger_debug.Children.
+			//debugger_debug.Children.
+			Boot.Instance.DBGCLI.AddCommand("clear",clearcon);
 
-            this.input.KeyDown += new KeyEventHandler(delegate (object sender, KeyEventArgs e) {
+			this.input.KeyDown += new KeyEventHandler(delegate (object sender, KeyEventArgs e) {
                 if (Keyboard.IsKeyDown(Key.Enter)) {
                     AddDebug(this.input.Text);
 					switch (((ComboBoxItem)target.SelectedItem).Content)
@@ -29,8 +30,10 @@ namespace DSTEd.UI.Components {
 								}
 							}
 							break;
-						case "Debug":
-							//make some DSTEd command? 
+						case "Console":
+							AddDebug(Boot.Instance.DBGCLI.Execute(input.Text));
+							//command example: 
+							//cl_interp 0.0031
 							break;
 					}
 
@@ -39,6 +42,12 @@ namespace DSTEd.UI.Components {
                 }
             });
         }
+
+		private string clearcon(params string[] args)
+		{
+			debugger_debug.Children.Clear();
+			return string.Empty;
+		}
 
         public StackPanel GetDebugger() {
             return this.debugger_debug;
@@ -53,7 +62,7 @@ namespace DSTEd.UI.Components {
         }
 
         public void AddOutput(string text) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
                 this.debugger_output.Children.Add(new DebugEntry(text));
             }));
 
@@ -61,7 +70,7 @@ namespace DSTEd.UI.Components {
         }
 
         public void AddError(string text) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
                 this.debugger_errors.Children.Add(new DebugEntry(text));
             }));
 
@@ -69,7 +78,7 @@ namespace DSTEd.UI.Components {
         }
 
         public void AddDebug(string text) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
                 this.debugger_debug.Children.Add(new DebugEntry(text));
             }));
 
@@ -77,7 +86,7 @@ namespace DSTEd.UI.Components {
         }
 
         public void Scroll(StackPanel element, Boolean autoscroll) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
                 if (autoscroll) {
                     ((ScrollViewer) element.Parent).ScrollToVerticalOffset(((ScrollViewer) element.Parent).ScrollableHeight - 0.01);
                 }
@@ -85,7 +94,7 @@ namespace DSTEd.UI.Components {
         }
 
         public void Clear(StackPanel element) {
-            Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
+            element.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (() => {
                 element.Children.Clear();
 
                 for (int index = 0; index < element.Children.Count; index++) {
