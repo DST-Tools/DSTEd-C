@@ -272,8 +272,8 @@
       <HintPath>..\packages\Dirkster.MLib.1.0.10\lib\net4\MLib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="MoonSharp.Interpreter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=921e73ce94aa17f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\MoonSharp.2.0.0.0\lib\net40-client\MoonSharp.Interpreter.dll</HintPath>
+    <Reference Include="MoonSharp.Interpreter">
+      <HintPath>$(ProjectDir)\Librarys\MoonSharp.Interpreter.dll</HintPath>
     </Reference>
     <Reference Include="MsgBox, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dirkster.MsgBox.1.4.2\lib\net451\MsgBox.dll</HintPath>
@@ -766,6 +766,7 @@
     <Resource Include="Assets\FileSystem\Assets.png" />
     <Resource Include="Assets\Icons\ModOptions.png" />
     <Resource Include="Assets\Icons\Clear.png" />
+    <Content Include="Librarys\MoonSharp.Interpreter.dll" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />
     <Content Include="Librarys\Steamworks.NET.dll" />

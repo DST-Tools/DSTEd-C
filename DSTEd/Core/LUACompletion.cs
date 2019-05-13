@@ -10,9 +10,11 @@ using ICSharpCode.AvalonEdit.Editing;
 
 namespace DSTEd.Core
 {
+	
+
     class KeywordCompleteion : ICompletionData, IComparable {
 
-
+		
         public object Description {
             get; set;
         }
@@ -88,6 +90,11 @@ namespace DSTEd.Core
 		{
 			return Text.CompareTo(obj);
 		}
+
+		public override string ToString()
+		{
+			return Text;
+		}
 	}
 	class VariableCompletion : ICompletionData,IComparable
 	{
@@ -116,6 +123,11 @@ namespace DSTEd.Core
 		public int CompareTo(object obj)
 		{
 			return Text.CompareTo(obj);
+		}
+
+		public override string ToString()
+		{
+			return Text;
 		}
 	}
 }

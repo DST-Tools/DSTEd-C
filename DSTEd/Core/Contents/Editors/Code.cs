@@ -11,7 +11,7 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Tree;
 
 namespace DSTEd.Core.Contents.Editors {
     class Code : TextEditor, DocumentHandler {
@@ -20,6 +20,9 @@ namespace DSTEd.Core.Contents.Editors {
 		private static List<KeywordCompleteion> keywords = new List<KeywordCompleteion>();
 		private List<FunctionCompleteion> funclist = new List<FunctionCompleteion>();
 		private List<VariableCompletion> varlist = new List<VariableCompletion>();
+
+		private Lexer lexer;//lexical analyzer, for autocompleteion. from modified moonsharp classlibrary
+
 		public Code(Document document) {
             this.document = document;
             this.ShowLineNumbers = true;
@@ -53,44 +56,55 @@ namespace DSTEd.Core.Contents.Editors {
             return document.GetHashCode() == HashCode;
         }
 		
-        public void OnInit() {
-			Script data = Boot.Core().GetLUA().GetParser().Run(this.document.GetFileContent(), false, delegate(ParserException e) {
-                Logger.Info(e);
-            });
-			/*Script data = new Script();
-			data.DoString(document.GetFileContent());*/
-			if (data != null)
-			{
-				foreach (DynValue k in data.Globals.Keys)
-				{
-					DynValue v = data.Globals.Get(k);
-					switch (v.Type)
-					{
-						case DataType.Table:
-						case DataType.Tuple:
-						case DataType.Boolean:
-						case DataType.Number:
-						case DataType.String:
-							var acvar = new VariableCompletion(k.String, "");
-							varlist.Add(acvar);
-							break;
-						case DataType.Function:
-							var acfunc = new FunctionCompleteion(k.String, "", "");//
-							funclist.Add(acfunc);
-							break;
-						case DataType.Nil:
-						case DataType.Void:
-						default:
-							break;
-					}
-				}
-			}
-			else
-			{
-				Logger.Warn("AutoComplete was limited, file:", document.GetFile());
-				//UI.Dialog.Open(I18N.__("Because of some errors happened, AutoComplete was being limited."));//cause an exception
-			}
+        public void OnInit()
+		{
+			//init lexical analyzer
+			RefreshLexer();
         }
+
+		public void RefreshLexer()
+		{
+			lexer = new Lexer(0, document.GetFileContent(), false);
+			funclist.Clear();
+			varlist.Clear();
+			while (lexer.Current.Type != TokenType.Eof)
+			{
+				var curtoken = lexer.Current;
+				Token name;
+				switch (curtoken.Type)
+				{
+					case TokenType.Function:
+						do
+						{
+							lexer.Next();
+						} while (lexer.Current.Type != TokenType.Name);//"Name" same as "identifier"
+						name = lexer.Current;
+						funclist.Add(new FunctionCompleteion(name.Text, name.Text, string.Empty));
+						break;
+					case TokenType.Local:
+						if (lexer.PeekNext().Type == TokenType.Function)
+						{
+							do
+							{
+								lexer.Next();
+							} while (lexer.Current.Type != TokenType.Name);//"Name" same as "identifier"
+							name = lexer.Current;
+							funclist.Add(new FunctionCompleteion(name.Text, name.Text, string.Empty));
+						}
+						else
+						{
+							do
+							{
+								lexer.Next();
+							} while (lexer.Current.Type != TokenType.Name);
+							name = lexer.Current;
+							varlist.Add(new VariableCompletion(name.Text, name.Text));
+						}
+						break;
+				}
+				lexer.Next();
+			}
+		}
 
         private IHighlightingDefinition LoadSyntax(string extension) {
             if (extension == ".lua") {
@@ -110,7 +124,7 @@ namespace DSTEd.Core.Contents.Editors {
 
         private void OnEnter(object sender, TextCompositionEventArgs e) {
             if (e.Text.Length > 0) {
-                //if (!char.IsLetterOrDigit(e.Text[0])) {
+				//if (!char.IsLetterOrDigit(e.Text[0])) {
 				completion = new CompletionWindow(TextArea);
 				completion.CompletionList.InsertionRequested += inserting;
                 completion.CompletionList.RequestInsertion(e);
@@ -120,9 +134,10 @@ namespace DSTEd.Core.Contents.Editors {
 
 		private void inserting(object s,EventArgs Arg)
 		{
+			Dispatcher.Invoke(RefreshLexer);
 			completion = new CompletionWindow(TextArea);
 			var dataref = completion.CompletionList.CompletionData;
-			if(Arg is TextCompositionEventArgs textarg)
+			if (Arg is TextCompositionEventArgs textarg)
 			{
 				if(textarg.Text[0]==':')
 				{
