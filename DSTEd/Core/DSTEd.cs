@@ -113,7 +113,7 @@ namespace DSTEd.Core {
 			Action[] q2 = { gameloading, modsloading, workshoploading };
 			loaderv2.Start(q1, q2);
 			ide.Show();
-			this.Run();
+		this.Run();
         }
 
         public IDE GetIDE() {

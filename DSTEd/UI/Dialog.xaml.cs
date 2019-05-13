@@ -63,7 +63,7 @@ namespace DSTEd.UI {
     public partial class DialogFactory : Window {
         private Dialog.Result result;
         private Func<Dialog.Result, Boolean> callback_result = null;
-
+		
         public DialogFactory() {
             InitializeComponent();
         }
