@@ -211,9 +211,6 @@
     <Compile Include="UI\IDE.xaml.cs">
       <DependentUpon>IDE.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Loading.xaml.cs">
-      <DependentUpon>Loading.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=3.3.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
@@ -508,10 +505,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\IDE.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,21 +13,22 @@ namespace DSTEd.UI
 			InitializeComponent();
 		}
 		private int p = 0;
+		private int cur = 0;
 		public int Progress//0 to 1
 		{
 			get
 			{
-				return p;
+				return cur;
 			}
 			set
 			{
-				p = value;
 				Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render,
 						new Action(() =>
 						{
-							progress.Value = p != 0 ? (value / p) * 100 : 0;
+							progress.Value = value != 0 ? (value / p) * 100 : 0;
 						})
 				);
+				cur++;
 			}
 		}
 		private void OnMove(object sender, MouseEventArgs e)
