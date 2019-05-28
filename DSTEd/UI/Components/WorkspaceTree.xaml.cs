@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Xml;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -62,7 +63,7 @@ namespace DSTEd.UI.Components {
                     }
 
                     // Create texture bundles
-                    if (file.Name.EndsWith(".tex") || file.Name.EndsWith(".xml")) {
+                    /*if (file.Name.EndsWith(".tex") || file.Name.EndsWith(".xml")) {
                         string name = Path.GetFileNameWithoutExtension(file.Name);
                         Dictionary<string, TreeViewItem> bundle = null;
 
@@ -80,7 +81,30 @@ namespace DSTEd.UI.Components {
                         }
 
                         ignore = true;
-                    }
+                    }*/
+
+					if(string.Compare(Path.GetExtension(file.Name),".xml",true) == 0)
+					{
+						XmlDocument ktex_atlas = new XmlDocument();
+						
+						ktex_atlas.Load(file.FullName);
+						try
+						{
+							foreach (XmlNode texture in ktex_atlas.SelectSingleNode("Atlas").SelectNodes("Texture"))
+							{
+								foreach(XmlAttribute att in texture.Attributes)
+								{
+									if (att.LocalName != "filename")
+										continue;
+									
+								}
+							}
+						}
+						catch(System.Xml.XPath.XPathException)
+						{
+							continue;
+						}
+					}
 
                     entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e) {
                         Logger.Info("ContextMenu: " + file.FullName);
