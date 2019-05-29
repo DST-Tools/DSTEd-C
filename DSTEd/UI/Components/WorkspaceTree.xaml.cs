@@ -29,7 +29,7 @@ namespace DSTEd.UI.Components {
 				{
 					Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(delegate ()
 					{
-						this.Render(directory, this.tree);
+						this.RenderV2(directory, this.tree);
 					}));
 				}
 			});
@@ -154,13 +154,14 @@ namespace DSTEd.UI.Components {
 		{
 			TreeViewItem item;
 
-
+			//workshop mods
 			if(files.GetName().StartsWith("workshop-"))
 			{
 				item = new WorkshopItem(files);
 			}
 			else
 			{
+				//initalize as a normal mod.
 				item = new TreeViewItem()
 				{
 					Header = files.GetName(),
@@ -188,69 +189,128 @@ namespace DSTEd.UI.Components {
 
 			if(files.HasFiles())
 			{
+				List<string> skiplist = new List<string>(20);
 				foreach (FileInfo file in files.GetFiles())
 				{
+					/* skip these files which added into skiplist, include bundled ktex(2019/5/30)
+					 * put this first to avoid object construction
+					 */
+					if (skiplist.Contains(file.FullName)) continue;
+
 					TreeViewItem entry;
+
+					//modinfo
 					if(file.Name == "modinfo.lua")
 					{
+						//build
 						entry = new ModInfoItem { Header = "ModInfo" };
+						entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+						{
+							Logger.Info("ContextMenu: " + file.FullName);
+						});
+						entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+						{
+							Boot.Core().GetWorkspace().OpenDocument(file.FullName);
+						});
 						item.Items.Add(entry);
+						//skip other steps
 						continue;
 					}
+
+					//texture bundle, read XML atlas first
 					if (string.Compare(Path.GetExtension(file.Name), ".xml", true) == 0)
 					{
 						XmlDocument ktex_atlas = new XmlDocument();
-						entry = new TextureItem() { Header = file.Name };
-						ktex_atlas.Load(file.FullName);
+
 						try
 						{
+							//create a bundle item
+							entry = new TextureItem() { Header = Path.GetFileNameWithoutExtension(file.FullName) };
+							ktex_atlas.Load(file.FullName);
+
+							//read XML atlas to find out all the textures
 							foreach (XmlNode texture in ktex_atlas.SelectSingleNode("Atlas").SelectNodes("Texture"))
 							{
+								//iterate attributes to find an attribute named "filename"
 								foreach (XmlAttribute att in texture.Attributes)
 								{
 									if (att.LocalName != "filename")
 										continue;
-
+									string ktex_path = Path.Combine(file.DirectoryName, att.Value);
+									//add it's path into skip list
+									skiplist.Add(ktex_path);
+									//build bundle, this is the texture step.
+									TreeViewItem ktex = new TreeViewItem { Header = att.Value };
+									ktex.PreviewMouseDown += new MouseButtonEventHandler(delegate (object s, MouseButtonEventArgs arg)
+									{
+										Boot.Instance.GetWorkspace().OpenDocument(ktex_path);
+									});
+									entry.Items.Add(ktex);
 								}
 							}
+
+							//add XML itself into the bundle
+							{
+								TreeViewItem xml_atlas = new TreeViewItem { Header = file.Name };
+								xml_atlas.PreviewMouseDown += new MouseButtonEventHandler(delegate (object s, MouseButtonEventArgs arg)
+								  {
+									  Boot.Instance.GetWorkspace().OpenDocument(file.FullName);
+								  });
+								entry.Items.Add(xml_atlas);
+							}
+
+							//set bundle mouse event handling
+							entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+							{
+								Logger.Info("ContextMenu: " + file.FullName);
+							});
+							entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+							{
+								// @ToDo open Texture-Editor
+								Logger.Info("Texture-Editor: " + file.FullName);
+								//this.GetCore().GetWorkspace().OpenDocument(file.FullName);
+							});
 						}
 						catch (System.Xml.XPath.XPathException)
 						{
+							//use continue to avoid a wrong bundle being added into the tree by skipping the code above
 							continue;
 						}
 						catch(XmlException)
 						{
+							//skip if the xml file does not contain any texture info
 							continue;
 						}
 						catch(Exception e)
 						{
 							Console.WriteLine(e.Message);
 							Console.WriteLine(e.StackTrace);
+							//same as before
 							continue;
 						}
 
-						entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-						{
-							Logger.Info("ContextMenu: " + bundles.Key);
-						});
 
-						entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-						{
-							// @ToDo open Texture-Editor
-							Logger.Info("Texture-Editor: " + bundles.Key);
-							//this.GetCore().GetWorkspace().OpenDocument(file.FullName);
-						});
+						item.Items.Add(entry);
+						//skip other steps to make it faster
+						continue;
 					}
 
-					/*entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+					//other files
 					{
-						Logger.Info("ContextMenu: " + file.FullName);
-					});
-					entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-					{
-						Boot.Core().GetWorkspace().OpenDocument(file.FullName);
-					});*/
-
+						entry = new TreeViewItem()
+						{
+							Header = file.Name
+						};
+						entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+						{
+							Logger.Info("ContextMenu: " + file.FullName);
+						});
+						entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
+						{
+							Boot.Core().GetWorkspace().OpenDocument(file.FullName);
+						});
+						item.Items.Add(entry);
+					}
 				}
 			}
 
