@@ -64,6 +64,10 @@ namespace DSTEd.Core.Contents.Editors {
 
 		public void RefreshLexer()
 		{
+			if(Path.GetExtension(document.GetFile()).CompareTo(".xml") == 0)
+			{
+				return;
+			}
 			lexer = new Lexer(0, document.GetFileContent(), false);
 			funclist.Clear();
 			varlist.Clear();
