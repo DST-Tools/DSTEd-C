@@ -14,7 +14,7 @@ using DSTEd.Core.IO;
 namespace DSTEd.UI.Components {
 	public partial class WorkspaceTree : UserControl
 	{
-		private Func<FileNode, TreeViewItem> callback = null;
+		private Func<FileNode, TreeViewItem> callback = null;//somedays may use
 
 		public WorkspaceTree(FileSystem files, Func<FileNode, TreeViewItem> callback)
 		{
@@ -33,121 +33,6 @@ namespace DSTEd.UI.Components {
 					}));
 				}
 			});
-		}
-
-		private TreeViewItem Render(FileNode files, TreeView container)
-		{
-			TreeViewItem item = new TreeViewItem { Header = files.GetName() };
-			item.FontWeight = FontWeights.Normal;
-
-			if (files.GetName().StartsWith("workshop-"))
-			{
-				item = callback?.Invoke(files);
-			}
-
-			if (files.HasSubdirectories())
-			{
-				foreach (FileNode directory in files.GetSubdirectories())
-				{
-					TreeViewItem root = this.Render(directory, null);
-					root.FontWeight = FontWeights.Normal;
-
-					if (container != null)
-					{
-						container.Items.Add(root);
-					}
-					else
-					{
-						item.Items.Add(root);
-					}
-				}
-			}
-
-			if (files.HasFiles())
-			{
-				Dictionary<string, Dictionary<string, TreeViewItem>> texture_bundles = new Dictionary<string, Dictionary<string, TreeViewItem>>();
-
-				foreach (FileInfo file in files.GetFiles())
-				{
-					TreeViewItem entry = new TreeViewItem { Header = file.Name };
-					Boolean ignore = false;
-
-					entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-					{
-						Logger.Info("ContextMenu: " + file.FullName);
-					});
-
-					entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-					{
-						Boot.Core().GetWorkspace().OpenDocument(file.FullName);
-					});
-
-					if (file.Name == "modinfo.lua")
-					{
-						entry = new ModInfoItem { Header = "ModInfo" }; // @ToDo need Translation(?)
-					}
-
-					// Create texture bundles
-					if (file.Name.EndsWith(".tex") || file.Name.EndsWith(".xml"))
-					{
-						string name = Path.GetFileNameWithoutExtension(file.Name);
-						Dictionary<string, TreeViewItem> bundle = null;
-
-						if (!texture_bundles.ContainsKey(name))
-						{
-							bundle = new Dictionary<string, TreeViewItem>();
-							texture_bundles.Add(name, bundle);
-						}
-						else if (texture_bundles.ContainsKey(name))
-						{
-							bundle = texture_bundles[name];
-						}
-
-						if (file.Name.EndsWith(".tex") && !bundle.ContainsKey("TEXTURE"))
-						{
-							bundle.Add("TEXTURE", entry);
-						}
-						else if (file.Name.EndsWith(".xml") && !bundle.ContainsKey("ATLAS"))
-						{
-							bundle.Add("ATLAS", entry);
-						}
-
-						ignore = true;
-					}
-
-					if (!ignore)
-					{
-						item.Items.Add(entry);
-					}
-				}
-
-				// Build texture bundles
-				foreach (KeyValuePair<string, Dictionary<string, TreeViewItem>> bundles in texture_bundles)
-				{
-					TextureItem entry = new TextureItem { Header = bundles.Key };
-
-					entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-					{
-						Logger.Info("ContextMenu: " + bundles.Key);
-					});
-
-					entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-					{
-						// @ToDo open Texture-Editor
-						Logger.Info("Texture-Editor: " + bundles.Key);
-						//this.GetCore().GetWorkspace().OpenDocument(file.FullName);
-					});
-
-					foreach (KeyValuePair<string, TreeViewItem> entries in bundles.Value)
-					{
-						entry.Items.Add(entries.Value);
-					}
-
-					item.Items.Add(entry);
-				}
-			}
-
-			return item;
 		}
 
 		private TreeViewItem RenderV2(FileNode files, TreeView container)
@@ -194,24 +79,17 @@ namespace DSTEd.UI.Components {
 				{
 					/* skip these files which added into skiplist, include bundled ktex(2019/5/30)
 					 * put this first to avoid object construction
+					 * this is the first check.
 					 */
 					if (skiplist.Contains(file.FullName)) continue;
 
-					TreeViewItem entry;
+					WorkspaceFileItem entry;
 
 					//modinfo
 					if(file.Name == "modinfo.lua")
 					{
 						//build
-						entry = new ModInfoItem { Header = "ModInfo" };
-						entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-						{
-							Logger.Info("ContextMenu: " + file.FullName);
-						});
-						entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-						{
-							Boot.Core().GetWorkspace().OpenDocument(file.FullName);
-						});
+						entry = new ModInfoItem(file.FullName) { Header = "ModInfo" };
 						item.Items.Add(entry);
 						//skip other steps
 						continue;
@@ -225,7 +103,7 @@ namespace DSTEd.UI.Components {
 						try
 						{
 							//create a bundle item
-							entry = new TextureItem() { Header = Path.GetFileNameWithoutExtension(file.FullName) };
+							entry = new TextureItem(file.FullName) { Header = Path.GetFileNameWithoutExtension(file.FullName) };
 							ktex_atlas.Load(file.FullName);
 
 							//read XML atlas to find out all the textures
@@ -240,11 +118,7 @@ namespace DSTEd.UI.Components {
 									//add it's path into skip list
 									skiplist.Add(ktex_path);
 									//build bundle, this is the texture step.
-									TreeViewItem ktex = new TreeViewItem { Header = att.Value };
-									ktex.PreviewMouseDown += new MouseButtonEventHandler(delegate (object s, MouseButtonEventArgs arg)
-									{
-										Boot.Instance.GetWorkspace().OpenDocument(ktex_path);
-									});
+									WorkspaceFileItem ktex = new WorkspaceFileItem(ktex_path) { Header = att.Value };
 									entry.Items.Add(ktex);
 								}
 							}
@@ -295,20 +169,20 @@ namespace DSTEd.UI.Components {
 						continue;
 					}
 
+					foreach (WorkspaceFileItem item_to_check in item.Items)
+					{
+						if(skiplist.Contains(item_to_check.FullPath))
+						{
+							item.Items.Remove(item_to_check);
+						}
+					}
+
 					//other files
 					{
-						entry = new TreeViewItem()
+						entry = new WorkspaceFileItem(file.FullName)
 						{
 							Header = file.Name
 						};
-						entry.MouseRightButtonDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-						{
-							Logger.Info("ContextMenu: " + file.FullName);
-						});
-						entry.PreviewMouseDown += new MouseButtonEventHandler(delegate (object sender, MouseButtonEventArgs e)
-						{
-							Boot.Core().GetWorkspace().OpenDocument(file.FullName);
-						});
 						item.Items.Add(entry);
 					}
 				}
@@ -318,6 +192,29 @@ namespace DSTEd.UI.Components {
 		}
 
 
+	}
+
+	public class WorkspaceFileItem : TreeViewItem
+	{
+		public string FullPath { get; private set; }
+
+		private void open_document(object s,MouseEventArgs arg)
+		{
+			Boot.Instance.GetWorkspace().OpenDocument(FullPath);
+		}
+
+		public WorkspaceFileItem(string FullPath, MouseButtonEventHandler CustomPreviewCallback = null) : base()
+		{
+			this.FullPath = FullPath;
+			if (CustomPreviewCallback != null) 
+			{
+				PreviewMouseDoubleClick += CustomPreviewCallback;
+			}
+			else
+			{
+				PreviewMouseDoubleClick += open_document;
+			}
+		}
 	}
 
     [ValueConversion(typeof(string), typeof(bool))]
@@ -339,9 +236,9 @@ namespace DSTEd.UI.Components {
                 name = "Image";
             } else if ((value as string).EndsWith(".txt")) {
                 name = "Text";
-            } else if ((value as string).Contains(".")) {
+            } else if ((value as string).Contains(".")) {//this may cause some strange bug, if a folder named like ".gnupg" the folder will display as a unkown file
                 name = "Unknown";
-            } else {
+            } else {//if a file named like "hosts", it will sorts wrong, too.
                 name = "Folder_Closed";
             }
 
