@@ -194,29 +194,6 @@ namespace DSTEd.UI.Components {
 
 	}
 
-	public class WorkspaceFileItem : TreeViewItem
-	{
-		public string FullPath { get; private set; }
-
-		private void open_document(object s,MouseEventArgs arg)
-		{
-			Boot.Instance.GetWorkspace().OpenDocument(FullPath);
-		}
-
-		public WorkspaceFileItem(string FullPath, MouseButtonEventHandler CustomPreviewCallback = null) : base()
-		{
-			this.FullPath = FullPath;
-			if (CustomPreviewCallback != null) 
-			{
-				PreviewMouseDoubleClick += CustomPreviewCallback;
-			}
-			else
-			{
-				PreviewMouseDoubleClick += open_document;
-			}
-		}
-	}
-
     [ValueConversion(typeof(string), typeof(bool))]
     public class Iconizer : IValueConverter {
         public static Iconizer Instance = new Iconizer();

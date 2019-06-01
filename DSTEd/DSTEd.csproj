@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="UI\Components\TextureItem.cs" />
     <Compile Include="UI\Components\WorkshopItem.cs" />
+    <Compile Include="UI\Components\WorkspaceFolderItem.cs" />
     <Compile Include="UI\Components\WorkspaceTree.xaml.cs">
       <DependentUpon>WorkspaceTree.xaml</DependentUpon>
     </Compile>
@@ -178,6 +179,7 @@
     <Compile Include="UI\Workspace.xaml.cs">
       <DependentUpon>Workspace.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Components\WorkspaceFileItem.cs" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>

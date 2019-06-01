@@ -4,7 +4,7 @@ using MoonSharp.Interpreter;
 
 namespace DSTEd.Core.Klei.Data {
     public class ModInfo {
-        private int id;
+        private UInt64 id;
         private string name = null;
         private string version = null;
         private string description = null;
@@ -122,11 +122,11 @@ namespace DSTEd.Core.Klei.Data {
             return this.is_broken;
         }
 
-        public void SetID(int id) {
+        public void SetID(UInt64 id) {
             this.id = id;
         }
 
-        public int GetID() {
+        public UInt64 GetID() {
             return this.id;
         }
 
