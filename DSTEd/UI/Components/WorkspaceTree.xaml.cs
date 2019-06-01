@@ -14,7 +14,7 @@ using DSTEd.Core.IO;
 namespace DSTEd.UI.Components {
 	public partial class WorkspaceTree : UserControl
 	{
-		private Func<FileNode, TreeViewItem> callback = null;//somedays may use
+		private Func<FileNode, TreeViewItem> callback = null;//maybe someday will use, keep
 
 		public WorkspaceTree(FileSystem files, Func<FileNode, TreeViewItem> callback)
 		{
@@ -169,14 +169,6 @@ namespace DSTEd.UI.Components {
 						continue;
 					}
 
-					foreach (WorkspaceFileItem item_to_check in item.Items)
-					{
-						if(skiplist.Contains(item_to_check.FullPath))
-						{
-							item.Items.Remove(item_to_check);
-						}
-					}
-
 					//other files
 					{
 						entry = new WorkspaceFileItem(file.FullName)
@@ -184,6 +176,19 @@ namespace DSTEd.UI.Components {
 							Header = file.Name
 						};
 						item.Items.Add(entry);
+					}
+				}
+
+				/* remove those item which shuold have skipped. 
+				 * for example, there is 2 files named "a.tex" "a.xml"
+				 * because "a.tex" being iterated earlier than "a.xml"
+				 * "a.tex" will be added into Items before it had beed added into skiplist.
+				 */
+				foreach (WorkspaceFileItem item_to_check in item.Items)
+				{
+					if (skiplist.Contains(item_to_check.FullPath))
+					{
+						item.Items.Remove(item_to_check);
 					}
 				}
 			}
