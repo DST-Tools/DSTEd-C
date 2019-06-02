@@ -8,11 +8,9 @@ using DSTEd.Core.Klei.Data;
 using DSTEd.Core.LUA;
 
 namespace DSTEd.UI.Components {
-    class WorkshopItem : TreeViewItem {
-        private FileNode file = null;
+    class WorkshopItem : WorkspaceFolderItem {
 
-        public WorkshopItem(FileNode file) {
-            this.file = file;
+        public WorkshopItem(FileNode file) : base(file) {
             this.FontWeight = FontWeights.Bold;
 
             this.LoadModInfo();
@@ -45,10 +43,10 @@ namespace DSTEd.UI.Components {
                 Logger.Error("[WorkshopItem] ModInfo is broken: " + e);
             });
 
-            info.SetID(Int32.Parse(this.file.GetName().Replace("workshop-", "")));
+            info.SetID(UInt64.Parse(this.file.GetName().Replace("workshop-", "")));
 
             if (info.IsBroken() && !info.HasName()) {
-                this.Header = this.file.GetName();
+                //this.Header = this.file.GetName(); //set at base constructs
             } else {
                 this.Header = info.GetName();
             }

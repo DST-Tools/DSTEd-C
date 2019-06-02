@@ -22,7 +22,7 @@ namespace DSTEd.UI
 			}
 			set
 			{
-				Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render,
+				Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
 						new Action(() =>
 						{
 							progress.Value = value != 0 ? (value / p) * 100 : 0;
