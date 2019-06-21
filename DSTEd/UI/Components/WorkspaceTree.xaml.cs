@@ -56,6 +56,7 @@ namespace DSTEd.UI.Components {
 				foreach (FileNode dir in files.GetSubdirectories())
 				{
 					WorkspaceFolderItem root = this.RenderV2(dir, null) as WorkspaceFolderItem;
+					if (root == null) continue;
 					root.FontWeight = FontWeights.Normal;
 
 					if (container != null)
@@ -122,11 +123,7 @@ namespace DSTEd.UI.Components {
 
 							//add XML itself into the bundle
 							{
-								TreeViewItem xml_atlas = new TreeViewItem { Header = file.Name };
-								xml_atlas.PreviewMouseDown += new MouseButtonEventHandler(delegate (object s, MouseButtonEventArgs arg)
-								  {
-									  Boot.Instance.GetWorkspace().OpenDocument(file.FullName);
-								  });
+								WorkspaceFileItem xml_atlas = new WorkspaceFileItem(file.FullName);
 								entry.Items.Add(xml_atlas);
 							}
 
@@ -141,6 +138,23 @@ namespace DSTEd.UI.Components {
 								Logger.Info("Texture-Editor: " + file.FullName);
 								//this.GetCore().GetWorkspace().OpenDocument(file.FullName);
 							});
+
+							//remove these existed texture items
+							{
+								List<TreeViewItem> excludes = new List<TreeViewItem>(4);
+								//find these items to remove by foreach,and add them into excludes
+								foreach (TreeViewItem to_check in item.Items)
+								{
+									if (skiplist.Contains((to_check as WorkspaceFileItem)?.FullPath))
+										excludes.Add(to_check);
+								}
+								foreach (object to_remove in excludes)
+								{
+									//remove it now because I can't do so when enumerating item.Items
+									//or a InvalidOpreationException will be thrown.
+									item.Items.Remove(to_remove);
+								}
+							}
 						}
 						catch (System.Xml.XPath.XPathException)
 						{
@@ -173,22 +187,6 @@ namespace DSTEd.UI.Components {
 							Header = file.Name
 						};
 						item.Items.Add(entry);
-					}
-				}
-
-				/* remove those item which shuold have skipped. 
-				 * for example, there is 2 files named "a.tex" "a.xml"
-				 * because "a.tex" being iterated earlier than "a.xml"
-				 * "a.tex" will be added into Items before it had been added into skiplist.
-				 */
-				foreach (TreeViewItem item1 in item.Items)
-				{
-					if (item1 is WorkspaceFSItem item_to_check)
-					{
-						if (skiplist.Contains(item_to_check.FullPath))
-						{
-							item.Items.Remove(item_to_check);
-						}
 					}
 				}
 			}
