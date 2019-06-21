@@ -17,6 +17,7 @@ namespace DSTEd.Core.Steam {
             this.software = new SteamAppsManager();
             this.account = new Account(this);
             this.workshop = new Workshop();
+			path = software.InstallDir;
         }
 
         public void LoadGame(KleiGame game) {
@@ -36,37 +37,29 @@ namespace DSTEd.Core.Steam {
             return this.games;
         }
 
-        public KleiGame GetGame() {
-            KleiGame game = null;
+		public KleiGame GetGame() {
+			KleiGame game = null;
 
-            foreach (KleiGame instance in this.games) {
-                if (instance.IsMainGame()) {
-                    game = instance;
-                    break;
-                }
-            }
+			foreach (KleiGame instance in this.games) {
+				if (instance.IsMainGame()) {
+					game = instance;
+					break;
+				}
+			}
 
-            return game;
-        }
-
+			return game;
+		}
+		[Obsolete("Always true.")]
         public Boolean ValidatePath(string path) {
-            if (path == null) {
-                return false;
-            }
-
-            return File.Exists(string.Format("{0}{1}Steam.exe", path, Path.DirectorySeparatorChar));
+			return true;
         }
-
-        public Boolean IsInstalled() {
-            return this.ValidatePath(this.path);
-        }
-
+		[Obsolete("Always true.")]
+		public Boolean IsInstalled() {
+			return true;
+		}
+		[Obsolete("Path was set in the contructor.Just not call this.",true)]
         public void SetPath(string path) {
-            this.path = path;
-
-            if (!this.ValidatePath(this.path) || this.path == null) {
-                //this.path = software.InstallDir;
-            }
+			
         }
 
         public String GetPath() {

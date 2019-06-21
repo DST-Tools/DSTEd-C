@@ -27,10 +27,7 @@ namespace DSTEd.UI.Components {
 			{
 				foreach (FileNode directory in f)
 				{
-					Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, new Action(delegate ()
-					{
-						this.RenderV2(directory, this.tree);
-					}));
+					Dispatcher.Invoke(() => RenderV2(directory, tree), System.Windows.Threading.DispatcherPriority.Render);
 				}
 			});
 		}
@@ -58,7 +55,7 @@ namespace DSTEd.UI.Components {
 			{
 				foreach (FileNode dir in files.GetSubdirectories())
 				{
-					TreeViewItem root = this.RenderV2(dir, null);
+					WorkspaceFolderItem root = this.RenderV2(dir, null) as WorkspaceFolderItem;
 					root.FontWeight = FontWeights.Normal;
 
 					if (container != null)
@@ -182,13 +179,16 @@ namespace DSTEd.UI.Components {
 				/* remove those item which shuold have skipped. 
 				 * for example, there is 2 files named "a.tex" "a.xml"
 				 * because "a.tex" being iterated earlier than "a.xml"
-				 * "a.tex" will be added into Items before it had beed added into skiplist.
+				 * "a.tex" will be added into Items before it had been added into skiplist.
 				 */
-				foreach (WorkspaceFileItem item_to_check in item.Items)
+				foreach (TreeViewItem item1 in item.Items)
 				{
-					if (skiplist.Contains(item_to_check.FullPath))
+					if (item1 is WorkspaceFSItem item_to_check)
 					{
-						item.Items.Remove(item_to_check);
+						if (skiplist.Contains(item_to_check.FullPath))
+						{
+							item.Items.Remove(item_to_check);
+						}
 					}
 				}
 			}
