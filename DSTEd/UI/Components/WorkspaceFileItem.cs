@@ -8,16 +8,14 @@ using System.Windows.Input;
 
 namespace DSTEd.UI.Components
 {
-	public class WorkspaceFileItem : TreeViewItem
+	public class WorkspaceFileItem : WorkspaceFSItem
 	{
-		public string FullPath { get; private set; }
-
 		private void open_document(object s, MouseEventArgs arg)
 		{
 			Boot.Instance.GetWorkspace().OpenDocument(FullPath);
 		}
 
-		public WorkspaceFileItem(string FullPath) : base()
+		public WorkspaceFileItem(string FullPath) : base(FullPath)
 		{
 			this.FullPath = FullPath;
 

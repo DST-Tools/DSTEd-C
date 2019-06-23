@@ -5,40 +5,40 @@ using System.IO;
 
 namespace DSTEd.Core {
     public class Workspace {
-        private UI.Workspace window;
+        //private UI.Workspace window; //get path from Steam class. no necessary to ask for it.
         private string path = "C:\\Program Files\\";
         private Dictionary<string, Document> documents = null;
         private Document welcome = null;
 
         public Workspace() {
-            this.window = new UI.Workspace();
+            //this.window = new UI.Workspace();
             this.documents = new Dictionary<string, Document>();
             this.CreateWelcome();
         }
 
         public void Show() {
-            this.window.Show();
+            //this.window.Show();
         }
 
         public void Close() {
-            this.window.Close(false);
+            //this.window.Close(false);
         }
 
         public void Close(Boolean ignore_callback) {
-            this.window.Close(ignore_callback);
+            //this.window.Close(ignore_callback);
         }
 
         public void OnClose(Action<CancelEventArgs> callback) {
-            this.window.OnClose(callback);
+            //this.window.OnClose(callback);
         }
 
         public void OnSelect(Action<string, Boolean> callback) {
-            this.window.OnSelect(callback);
+            //this.window.OnSelect(callback);
         }
 
         public void SetPath(string path) {
             this.path = path;
-            this.window.SetPath(this.path);
+            //this.window.SetPath(this.path);
         }
 
         public string GetPath() {

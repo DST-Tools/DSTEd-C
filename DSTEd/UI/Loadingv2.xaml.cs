@@ -48,12 +48,15 @@ namespace DSTEd.UI
 			Show();
 			foreach (Action[] workers in queue)
 			{
-				Parallel.For(0, workers.Length, new Action<int>((int _p) => {
-					workers[_p]();
-					Progress++;
-				}));
+				Parallel.ForEach(workers,
+						(Action work) =>
+						{
+							work();
+							Progress++;
+						}
+					);
 			}
-			Hide();
+			Close();
 		}
 	}
 }

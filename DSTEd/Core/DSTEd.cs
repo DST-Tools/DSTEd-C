@@ -33,32 +33,34 @@ namespace DSTEd.Core {
             this.steam = new Steam.Steam();
             this.ide = new IDE();
             this.workspace = new Workspace();
-            //this.loading = new Loading();
+			//this.loading = new Loading();
 
-            // Set the steam path by configuration
-            this.steam.SetPath(this.configuration.Get("STEAM_PATH", null));
-            this.workspace.SetPath(this.steam.GetPath());
+			//Set the steam path by configuration
+			this.workspace.SetPath(this.steam.GetPath());
 
-            this.workspace.OnSelect(delegate (string path, Boolean save) {
-                if (!this.steam.ValidatePath(path)) {
-                    Dialog.Open(I18N.__("Bad steam path! Please select the directory of Steam."), I18N.__("Problem"), Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result) {
-                        return true;
-                    });
-                    return;
-                }
+			this.workspace.OnSelect(delegate (string path, Boolean save)
+			{
+				//if (!this.steam.ValidatePath(path))
+				//{
+				//	Dialog.Open(I18N.__("Bad steam path! Please select the directory of Steam."), I18N.__("Problem"), Dialog.Buttons.OK, Dialog.Icon.Warning, delegate (Dialog.Result result)
+				//	{
+				//		return true;
+				//	});
+				//	return;
+				//}
 
-                this.steam.SetPath(path);
-                this.workspace.SetPath(path);
+				this.workspace.SetPath(steam.GetPath());
 
-                if (save) {
-                    this.configuration.Set("STEAM_PATH", path);
-                    this.configuration.Save();
-                }
+				if (save)
+				{
+					this.configuration.Set("STEAM_PATH", path);
+					this.configuration.Save();
+				}
 
-                this.workspace.Close(true);
-            });
+				this.workspace.Close(true);
+			});
 
-            this.workspace.OnClose(delegate (CancelEventArgs e) {
+			this.workspace.OnClose(delegate (CancelEventArgs e) {
                 Dialog.Open(I18N.__("You must set the workspace path! If you cancel these, DSTEd will be closed."), I18N.__("Problem"), Dialog.Buttons.RetryCancel, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                     if (result == Dialog.Result.Cancel) {
                         Environment.Exit(0);
@@ -71,20 +73,6 @@ namespace DSTEd.Core {
             });
 
 			# region Define workers
-			void SteamPathInit()
-			{
-				if (!steam.IsInstalled())
-				{
-					Logger.Info("Steam is not installed? Ask for Workspace...");
-					Dialog.Open(I18N.__("We can not find the path to STEAM. Please check the workspace settings."), I18N.__("Problem: Steam"), Dialog.Buttons.OK, Dialog.Icon.Warning,
-						delegate (Dialog.Result r)
-						{
-							workspace.Show();
-							return true;
-						}
-						);
-				}
-			}
 			void gameloading()
 			{
 				steam.LoadGame(new DSTC());//CL
@@ -109,9 +97,8 @@ namespace DSTEd.Core {
 				});
 			}
 			#endregion
-			Action[] q1 = { SteamPathInit };
 			Action[] q2 = { gameloading, modsloading, workshoploading };
-			loaderv2.Start(q1, q2);
+			loaderv2.Start(q2);
 			ide.Show();
 		this.Run();
         }
