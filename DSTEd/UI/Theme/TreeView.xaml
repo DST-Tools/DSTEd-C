@@ -27,8 +27,8 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
-    <Style TargetType="{x:Type Components:WorkshopItem}">
+
+	<Style TargetType="{x:Type Components:WorkshopItem}">
         <Setter Property="Foreground" Value="#FFFFFF"/>
         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
         
@@ -65,8 +65,8 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
-    <Style TargetType="{x:Type TreeViewItem}">
+
+	<Style TargetType="{x:Type Components:WorkspaceFolderItem}">
         <Setter Property="Foreground" Value="#FFFFFF"/>
         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
         
@@ -141,4 +141,30 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+	<Style TargetType="{x:Type Components:WorkspaceFSItem}">
+		<Setter Property="Foreground" Value="#FFFFFFFF"/>
+		<Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}"/>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Components:WorkspaceFSItem}">
+					<StackPanel Orientation="Vertical" Margin="10,0,0,1">
+						<StackPanel Orientation="Horizontal">
+							<Image Name="icon" Width="16" Height="16" Stretch="Fill" 
+								   Source="{Binding RelativeSource=
+								{
+									RelativeSource Mode=FindAncestor,
+									AncestorType={x:Type TreeViewItem}},
+									Path=Header,
+									Converter={x:Static Components:Iconizer.Instance}
+								}" />
+							<ContentPresenter Margin="5,0,0,0" x:Name="PART_Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="Header"/>
+						</StackPanel>
+						<ItemsPresenter x:Name="ItemsHost" Margin="10,0,0,0" />
+					</StackPanel>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>

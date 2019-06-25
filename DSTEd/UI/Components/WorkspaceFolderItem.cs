@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -16,6 +17,7 @@ namespace DSTEd.UI.Components
 		{
 			this.file = file;
 			Header = file.GetName();
+			FontWeight = FontWeights.Bold;
 		}
 	}
 }
