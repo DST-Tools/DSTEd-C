@@ -34,7 +34,7 @@ namespace DSTEd.UI.Components {
 
 		private TreeViewItem RenderV2(FileNode files, TreeView container)
 		{
-			TreeViewItem item;
+			WorkspaceFolderItem item;
 
 			//workshop mods
 			if(files.GetName().StartsWith("workshop-"))
@@ -44,11 +44,7 @@ namespace DSTEd.UI.Components {
 			else
 			{
 				//initalize as a normal mod.
-				item = new TreeViewItem()
-				{
-					Header = files.GetName(),
-					FontWeight = FontWeights.Normal
-				};
+				item = new WorkspaceFolderItem(files);
 			}
 
 			if(files.HasSubdirectories())

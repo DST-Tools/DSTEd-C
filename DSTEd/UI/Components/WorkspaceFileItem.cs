@@ -17,8 +17,8 @@ namespace DSTEd.UI.Components
 
 		public WorkspaceFileItem(string FullPath) : base(FullPath)
 		{
-			this.FullPath = FullPath;
-
+			//this.FullPath = FullPath;
+			Header = System.IO.Path.GetFileName(FullPath);
 			PreviewMouseDoubleClick += open_document;
 		}
 	}
