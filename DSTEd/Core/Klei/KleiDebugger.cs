@@ -49,15 +49,15 @@ namespace DSTEd.Core.Klei {
 		}
 
         public void AddOutput(string text) {
-            Boot.Core().GetIDE().GetDebugPanel().AddOutput(text);
+            Boot.Core.IDE.GetDebugPanel().AddOutput(text);
         }
 
         public void AddError(string text) {
-            Boot.Core().GetIDE().GetDebugPanel().AddError(text);
+            Boot.Core.IDE.GetDebugPanel().AddError(text);
         }
 
         public void AddDebug(string text) {
-            Boot.Core().GetIDE().GetDebugPanel().AddDebug(text);
+            Boot.Core.IDE.GetDebugPanel().AddDebug(text);
         }
 
         public void Attach(string executable) {

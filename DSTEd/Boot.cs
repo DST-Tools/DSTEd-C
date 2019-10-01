@@ -3,17 +3,13 @@ using DSTEd.Core;
 
 namespace DSTEd {
     class Boot {
-        public static Core.DSTEd Instance = null;
-
-        [STAThread]
+		[STAThread]
         public static void Main(String[] args) {
             Logger.Info("Booting up...");
-            Instance = new Core.DSTEd();
-            Instance.Start();
+            Core = new Core.DSTEd();
+            Core.Start();
         }
 
-        public static Core.DSTEd Core() {
-            return Instance;
-        }
-    }
+		public static Core.DSTEd Core { get; private set; } = null;
+	}
 }

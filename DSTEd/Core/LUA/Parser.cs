@@ -62,7 +62,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             } catch (SyntaxErrorException e) {
                 ParserException exception;
 
@@ -73,7 +73,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             } catch (InternalErrorException e) {
                 ParserException exception;
 
@@ -84,7 +84,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             } catch (InterpreterException e) {
                 ParserException exception;
 
@@ -95,7 +95,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             }
             return script;
         }
@@ -125,7 +125,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             } catch (SyntaxErrorException e) {
                 ParserException exception;
 
@@ -136,7 +136,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             } catch (InternalErrorException e) {
                 ParserException exception;
 
@@ -147,7 +147,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             } catch (InterpreterException e) {
                 ParserException exception;
 
@@ -158,7 +158,7 @@ namespace DSTEd.Core.LUA {
                 }
 
                 callback?.Invoke(exception);
-                Boot.Core().GetIDE().GetDebugPanel().AddError(exception);
+                Boot.Core.IDE.GetDebugPanel().AddError(exception);
             }
 
             return null;

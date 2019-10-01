@@ -75,17 +75,17 @@ namespace DSTEd.Core.Klei {
         }
 
         public void AddDebug(string name, string executable) {
-            Boot.Instance.GetIDE().Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(delegate () {
+            Boot.Core.IDE.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(delegate () {
                 MenuItem item = AddDebugMenu(name, executable);
-                MenuItem debug = Boot.Core().GetIDE().GetDebug();
+                MenuItem debug = Boot.Core.IDE.GetDebug();
                 debug.Items.Add(item);
             }));
         }
 
         public void AddSubDebug(string node, string name, string executable) {
-            Boot.Instance.GetIDE().Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(delegate () {
+            Boot.Core.IDE.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(delegate () {
                 MenuItem item = AddDebugMenu(name, executable);
-                MenuItem tools = Boot.Core().GetIDE().GetDebug();
+                MenuItem tools = Boot.Core.IDE.GetDebug();
                 MenuItem found = null;
 
                 foreach (MenuItem entry in tools.Items) {
@@ -122,20 +122,20 @@ namespace DSTEd.Core.Klei {
         public void AddTool(string name, string executable) {
             /*Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate () {
                 MenuItem item = AddToolMenu(name, executable);
-                MenuItem tools = Boot.Core().GetIDE().GetTools();
+                MenuItem tools = Boot.Core.IDE.GetTools();
                 tools.Items.Add(item);
             }));*/
-            Boot.Instance.GetIDE().Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
+            Boot.Core.IDE.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() =>
              {
                  MenuItem item = AddToolMenu(name, executable);
-                 Boot.Instance.GetIDE().tools.Items.Add(item);
+                 Boot.Core.IDE.tools.Items.Add(item);
              }));
         }
 
         public void AddSubTool(string node, string name, string executable) {
-            Boot.Instance.GetIDE().Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(delegate () {
+            Boot.Core.IDE.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(delegate () {
                 MenuItem item = AddToolMenu(name, executable);
-                foreach (MenuItem entry in Boot.Instance.GetIDE().tools.Items) {
+                foreach (MenuItem entry in Boot.Core.IDE.tools.Items) {
                     if (entry.Name == node) {
                         entry.Items.Add(item);
                         return;

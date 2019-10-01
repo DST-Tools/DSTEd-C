@@ -14,7 +14,7 @@ namespace DSTEd.Core.LUA {
         }
 
         public string GetPath() {
-            return string.Format("{0}/data/scripts/", Boot.Core().GetSteam().GetGame().GetPath());
+            return string.Format("{0}/data/scripts/", Boot.Core.Steam.GetGame().GetPath());
         }
 
         public string GetPaths() {

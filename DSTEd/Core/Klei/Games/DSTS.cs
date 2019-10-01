@@ -31,7 +31,7 @@ namespace DSTEd.Core.Klei.Games {
                     Header = I18N.__(header),
                 };
                 menuItem.Click += function;
-                var dbg = Boot.Core().GetIDE().GetDebug();
+                var dbg = Boot.Core.IDE.GetDebug();
 			    foreach (MenuItem item in dbg.Items)
 			    {
 				    if(item.Name == node)
@@ -41,7 +41,7 @@ namespace DSTEd.Core.Klei.Games {
 				    }
 			    }
             }
-            Boot.Instance.GetIDE().Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(add));
+            Boot.Core.IDE.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(add));
         }
 
 		public struct ARG//persistent_storage_root/cluster/shard

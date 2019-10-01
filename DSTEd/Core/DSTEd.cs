@@ -7,38 +7,47 @@ using DSTEd.UI;
 
 namespace DSTEd.Core {
     public class DSTEd : System.Windows.Application {
-        private String version = "2.0.0";
-        private String language = "en_US";
-        private IDE ide = null;//UI
-        private Workspace workspace = null;
 		private Loadingv2 loaderv2 = new Loadingv2();//UI
-        private Steam.Steam steam = null;
-        private Configuration configuration = null;
-		private Core.LUA.LUA lua;
+		private Configuration configuration = null;
 		public DebugCLICore DBGCLI;
+		public IDE IDE { get; private set; } = null;
+		public LUA.LUA LUA { get; private set; }
+		public Steam.Steam Steam { get; private set; } = null;
+		public Workspace Workspace { get; private set; } = null;
+		public bool IsWorkspaceReady => this.Workspace != null;
+		public string Version { get; } = "2.0.0";
+		public string Language
+		{
+			get
+			{
+				return this.configuration.Get("LANGUAGE", "en_US");
+			}
+		}
 
-        public DSTEd() {
+		public DSTEd()
+		{
 			DBGCLI = new DebugCLICore();
-        }
+		}
 
-        public void Start() {
-            Logger.Info("Start DSTEd v" + GetVersion());
+		public void Start()
+		{
+			Logger.Info("Start DSTEd v" + Version);
 
-            this.configuration = new Configuration();
+			this.configuration = new Configuration();
 
-            // Init Language
-            I18N.SetLanguage(this.GetLanguage());
+			// Init Language
+			I18N.SetLanguage(this.Version);
 
-            // Init classes
-            this.steam = new Steam.Steam();
-            this.ide = new IDE();
-            this.workspace = new Workspace();
+			// Init classes
+			this.Steam = new Steam.Steam();
+			this.IDE = new IDE();
+			this.Workspace = new Workspace();
 			//this.loading = new Loading();
 
 			//Set the steam path by configuration
-			this.workspace.SetPath(this.steam.GetPath());
+			this.Workspace.SetPath(this.Steam.GetPath());
 
-			this.workspace.OnSelect(delegate (string path, Boolean save)
+			this.Workspace.OnSelect(delegate (string path, Boolean save)
 			{
 				//if (!this.steam.ValidatePath(path))
 				//{
@@ -49,7 +58,7 @@ namespace DSTEd.Core {
 				//	return;
 				//}
 
-				this.workspace.SetPath(steam.GetPath());
+				this.Workspace.SetPath(Steam.GetPath());
 
 				if (save)
 				{
@@ -57,29 +66,30 @@ namespace DSTEd.Core {
 					this.configuration.Save();
 				}
 
-				this.workspace.Close(true);
+				this.Workspace.Close(true);
 			});
 
-			this.workspace.OnClose(delegate (CancelEventArgs e) {
-                Dialog.Open(I18N.__("You must set the workspace path! If you cancel these, DSTEd will be closed."), I18N.__("Problem"), Dialog.Buttons.RetryCancel, Dialog.Icon.Warning, delegate (Dialog.Result result) {
-                    if (result == Dialog.Result.Cancel) {
-                        Environment.Exit(0);
-                        return true;
-                    }
+			this.Workspace.OnClose(delegate (CancelEventArgs e) {
+				Dialog.Open(I18N.__("You must set the workspace path! If you cancel these, DSTEd will be closed."), I18N.__("Problem"), Dialog.Buttons.RetryCancel, Dialog.Icon.Warning, delegate (Dialog.Result result) {
+					if (result == Dialog.Result.Cancel)
+					{
+						Environment.Exit(0);
+						return true;
+					}
 
-                    e.Cancel = true;
-                    return true;
-                });
-            });
+					e.Cancel = true;
+					return true;
+				});
+			});
 
-			# region Define workers
+			#region Define workers
 			void gameloading()
 			{
-				steam.LoadGame(new DSTC());//CL
-				steam.LoadGame(new DSTM());//MT
-				steam.LoadGame(new DSTS());//SV
-				lua = new LUA.LUA();
-				ide.Init();
+				Steam.LoadGame(new DSTC());//CL
+				Steam.LoadGame(new DSTM());//MT
+				Steam.LoadGame(new DSTS());//SV
+				LUA = new LUA.LUA();
+				IDE.Init();
 			}
 			void modsloading()
 			{
@@ -87,7 +97,7 @@ namespace DSTEd.Core {
 			}
 			void workshoploading()
 			{
-				steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
+				Steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
 					Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
 
 					for (int index = 0; index < items.Length; index++)
@@ -99,36 +109,9 @@ namespace DSTEd.Core {
 			#endregion
 			Action[] q2 = { gameloading, modsloading, workshoploading };
 			loaderv2.Start(q2);
-			ide.Show();
-		this.Run();
-        }
+			IDE.Show();
+			this.Run();
+		}
 
-        public IDE GetIDE() {
-            return this.ide;
-        }
-
-        public LUA.LUA GetLUA() {
-            return this.lua;
-        }
-
-        public Steam.Steam GetSteam() {
-            return this.steam;
-        }
-
-        public Workspace GetWorkspace() {
-            return this.workspace;
-        }
-
-        public Boolean IsWorkspaceReady() {
-            return this.workspace != null;
-        }
-
-        public String GetVersion() {
-            return this.version;
-        }
-
-        public String GetLanguage() {
-            return this.configuration.Get("LANGUAGE", this.language);
-        }
-    }
+	}
 }

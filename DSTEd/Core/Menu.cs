@@ -16,8 +16,8 @@ namespace DSTEd.Core {
 
         public void Update() {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, new Action(delegate () {
-                if (Boot.Core().IsWorkspaceReady()) {
-                    Boot.Core().GetIDE().UpdateWelcome(Boot.Core().GetWorkspace().HasWelcome());
+                if (Boot.Core.IsWorkspaceReady) {
+                    Boot.Core.IDE.UpdateWelcome(Boot.Core.Workspace.HasWelcome());
                 }
             }));
         }
@@ -39,20 +39,20 @@ namespace DSTEd.Core {
                     dialog.AllowNonFileSystemItems = false;
                     dialog.Multiselect = false;
                     dialog.RestoreDirectory = false;
-                    dialog.InitialDirectory = Boot.Core().GetWorkspace().GetPath();
+                    dialog.InitialDirectory = Boot.Core.Workspace.GetPath();
 
                     CommonFileDialogResult value = dialog.ShowDialog();
 
                     if (value == CommonFileDialogResult.Ok) {
-                        Boot.Core().GetWorkspace().OpenDocument(dialog.FileName);
+                        Boot.Core.Workspace.OpenDocument(dialog.FileName);
                     }
                     break;
                 //case "FILE_OPEN_RECENT":
                 case "FILE_SAVE":
-					Boot.Core().GetIDE().SaveActiveDocument();
+					Boot.Core.IDE.SaveActiveDocument();
 					break;
                 case "FILE_SAVE_ALL":
-					Boot.Core().GetIDE().SaveAllDocument();
+					Boot.Core.IDE.SaveAllDocument();
 					break;
                 //case "FILE_CLOSE":
                 //case "FILE_CLOSE_ALL":
@@ -74,7 +74,7 @@ namespace DSTEd.Core {
                 //case "SEARCH_FIND":
                 //case "SEARCH_FIND_NEXT":
                 case "VIEW_WELCOME":
-                    Boot.Core().GetIDE().UpdateWelcome(Boot.Core().GetWorkspace().ToggleWelcome());
+                    Boot.Core.IDE.UpdateWelcome(Boot.Core.Workspace.ToggleWelcome());
                     break;
                 //case "DEBUG_RUN_DST":
                 //case "TOOLS_STEAM":

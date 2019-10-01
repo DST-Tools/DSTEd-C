@@ -14,7 +14,7 @@ namespace DSTEd.UI.Components {
             this.DockMinHeight = 100;
             this.DockHeight = new GridLength(200);
 			//debugger_debug.Children.
-			Boot.Instance.DBGCLI.AddCommand("clear",clearcon);
+			Boot.Core.DBGCLI.AddCommand("clear",clearcon);
 
 			this.input.KeyDown += new KeyEventHandler(delegate (object sender, KeyEventArgs e) {
                 if (Keyboard.IsKeyDown(Key.Enter)) {
@@ -22,7 +22,7 @@ namespace DSTEd.UI.Components {
 					switch (((ComboBoxItem)target.SelectedItem).Content)
 					{
 						case "Server":
-							foreach(var g in Boot.Core().GetSteam().GetGames())
+							foreach(var g in Boot.Core.Steam.GetGames())
 							{
 								if(g.GetID() == 343050)
 								{
@@ -31,7 +31,7 @@ namespace DSTEd.UI.Components {
 							}
 							break;
 						case "Console":
-							AddDebug(Boot.Instance.DBGCLI.Execute(input.Text));
+							AddDebug(Boot.Core.DBGCLI.Execute(input.Text));
 							//command example: 
 							//cl_interp 0.0031
 							break;
