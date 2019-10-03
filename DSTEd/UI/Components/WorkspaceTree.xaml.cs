@@ -132,7 +132,7 @@ namespace DSTEd.UI.Components {
 							{
 								// @ToDo open Texture-Editor
 								Logger.Info("Texture-Editor: " + file.FullName);
-								//this.GetCore().GetWorkspace().OpenDocument(file.FullName);
+								//this.GetCore.Workspace.OpenDocument(file.FullName);
 							});
 
 							//remove these existed texture items

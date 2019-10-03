@@ -74,7 +74,7 @@ namespace DSTEd.Core {
             } else {
                 visible = true;
                 this.AddDocument(this.welcome);
-                Boot.Core().GetIDE().SetActiveDocument(this.welcome);
+                Boot.Core.IDE.SetActiveDocument(this.welcome);
             }
 
             return visible;
@@ -114,14 +114,14 @@ namespace DSTEd.Core {
             Document document = new Document(type);
             document.Load(file);
             // @ToDo add to RecentFiles
-            Boot.Core().GetWorkspace().AddDocument(document);
+            Boot.Core.Workspace.AddDocument(document);
         }
 
         internal void ShowDocument(string file) {
             foreach (KeyValuePair<string, Document> entry in this.documents) {
                 if (/*entry.Key == file || /*Hashed */entry.Value.GetFile() == file) {
                     // @ToDo check content if its newer and ask for reloading...
-                    Boot.Core().GetIDE().SetActiveDocument(entry.Value);
+                    Boot.Core.IDE.SetActiveDocument(entry.Value);
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace DSTEd.Core {
             document.OnChange(this.OnChanged);
 
             if (this.documents.ContainsKey(document.GetHash())) {
-                Boot.Core().GetIDE().SetActiveDocument(document);
+                Boot.Core.IDE.SetActiveDocument(document);
             } else {
                 this.documents.Add(document.GetHash(), document);
                 document.Init();
@@ -162,8 +162,8 @@ namespace DSTEd.Core {
         public void OnChanged(Document document, Document.State state) {
             Logger.Info("[Workspace] Changed document: " + document.GetName() + " >> " + state);
 
-            Boot.Core().GetIDE().GetMenu().Update();
-            Boot.Core().GetIDE().OnChanged(document, state);
+            Boot.Core.IDE.GetMenu().Update();
+            Boot.Core.IDE.OnChanged(document, state);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace DSTEd.UI.Contents {
             this.document = document;
             this.news.Children.Clear();
 
-            Boot.Core().GetSteam().GetNews(delegate (List<SteamKit2.KeyValue> news) {
+            Boot.Core.Steam.GetNews(delegate (List<SteamKit2.KeyValue> news) {
                 foreach (SteamKit2.KeyValue entry in news) {
                     this.AddNewsEntry(entry);
                 }

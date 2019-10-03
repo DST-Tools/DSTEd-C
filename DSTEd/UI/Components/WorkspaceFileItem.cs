@@ -12,7 +12,7 @@ namespace DSTEd.UI.Components
 	{
 		private void open_document(object s, MouseEventArgs arg)
 		{
-			Boot.Instance.GetWorkspace().OpenDocument(FullPath);
+			Boot.Core.Workspace.OpenDocument(FullPath);
 		}
 
 		public WorkspaceFileItem(string FullPath) : base(FullPath)
