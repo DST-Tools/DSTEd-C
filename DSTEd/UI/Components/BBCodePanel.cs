@@ -32,7 +32,7 @@ namespace DSTEd.UI.Components {
                     image.Height = Double.NaN;
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(node.GetValue(), UriKind.Absolute);
+                    bitmap.UriSource = new Uri(this.ImageSrcRender(node.GetValue()), UriKind.Absolute);
                     bitmap.EndInit();
                     image.Source = bitmap;
                     container.Children.Add(image);
@@ -117,6 +117,10 @@ namespace DSTEd.UI.Components {
                     Logger.Warn("Unimplemented BBCode: " + node.GetName());
                     break;
             }
+        }
+        public string ImageSrcRender(string src)
+        {
+            return src.Replace("{STEAM_CLAN_IMAGE}", "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/clans");
         }
     }
 }
