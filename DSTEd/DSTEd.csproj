@@ -192,6 +192,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <EmbeddedResource Include="Core\Contents\Editors\Format\LUA.xshd" />
+    <Resource Include="Languages\zh_CN.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <None Include="packages.config" />
     <None Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\__TEMPORY_ANIMATION.scml" />
     <None Include="Project Templates\Character\images\avatars\_EXAMPLE.psd" />

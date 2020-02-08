@@ -36,7 +36,7 @@ namespace DSTEd.Core {
 			this.configuration = new Configuration();
 
 			// Init Language
-			I18N.SetLanguage(this.Version);
+			I18N.SetLanguage(this.Language);
 
 			// Init classes
 			this.Steam = new Steam.Steam();
