@@ -2,8 +2,8 @@
 	"__LANGUAGE_INFO": {
 		"name": "Chinese",
 		"author": [
-			"Adrian <Bizzi> Preu\u00df",
-			"ADI"
+			"anonymous :)",
+			":)"
 		],
 		"version": "1.0.0"
 	},
@@ -81,8 +81,8 @@
 
 	"Username": "用户名",
 	"Password": "密码",
-	"SteamGuard": "SteamGuard",
-	"AuthCode": "AuthCode",
+	"SteamGuard": "Steam令牌",
+	"AuthCode": "验证码",
 	"Confirm login": "确认登录",
 
 	"Open File": "打开文件",
@@ -108,7 +108,7 @@
 	"Version": "版本",
 	"Description": "描述",
 	"Author": "作者",
-	"Forum-Thread": "Foren-Thread",
+	"Forum-Thread": "论坛-帖子",
 	"Tags": "标签",
 	"Assets": "Assets",
 	"Icon (Atlas)": "图标 (Atlas)",
@@ -120,5 +120,5 @@
 	"Reign of Giants": "巨人国",
 	"Standalone": "Standalone",
 	"All Clients Required": "All Clients Required",
-	"Restart Required": "Neustart benötigt"
+	"Restart Required": "需要重启"
 }
