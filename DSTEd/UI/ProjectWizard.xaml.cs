@@ -28,7 +28,8 @@ namespace DSTEd.UI
 			InitializeComponent();
 
 			InitializeModInfo();
-
+			InitializeModOption();
+			InitializeModType();
 		}
 
 		public void InitializeModInfo()
@@ -96,6 +97,93 @@ namespace DSTEd.UI
 			properties.AddEntry("restart_require", I18N.__("Restart Required"), Core.Contents.Editors.Properties.Type.YESNO, info.MustRestart());
 			
 			this.modinfo.Content = properties;
+		}
+
+		public void InitializeModOption()
+		{
+			Core.Contents.Editors.Properties properties = new Core.Contents.Editors.Properties();
+
+			// load defaut modinfo
+			string modinfo;
+
+			using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DSTEd.Project_Templates.BaseMod.modinfo.lua"))
+			{
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					modinfo = reader.ReadToEnd();
+				}
+			}
+
+			Core.Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(modinfo, delegate (ParserException e) {
+				Logger.Info("[ProjectWizard ModInfo] " + e);
+			});
+
+			if (info.IsBroken())
+			{
+				return;
+			}
+
+			if (info.GetOptions() != null)
+			{
+				foreach (Core.Klei.Data.Options entry in info.GetOptions())
+				{
+					properties.AddCategory("");
+					properties.AddEntry("name", I18N.__("Name"), Core.Contents.Editors.Properties.Type.STRING, entry.GetName());
+					properties.AddEntry("label", I18N.__("Label"), Core.Contents.Editors.Properties.Type.STRING, entry.GetLabel());
+					if (!(entry.GetHover() == null))
+					{
+						properties.AddEntry("hover", I18N.__("Hover"), Core.Contents.Editors.Properties.Type.STRING, entry.GetHover());
+					}
+					if (!(entry.GetLongLabel() == null))
+					{
+						properties.AddEntry("longlabel", I18N.__("LongLabel"), Core.Contents.Editors.Properties.Type.STRING, entry.GetLongLabel());
+					}
+
+					if (entry.GetDefaults() == null)
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.STRING, "NULL");
+					}
+					else if (entry.GetDefaults().GetType() == typeof(string))
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.STRING, (string)entry.GetDefaults());
+					}
+					else if (entry.GetDefaults().GetType() == typeof(String))
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.STRING, (String)entry.GetDefaults());
+					}
+					else if (entry.GetDefaults().GetType() == typeof(bool))
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.YESNO, (bool)entry.GetDefaults());
+					}
+					else if (entry.GetDefaults().GetType() == typeof(Boolean))
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.YESNO, (Boolean)entry.GetDefaults());
+					}
+					else if (entry.GetDefaults().GetType() == typeof(int))
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.NUMBER, (int)entry.GetDefaults());
+					}
+					else if (entry.GetDefaults().GetType() == typeof(double))
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.NUMBER, (double)entry.GetDefaults());
+					}
+					else if (entry.GetDefaults().GetType() == typeof(float))
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.NUMBER, (float)entry.GetDefaults());
+					}
+					else
+					{
+						properties.AddEntry("default", I18N.__("Default"), Core.Contents.Editors.Properties.Type.STRING, entry.GetDefaults());
+					}
+
+					this.modoptions.Children.Add(properties);
+				}
+			}
+		}
+
+		public void InitializeModType()
+		{
+			//do something init
 		}
 
 		/// <summary>

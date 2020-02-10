@@ -70,6 +70,23 @@ namespace DSTEd.Core.Contents.Editors {
             BUTTON
         };
 
+        //for ProjectWizard
+        public Properties()
+        {
+            this.container = new Grid();
+            ColumnDefinition left = new ColumnDefinition();
+            ColumnDefinition middle = new ColumnDefinition();
+            ColumnDefinition right = new ColumnDefinition();
+            left.Width = GridLength.Auto;
+            middle.Width = new GridLength(1, GridUnitType.Star);
+            right.Width = GridLength.Auto;
+            this.container.ColumnDefinitions.Add(left);
+            this.container.ColumnDefinitions.Add(middle);
+            this.container.ColumnDefinitions.Add(right);
+            this.container.VerticalAlignment = VerticalAlignment.Top;
+            this.AddChild(this.container);
+        }
+
         public Properties(string title, string icon, string description) {
             this.container = new Grid();
             ColumnDefinition left = new ColumnDefinition();

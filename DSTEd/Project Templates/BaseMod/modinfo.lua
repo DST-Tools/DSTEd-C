@@ -31,4 +31,17 @@ icon = "icon.tex"
 -- example forumthread = "/files/file/923-dst-status-announcements"
 forumthread = ""
 
-configuration_options = {}
+configuration_options = 
+{
+	{
+		name = "options_name",
+		label = "options_label",
+		hover = "options_hover.",
+		options =
+		{
+			{ description = "On", data = true },
+			{ description = "Off", data = false },
+		},
+		default = true,
+	}
+}

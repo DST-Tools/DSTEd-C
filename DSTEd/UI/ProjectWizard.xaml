@@ -41,13 +41,32 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Label Margin="10,10,0,0" Content="{Core:I18N_XAML 'New Project'}" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" />
-            <TextBlock Grid.Row="1" Foreground="#FFFFFF" Margin="20,10,10,10" FontSize="12" Text="{Core:I18N_XAML 'Please Select one or more type(s) to initialize mod files.'}" />
+            <TextBlock Grid.Row="1" Foreground="#FFFFFF" Margin="20,10,10,10" FontSize="12" TextWrapping="Wrap" Text="{Core:I18N_XAML 'Select the specified values of the individual properties to change the configuration of the mod.'}" />
         </Grid>
         
         <TabControl Grid.Row="1" >
             <TabItem Header="Mod Info" Name="modinfo"/>
-            <TabItem Header="Mod Options" Name="modoptions"/>
-            <TabItem Header="Mod Types" Name="modtypes"/>
+            <TabItem Header="Mod Options">
+                <Grid Name="modoptions">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1" HorizontalAlignment="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Add" Margin="10,10,0,10"/>
+                        <Button Grid.Column="1" Content="Del" Margin="10,10,10,10"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Mod Types">
+                <ScrollViewer Grid.Row="1"  Margin="10,10,10,10"  Background="#413F3C" Padding="10">
+                    <CheckBox Content="123"/>
+                </ScrollViewer>
+            </TabItem>
         </TabControl>
 
         <Grid Grid.Row="2">
