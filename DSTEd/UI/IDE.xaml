@@ -68,6 +68,7 @@
             <MenuItem Header="{Core:I18N_XAML File}" Grid.Column="0">
                 <MenuItem Header="{Core:I18N_XAML New...}">
                     <MenuItem Name="FILE_NEW_PROJECT" Header="{Core:I18N_XAML Project}" Click="OnMenu" />
+                    <MenuItem Name="FILE_IMPORT_PROJECT" Header="{Core:I18N_XAML Import Project}" Click="OnMenu" />
                     <MenuItem Name="FILE_NEW_FILE" Header="{Core:I18N_XAML File}" Click="OnMenu" />
                     <MenuItem Name="FILE_NEW_ASSET" Header="{Core:I18N_XAML Asset}" Click="OnMenu" />
                 </MenuItem>
