@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace DSTEd.Core.IO.EnumerableFileSystem
 {
@@ -162,12 +163,97 @@ namespace DSTEd.Core.IO.EnumerableFileSystem
 		/// <summary>
 		/// Get relative path from two full path strings.
 		/// </summary>
-		/// <param name="Parent">parent directory</param>
-		/// <param name="File">file</param>
+		/// <param name="Parent">parent directory, full path</param>
+		/// <param name="File">file,full path</param>
 		/// <returns></returns>
 		public static string SimpleRelative(string Parent, string File)
 		{
 			return File.Replace(Parent, string.Empty);
+		}
+
+		/// <summary>
+		/// Strict relative path
+		/// </summary>
+		/// <param name="basepath">full path</param>
+		/// <param name="path">full path</param>
+		/// <returns>Relative path</returns>
+		/// <exception cref="ArgumentException">base path's driver doesn't same as path's</exception>
+		/// <exception cref="Exception">some critical bug happened</exception>
+		//this method is something called 祖传代码
+		public static string ExplicitRelative(string basepath, string path)
+		{
+			string[] b = basepath.Replace('/', '\\').Split('\\');
+			string[] p = path.Replace('/', '\\').Split('\\');
+			string relative_path;
+
+			//check driver same,e.g. "C:" and "D:" does not same,so they can't be relative
+			if (b[0][1] == ':' && (b[0] != p[0]))
+				throw new ArgumentException(string.Format("base path's driver \"{0}\" doesn't same as path's\"{1}\"", b[0], p[0]));
+
+			IEnumerator<string>
+			it_base = ((IEnumerable<string>)b).GetEnumerator(),
+			it_path = ((IEnumerable<string>)p).GetEnumerator();
+			{
+				bool b_end = true, p_end = true;
+
+				//find same part by "foreach"
+				do
+				{
+					b_end = it_base.MoveNext();
+					p_end = it_path.MoveNext();
+
+					//no difference until one collection end
+					if (!b_end)
+					{
+						relative_path = "\\" + it_path.Current;
+						while (it_path.MoveNext())
+						{
+							relative_path += '\\' + it_path.Current;
+						}
+						return relative_path;
+					}
+					if (!p_end)
+					{
+						relative_path = "\\..";
+						while (it_base.MoveNext())
+						{
+							relative_path += "\\..";
+						}
+						return relative_path;
+					}
+
+					//find difference before ends
+					if (it_base.Current != it_path.Current)
+					{
+						StringBuilder rel_base = new StringBuilder("..\\");
+						StringBuilder rel_path = new StringBuilder(it_path.Current);
+
+						Action[] build_relative =
+						{
+							()=>
+							{
+								while (it_base.MoveNext())
+								{
+									rel_base.Append("..\\");
+								}
+							},//base
+							()=>
+							{
+								while (it_path.MoveNext())
+								{
+									rel_path.Append('\\').Append(it_path.Current);
+								}
+							}//path
+						};
+						System.Threading.Tasks.Parallel.Invoke(build_relative);
+
+						return rel_base.Append(rel_path).ToString();
+					}
+				} while (b_end && p_end);
+			}
+
+			throw new Exception(string.Format("Critical error happened, base:{0}," +
+				"path:{1}", basepath, path));
 		}
 
 		/// <summary>
