@@ -53,7 +53,7 @@ namespace DSTEd.Core {
                     Task.Delay(500);
                 } while (true);
             });
-    }
+        }
 
         public string GetHash() {
             return Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(string.Format("{0}-{1}", this.GetTitle(), this.GetFile()))));
@@ -86,6 +86,7 @@ namespace DSTEd.Core {
                         this.is_content_loaded = true;
                     }
                 } catch (IOException) {
+                    Logger.Error(I18N.__("File reading error"));
                 }
             }));
         }

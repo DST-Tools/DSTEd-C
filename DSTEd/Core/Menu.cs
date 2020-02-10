@@ -24,10 +24,11 @@ namespace DSTEd.Core {
 
         public void Handle(string name, MenuItem menu) {
             switch (name) {
-                /*case "FILE_NEW_PROJECT":
-					Dialog.Open();
+                case "FILE_NEW_PROJECT":
+                    ProjectWizard projectWizard = new ProjectWizard();
+                    projectWizard.ShowDialog();
 					//todo: add sample project file
-					break;*/
+					break;
                 case "FILE_NEW_FILE":
 
 					break;

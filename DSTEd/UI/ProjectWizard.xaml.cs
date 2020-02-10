@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
+using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -12,12 +13,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DSTEd.Core;
+using DSTEd.Core.LUA;
 
 namespace DSTEd.UI
 {
-	/// <summary>
-	/// ProjectWizard.xaml 的交互逻辑
-	/// </summary>
 	public partial class ProjectWizard : Window
 	{
 		//TODO: ProjectWizard UI
@@ -26,7 +26,78 @@ namespace DSTEd.UI
 		public ProjectWizard()
 		{
 			InitializeComponent();
+
+			InitializeModInfo();
+
 		}
+
+		public void InitializeModInfo()
+		{
+			Core.Contents.Editors.Properties properties = new Core.Contents.Editors.Properties();
+
+			// load defaut modinfo
+			string modinfo;
+
+			using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DSTEd.Project_Templates.BaseMod.modinfo.lua"))
+			{
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					modinfo = reader.ReadToEnd();
+				}
+			}
+			Core.Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(modinfo, delegate (ParserException e) {
+				Logger.Info("[ProjectWizard ModInfo] " + e);
+			});
+
+			if (info.IsBroken())
+			{
+				return;
+			}
+
+			// Build Properties-Editor
+			properties.AddCategory(I18N.__("Informations"));
+			properties.AddEntry("name", I18N.__("Name"), Core.Contents.Editors.Properties.Type.STRING, info.GetName());
+			properties.AddEntry("version", I18N.__("Version"), Core.Contents.Editors.Properties.Type.STRING, info.GetVersion());
+			properties.AddEntry("description", I18N.__("Description"), Core.Contents.Editors.Properties.Type.TEXT, info.GetDescription());
+			properties.AddEntry("author", I18N.__("Author"), Core.Contents.Editors.Properties.Type.STRING, info.GetAuthor());
+			properties.AddEntry("forumthread", I18N.__("Forum-Thread"), Core.Contents.Editors.Properties.Type.URL, info.GetForumThread());
+			properties.AddEntry("server_filter_tags", I18N.__("Tags"), Core.Contents.Editors.Properties.Type.STRINGLIST, info.GetTags());
+
+			properties.AddCategory(I18N.__("Assets"));
+			properties.AddEntry("icon_atlas", I18N.__("Icon (Atlas)"), Core.Contents.Editors.Properties.Type.ATLAS, info.GetIconAtlas());
+			properties.AddEntry("icon", I18N.__("Icon (Texture)"), Core.Contents.Editors.Properties.Type.KTEX, info.GetIcon());
+
+			properties.AddCategory(I18N.__("System"));
+			properties.AddEntry("priority", I18N.__("Priority"), Core.Contents.Editors.Properties.Type.NUMBER, info.GetPriority());
+			properties.AddEntry("api_version", I18N.__("API Version"), Core.Contents.Editors.Properties.Type.SELECTION, new Core.Contents.Editors.Selection(new Dictionary<object, string> {
+				   { 6, "Don't Starve" },
+				   { 10, "Don't Starve Together" }
+				}, info.GetAPIVersion()));
+
+			// Only add outdated dst_api_version if it's exists on the modinfo.
+			if (info.GetDSTAPIVersion() > 0)
+			{
+				properties.AddEntry("dst_api_version", I18N.__("API Version (DST)"), Core.Contents.Editors.Properties.Type.SELECTION, new Core.Contents.Editors.Selection(new Dictionary<object, string> {
+					   { 6, "6" },
+					   { 10, "10" }
+					}, info.GetDSTAPIVersion()));
+			}
+
+			properties.AddCategory(I18N.__("Compatiblity"));
+			properties.AddEntry("dont_starve_compatible", I18N.__("Don't Starve"), Core.Contents.Editors.Properties.Type.YESNO, info.IsDS());
+			properties.AddEntry("dst_compatible", I18N.__("Don't Starve Together"), Core.Contents.Editors.Properties.Type.YESNO, info.IsDST());
+			properties.AddEntry("reign_of_giants_compatible", I18N.__("Reign of Giants"), Core.Contents.Editors.Properties.Type.YESNO, info.IsROG());
+			properties.AddEntry("shipwrecked_compatible", I18N.__("Shipwrecked"), Core.Contents.Editors.Properties.Type.YESNO, info.IsSW());
+
+			properties.AddCategory(I18N.__("Requirements"));
+			properties.AddEntry("standalone", I18N.__("Standalone"), Core.Contents.Editors.Properties.Type.YESNO, info.ModsAllowed());
+			properties.AddEntry("client_only_mod", I18N.__("Only Client"), Core.Contents.Editors.Properties.Type.YESNO, info.IsOnlyClient());
+			properties.AddEntry("all_clients_require_mod", I18N.__("All Clients Required"), Core.Contents.Editors.Properties.Type.YESNO, info.IsRequired());
+			properties.AddEntry("restart_require", I18N.__("Restart Required"), Core.Contents.Editors.Properties.Type.YESNO, info.MustRestart());
+			
+			this.modinfo.Content = properties;
+		}
+
 		/// <summary>
 		/// Create a new Project from a specified template
 		/// </summary>

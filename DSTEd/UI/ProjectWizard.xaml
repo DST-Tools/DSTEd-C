@@ -4,7 +4,58 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DSTEd.UI"
+        xmlns:Core="clr-namespace:DSTEd.Core"
         mc:Ignorable="d"
-        Title="ProjectWizard" Height="660.5" Width="934.5">
-    <Grid HorizontalAlignment="Left" Height="637" Margin="0,0,-8,-7.5" VerticalAlignment="Top" Width="934.5"/>
+        Title="ProjectWizard" Height="700" Width="900" Background="#FF2D2D30">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabControl.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TabItem.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/Button.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/GroupBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TextBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/ComboBox.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/TreeView.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/Menu.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/ToolTip.xaml"/>
+                <ResourceDictionary Source="/DSTEd;component/UI/Theme/CheckBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid UseLayoutRounding="False" Grid.IsSharedSizeScope="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Background="#FF242425">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Margin="10,10,0,0" Content="{Core:I18N_XAML 'New Project'}" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="1" Foreground="#FFFFFF" Margin="20,10,10,10" FontSize="12" Text="{Core:I18N_XAML 'Please Select one or more type(s) to initialize mod files.'}" />
+        </Grid>
+        
+        <TabControl Grid.Row="1" >
+            <TabItem Header="Mod Info" Name="modinfo"/>
+            <TabItem Header="Mod Options" Name="modoptions"/>
+            <TabItem Header="Mod Types" Name="modtypes"/>
+        </TabControl>
+
+        <Grid Grid.Row="2">
+            <DockPanel x:Name="buttons" Background="#FF242425">
+                <WrapPanel Margin="10,20,30,20"  UseLayoutRounding="True" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Content="{Core:I18N_XAML 'Next'}" HorizontalAlignment="Center" />
+                </WrapPanel>
+            </DockPanel>
+        </Grid>
+    </Grid>
 </Window>
