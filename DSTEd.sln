@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSTEd", "DSTEd\DSTEd.csproj", "{ECC45953-8D34-44D0-9DB6-BD91DE26BD06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSTEd.Core.IO.EnumerableFileSystem", "D:\DSTed_sub\DSTEd.Core.IO.FileSystem\DSTEd.Core.IO.EnumerableFileSystem.csproj", "{E2A39F1E-FB70-4B9E-91CE-0D36155156B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSTEd.Core.IO.EnumerableFileSystem", "DSTEd.Core.IO.FileSystem\DSTEd.Core.IO.EnumerableFileSystem.csproj", "{E2A39F1E-FB70-4B9E-91CE-0D36155156B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSTEd.Test.IO.EnumerableFileSystem", "D:\DSTed_sub\DSTEd.Test.EnumerableFileSystem\DSTEd.Test.IO.EnumerableFileSystem.csproj", "{0C98B29C-F6EC-42DA-822B-665CA390234F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSTEd.Test.IO.EnumerableFileSystem", "DSTEd.Test.EnumerableFileSystem\DSTEd.Test.IO.EnumerableFileSystem.csproj", "{0C98B29C-F6EC-42DA-822B-665CA390234F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
