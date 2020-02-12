@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace DSTEd.Core.Klei.KTEX {
     class KTEX {
+        [Serializable]
         public class InvalidTEXFileException : Exception { public InvalidTEXFileException(string msg) : base(msg) { } };
 
         public enum Platform {

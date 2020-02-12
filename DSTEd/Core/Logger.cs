@@ -32,14 +32,12 @@ namespace DSTEd.Core {
 
             Console.WriteLine(outstr);
 
-            if(type == "DEBUG")
+            if (type == "DEBUG")
                 System.Diagnostics.Debug.WriteLine(outstr);
 
-            if(LogFile != string.Empty || LogFile != null)
-                using (System.IO.FileStream stream = System.IO.File.Open(LogFile, System.IO.FileMode.Append))
-                    using (System.IO.StreamWriter writer = new System.IO.StreamWriter(stream))
-                        lock (writer)
-                            writer.WriteLine(outstr);
+            if (LogFile != string.Empty || LogFile != null)
+                using (System.IO.StreamWriter writer = System.IO.File.CreateText(LogFile))
+                    writer.WriteLine(outstr);
         }
 
         public static void Info(params object[] args) {
