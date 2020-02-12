@@ -5,6 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == 'x64' ">x64</Platform>
     <ProjectGuid>{ECC45953-8D34-44D0-9DB6-BD91DE26BD06}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -62,7 +63,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
@@ -72,7 +73,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -293,7 +294,6 @@
     <Reference Include="NativeSquish_x64, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fac8b2bfeda84eab, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Librarys\NativeSquish_x64.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="NativeSquish_x86, Version=2.0.0.0, Culture=neutral, PublicKeyToken=fac8b2bfeda84eab, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -323,11 +323,19 @@
       <HintPath>..\packages\SteamStorefrontAPI.1.2.6759.40399\lib\net461\SteamStorefrontAPI.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Steamworks.NET, Version=12.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Condition="'$(Platform)' == 'x86'" Include="Steamworks.NET">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Librarys\Steamworks.NET.dll</HintPath>
+      <HintPath>Librarys\Steamworks.NET.x86.dll</HintPath>
     </Reference>
-    <Reference Include="SteamworksSharp.Native, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Condition="'$(Platform)' == 'Any CPU'" Include="Steamworks.NET">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librarys\Steamworks.NET.x86.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(Platform)' == 'x64'" Include="Steamworks.NET">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librarys\Steamworks.NET.x64.dll</HintPath>
+    </Reference>
+    <Reference Condition="'$(Platform)' !='x64'" Include="SteamworksSharp.Native, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SteamworksSharp.Native.1.0.8\lib\net452\SteamworksSharp.Native.dll</HintPath>
     </Reference>
     <Reference Include="System">
@@ -793,6 +801,8 @@ XCOPY "$(ProjectDir)Languages\*.json" "$(TargetDir)Languages" /i /d /y
 :: Copying external required Librarys
 if not exist "$(TargetDir)Librarys" mkdir "$(TargetDir)Librarys"
 XCOPY "$(ProjectDir)Librarys\*.dll" "$(TargetDir)Librarys" /i /d /y
+copy "$(ProjectDir)Librarys\Steamworks.NET.$(Platform).dll" "$(TargetDir)Librarys\Steamworks.NET.dll" /y
+
 
 :: Move Steam-AppID to the root folder
 XCOPY "$(ProjectDir)steam_appid.txt" "$(TargetDir)" /i /d /y
@@ -801,6 +811,11 @@ XCOPY "$(ProjectDir)steam_appid.txt" "$(TargetDir)" /i /d /y
   </PropertyGroup>
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths">
     <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="Steamworks copy">
+    <Copy SourceFiles="Librarys\Steamworks.NET.x86.dll" DestinationFiles="$(outdir)Steamworks.NET.dll" Condition="'$(Platform)' == 'x86'" />
+    <Copy SourceFiles="Librarys\Steamworks.NET.x64.dll" DestinationFiles="$(outdir)Steamworks.NET.dll" Condition="'$(Platform)' == 'x86'" />
+    <Copy SourceFiles="Librarys\Steamworks.NET.x86.dll" DestinationFiles="$(outdir)Steamworks.NET.dll" Condition="'$(Platform)' == 'Any CPU'" />
   </Target>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
