@@ -10,7 +10,9 @@ using DSTEd.UI.Contents;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DSTEd.Core.Klei {
+#pragma warning disable CA1001
     public class KleiDebugger {
+#pragma warning restore CA1001
         protected Process process = null;
 
         public KleiDebugger() {

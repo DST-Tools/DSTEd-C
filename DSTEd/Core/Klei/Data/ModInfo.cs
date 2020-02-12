@@ -106,8 +106,13 @@ namespace DSTEd.Core.Klei.Data {
                     case "configuration_options":
                         this.options = new List<Options>();
 
-                        foreach (TablePair a in ((Table) values[key.String]).Pairs) {
-                            this.options.Add(new Options(a.Value.Table.Pairs));
+                        foreach (TablePair a in (values[key.String] as Table).Pairs) {
+                            try { this.options.Add(new Options(a.Value.Table.Pairs)); }
+                            catch (NullReferenceException)
+                            {
+                                //No options
+                                Logger.Info("mod \"", name, "\" have no options");
+                            }
                         }
                         break;
                         /* default:
