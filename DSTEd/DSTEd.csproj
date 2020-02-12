@@ -767,6 +767,10 @@
     <Resource Include="Assets\FileSystem\Assets.png" />
     <Resource Include="Assets\Icons\ModOptions.png" />
     <Resource Include="Assets\Icons\Clear.png" />
+    <Resource Include="Assets\Icons\Character.png" />
+    <Resource Include="Assets\Icons\Item.png" />
+    <Resource Include="Assets\Icons\Pet.png" />
+    <Resource Include="Assets\Icons\Creature.png" />
     <Content Include="Librarys\MoonSharp.Interpreter.dll" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />

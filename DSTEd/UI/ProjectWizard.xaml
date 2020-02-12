@@ -64,7 +64,165 @@
             </TabItem>
             <TabItem Header="Mod Types">
                 <ScrollViewer Grid.Row="1"  Margin="10,10,10,10"  Background="#413F3C" Padding="10">
-                    <CheckBox Content="123"/>
+                    <Grid Margin="10,10,10,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Character}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Item.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Item}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Pet.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Pet}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Creature.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Creature}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Environment}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Interface}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Utility}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Art}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Worldgen}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Tweak}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Scenario}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Language}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Other}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Tutorial}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Client_only_mod}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Server_only_mod}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML All_client_require_mod}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                        <Grid Grid.Row="4" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/DSTEd;component/Assets/Icons/Character.png"/>
+                            <CheckBox Grid.Row="1" Content="{Core:I18N_XAML Server_admin}" Margin="10" FontSize="12" HorizontalAlignment="Center" Foreground="#FFFFFF"/>
+                        </Grid>
+                    </Grid>
                 </ScrollViewer>
             </TabItem>
         </TabControl>
