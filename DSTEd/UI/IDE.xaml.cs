@@ -104,6 +104,8 @@ namespace DSTEd.UI {
             // Check if the document has changed.
             if((e.Document.Title).Contains("*")) {
                 Dialog.Open(I18N.__("Save And close?"), "DSTEd", Dialog.Buttons.YesNoCancel, Dialog.Icon.Warning, savedialogfunc);
+            } else {
+                e.Cancel = true;
             }
         }
 
