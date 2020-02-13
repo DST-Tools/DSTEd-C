@@ -16,7 +16,18 @@ namespace DSTEd.Core.Steam.BBCode {
             if (this.name.StartsWith("url=")) {
                 this.value = this.name.Replace("url=", "");
                 this.name = "url";
-            } /*else if (this.name.StartsWith("img=")) {
+            } else if (this.name.StartsWith("previewyoutube=")) {
+                string token = this.name.Replace("previewyoutube=", "");
+
+                // Split by additional options/settings to extract the orginal token
+                if(token.Contains(";")) {
+                    string[] parts = token.Split(';');
+                    token = parts[0];
+                }
+
+                this.value = "https://www.youtube.com/watch?v=" + token;
+                this.name = "url"; // youtube/video
+            }/*else if (this.name.StartsWith("img=")) {
                 this.value = this.name.Replace("img=", "");
                 this.name = "img";
             }*/

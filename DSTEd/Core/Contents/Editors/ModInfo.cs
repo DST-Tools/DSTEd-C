@@ -33,7 +33,7 @@ namespace DSTEd.Core.Contents.Editors {
             Properties properties = new Properties(I18N.__("ModInfo Editor"), "ModInfo", I18N.__("With the ModInfo Editor of DSTEd you can easily edit the modinfo.lua of your mods. To do this, select the specified values of the individual properties to change the configuration of the mod."));
 
             // try {
-            Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(this.document.GetFileContent(), delegate (ParserException e) {
+            Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(this.document.GetFileContent(), null, delegate (ParserException e) {
                 Logger.Info("[ModInfo Editor] " + e);
             });
 
@@ -101,7 +101,7 @@ namespace DSTEd.Core.Contents.Editors {
             Properties properties = new Properties(I18N.__("Options Editor"), "ModOptions", I18N.__("Make settings for the mod in the Options Editor."));
 
             //try {
-            Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(this.document.GetFileContent(), delegate (ParserException e) {
+            Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(this.document.GetFileContent(), null, delegate (ParserException e) {
                 Logger.Info("[ModInfo Editor] " + e);
             });
 
