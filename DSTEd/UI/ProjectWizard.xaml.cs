@@ -27,9 +27,62 @@ namespace DSTEd.UI
 		{
 			InitializeComponent();
 
+			InitializeControls();
 			InitializeModInfo();
 			InitializeModOption();
 			InitializeModType();
+		}
+
+		public void InitializeControls()
+		{
+			//tabcontrol
+			this.tab.SelectionChanged += Tab_SelectionChanged;
+
+			//buttons
+			this.btn_Previous.IsEnabled = false;
+			this.btn_Finish.IsEnabled = false;
+			this.btn_Cancel.Click += Btn_Cancel_Click;
+			this.btn_Next.Click += Btn_Next_Click;
+			this.btn_Previous.Click += Btn_Previous_Click;
+		}
+
+		private void Btn_Previous_Click(object sender, RoutedEventArgs e)
+		{
+			this.tab.SelectedIndex--;
+		}
+
+		private void Btn_Next_Click(object sender, RoutedEventArgs e)
+		{
+			this.tab.SelectedIndex++;
+		}
+
+		private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
+
+		private void Tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			switch(this.tab.SelectedIndex)
+			{
+				case 0:
+					this.btn_Previous.IsEnabled = false;
+					this.tip.Text = I18N.__("Select the specified values of the individual properties to change the configuration of the mod.");
+					break;
+				case 1:
+					this.btn_Previous.IsEnabled = true;
+					this.btn_Finish.IsEnabled = false;
+					this.btn_Next.IsEnabled = true;
+					this.tip.Text = I18N.__("Add or delete your mod options.");
+					break;
+				case 2:
+					this.tip.Text = I18N.__("Chose one or more mod type for your mod type.");
+					this.btn_Finish.IsEnabled = true;
+					this.btn_Next.IsEnabled = false;
+					break;
+				default:
+					break;
+			}
 		}
 
 		public void InitializeModInfo()

@@ -41,10 +41,10 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Label Margin="10,10,0,0" Content="{Core:I18N_XAML 'New Project'}" Foreground="#FFFFFF" FontSize="16" FontWeight="Bold" />
-            <TextBlock Grid.Row="1" Foreground="#FFFFFF" Margin="20,10,10,10" FontSize="12" TextWrapping="Wrap" Text="{Core:I18N_XAML 'Select the specified values of the individual properties to change the configuration of the mod.'}" />
+            <TextBlock Grid.Row="1" x:Name="tip" Foreground="#FFFFFF" Margin="20,10,10,10" FontSize="12" TextWrapping="Wrap" Text="{Core:I18N_XAML 'Select the specified values of the individual properties to change the configuration of the mod.'}" />
         </Grid>
         
-        <TabControl Grid.Row="1" >
+        <TabControl Grid.Row="1" Name="tab">
             <TabItem Header="Mod Info" Name="modinfo"/>
             <TabItem Header="Mod Options">
                 <Grid Name="modoptions">
@@ -228,9 +228,12 @@
         </TabControl>
 
         <Grid Grid.Row="2">
-            <DockPanel x:Name="buttons" Background="#FF242425">
+            <DockPanel Background="#FF242425">
                 <WrapPanel Margin="10,20,30,20"  UseLayoutRounding="True" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Button Content="{Core:I18N_XAML 'Next'}" HorizontalAlignment="Center" />
+                    <Button Content="{Core:I18N_XAML Previous}" Name="btn_Previous" Margin="0,0,10,0" HorizontalAlignment="Center" Width="75"/>
+                    <Button Content="{Core:I18N_XAML Next}" Name="btn_Next" Margin="0,0,10,0" HorizontalAlignment="Center" Width="75"/>
+                    <Button Content="{Core:I18N_XAML Cancel}" Name="btn_Cancel" Margin="0,0,10,0" HorizontalAlignment="Center" Width="75"/>
+                    <Button Content="{Core:I18N_XAML Finish}" Name="btn_Finish" Margin="0,0,10,0" HorizontalAlignment="Center" Width="75"/>
                 </WrapPanel>
             </DockPanel>
         </Grid>

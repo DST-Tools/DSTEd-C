@@ -59,7 +59,12 @@ namespace DSTEd.Core.Contents.Editors {
         public void OnInit()
 		{
 			//init lexical analyzer
-			RefreshLexer();
+			switch(Path.GetExtension(this.document.GetFile()))
+			{
+				case "lua":
+					RefreshLexer();
+					break;
+			}
         }
 
 		public void RefreshLexer()
@@ -167,10 +172,10 @@ namespace DSTEd.Core.Contents.Editors {
 				}
 				completion.Show();
 				completion.Closed += (object lambdasender, EventArgs arg) =>
-				 {
+				{
 					 completion = null;
 					 //completion = new CompletionWindow(TextArea);
-				 };
+				};
 				//dataref.sort
 			}
 		}
