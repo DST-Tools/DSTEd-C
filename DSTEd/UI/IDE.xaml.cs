@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
 using DSTEd.Core;
@@ -167,6 +168,31 @@ namespace DSTEd.UI {
             newdoc.IsActive = true;
             lastactivedocument = newdoc;
             editors.Children.Add(newdoc);
+        }
+
+        public void CloseActiveDocument()
+        {
+            var doc = GetActiveDocument();
+            doc.Close();
+        }
+
+        public void CloseAllDocuments()
+        {
+            List<AvalonDocument> closeable = new List<AvalonDocument>();
+
+            foreach (LayoutDocument child in editors.Children)
+            {
+                if (child.GetType() == typeof(AvalonDocument))
+                {
+                    AvalonDocument avalondoc = (AvalonDocument)child;
+                    closeable.Add(avalondoc);
+                }
+            }
+
+            foreach (var document in closeable)
+            {
+                document.Close();
+            }
         }
 
         public void SaveActiveDocument()

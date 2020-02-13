@@ -65,8 +65,12 @@ namespace DSTEd.Core {
                 case "FILE_SAVE_ALL":
 					Boot.Core.IDE.SaveAllDocument();
 					break;
-                //case "FILE_CLOSE":
-                //case "FILE_CLOSE_ALL":
+                case "FILE_CLOSE":
+                    Boot.Core.IDE.CloseActiveDocument();
+                    break;
+                case "FILE_CLOSE_ALL":
+                    Boot.Core.IDE.CloseAllDocuments();
+                    break;
                 case "FILE_EXIT":
                     Dialog.Open(I18N.__("Do you want to exit DSTEd?"), I18N.__("Exit DSTEd"), Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                         if (result == Dialog.Result.Yes) {
