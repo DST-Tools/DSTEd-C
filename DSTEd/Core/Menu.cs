@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+
 using System.Windows.Threading;
 using DSTEd.UI;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -24,10 +25,20 @@ namespace DSTEd.Core {
 
         public void Handle(string name, MenuItem menu) {
             switch (name) {
-                /*case "FILE_NEW_PROJECT":
-					Dialog.Open();
+                case "FILE_NEW_PROJECT":
+                    new ProjectWizard().ShowDialog();
 					//todo: add sample project file
-					break;*/
+					break;
+                case "FILE_IMPORT_PROJECT":
+                    //todo: ask mod directory and check modinfo.lua exist or not then copy them to game mod directory, open modinfo editor?
+                    var dlg = new System.Windows.Forms.FolderBrowserDialog();
+                    dlg.Description = I18N.__("Import Project");
+                    dlg.ShowNewFolderButton = false;
+                    if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        Logger.Info(dlg.SelectedPath);
+                    }
+                    break;
                 case "FILE_NEW_FILE":
 
 					break;

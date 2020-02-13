@@ -197,6 +197,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Project Templates\BaseMod\modinfo.lua" />
+    <None Include="Project Templates\BaseMod\modmain.lua" />
     <None Include="Project Templates\Character\exported\__TEMPORY__TEST_ANIMATION\__TEMPORY_ANIMATION.scml" />
     <None Include="Project Templates\Character\images\avatars\_EXAMPLE.psd" />
     <None Include="Project Templates\Character\images\avatars\__Fa_EXAMPLE.psd" />
@@ -773,6 +775,10 @@
     <Resource Include="Assets\FileSystem\Assets.png" />
     <Resource Include="Assets\Icons\ModOptions.png" />
     <Resource Include="Assets\Icons\Clear.png" />
+    <Resource Include="Assets\Icons\Character.png" />
+    <Resource Include="Assets\Icons\Item.png" />
+    <Resource Include="Assets\Icons\Pet.png" />
+    <Resource Include="Assets\Icons\Creature.png" />
     <Content Include="Librarys\MoonSharp.Interpreter.dll" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />

@@ -37,8 +37,7 @@ namespace DSTEd.UI.Components {
                 return;
             }
 
-            Logger.Error("[WorkshopItem] OK: " + this.file.GetName());
-
+            Logger.Info("[WorkshopItem] OK: " + this.file.GetName());
             ModInfo info = Boot.Core.LUA.GetModInfo(content, delegate (ParserException e) {
                 Logger.Error("[WorkshopItem] ModInfo is broken: " + e);
             });

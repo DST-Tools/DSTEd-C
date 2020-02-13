@@ -16,19 +16,19 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#333333">
-                <Label Foreground="#FFFFFF" Content="{Core:I18N_XAML 'Target:'}" />
+                <Label Foreground="#FFFFFF" Content="{Core:I18N_XAML Target:}" />
                 <ComboBox Name="target" SelectedIndex="0" MinWidth="80">
-                    <ComboBoxItem Content="Console" />
-                    <ComboBoxItem Content="Client" />
-                    <ComboBoxItem Content="Server" />
+                    <ComboBoxItem Content="{Core:I18N_XAML Console}" />
+                    <ComboBoxItem Content="{Core:I18N_XAML Client}" />
+                    <ComboBoxItem Content="{Core:I18N_XAML Server}" />
                 </ComboBox>
                 <Button Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClearDebugger">
                     <StackPanel Orientation="Horizontal" Margin="-8,-4,-6,-4">
                         <Image Height="16" Width="16" Margin="0,0,2,0" Source="/DSTEd;component/Assets/Icons/Clear.png" />
-                        <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
+                        <TextBlock Padding="0,0,0,0" FontSize="11" Text="{Core:I18N_XAML Clear}"/>
                     </StackPanel>
                 </Button>
-                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_debugger" Content="Autoscroll" IsChecked="True" />
+                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_debugger" Content="{Core:I18N_XAML Autoscroll}" IsChecked="True" />
             </StackPanel>
             <ScrollViewer Grid.Row="1">
                 <StackPanel x:Name="debugger_debug" />
@@ -46,10 +46,10 @@
                 <Button Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClearOutput">
                     <StackPanel Orientation="Horizontal" Margin="-8,-4,-6,-4">
                         <Image Height="16" Width="16" Margin="0,0,2,0" Source="/DSTEd;component/Assets/Icons/Clear.png" />
-                        <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
+                        <TextBlock Padding="0,0,0,0" FontSize="11" Text="{Core:I18N_XAML Clear}"/>
                     </StackPanel>
                 </Button>
-                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_output" Content="Autoscroll" IsChecked="True" />
+                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_output" Content="{Core:I18N_XAML Autoscroll}" IsChecked="True" />
             </StackPanel>
             <ScrollViewer Grid.Row="1">
                 <StackPanel x:Name="debugger_output" />
@@ -66,10 +66,10 @@
                 <Button Margin="0,2,0,2" Padding="0,0,0,0" Click="OnClearErrors">
                     <StackPanel Orientation="Horizontal" Margin="-8,-4,-6,-4">
                         <Image Height="16" Width="16" Margin="0,0,2,0" Source="/DSTEd;component/Assets/Icons/Clear.png" />
-                        <TextBlock Padding="0,0,0,0" FontSize="11">Clear</TextBlock>
+                        <TextBlock Padding="0,0,0,0" FontSize="11" Text="{Core:I18N_XAML Clear}"/>
                     </StackPanel>
                 </Button>
-                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_errors" Content="Autoscroll" IsChecked="True" />
+                <Components:CheckBox Margin="10,6,0,0" FontSize="11" x:Name="autoscroll_errors" Content="{Core:I18N_XAML Autoscroll}" IsChecked="True" />
             </StackPanel>
             <ScrollViewer Grid.Row="1">
                 <StackPanel x:Name="debugger_errors" />

@@ -70,6 +70,23 @@ namespace DSTEd.Core.Contents.Editors {
             BUTTON
         };
 
+        //for ProjectWizard
+        public Properties()
+        {
+            this.container = new Grid();
+            ColumnDefinition left = new ColumnDefinition();
+            ColumnDefinition middle = new ColumnDefinition();
+            ColumnDefinition right = new ColumnDefinition();
+            left.Width = GridLength.Auto;
+            middle.Width = new GridLength(1, GridUnitType.Star);
+            right.Width = GridLength.Auto;
+            this.container.ColumnDefinitions.Add(left);
+            this.container.ColumnDefinitions.Add(middle);
+            this.container.ColumnDefinitions.Add(right);
+            this.container.VerticalAlignment = VerticalAlignment.Top;
+            this.AddChild(this.container);
+        }
+
         public Properties(string title, string icon, string description) {
             this.container = new Grid();
             ColumnDefinition left = new ColumnDefinition();
@@ -318,10 +335,11 @@ namespace DSTEd.Core.Contents.Editors {
             browse.Margin = new Thickness(0, 0, 10, 0);
             browse.Padding = new Thickness(0, 0, 0, 0);
             browse.Content = I18N.__("Browse");
+
             Grid.SetColumn(browse, 1);
-            Grid.SetColumnSpan(browse, 2);
             panel.Children.Add(browse);
 
+            Grid.SetColumnSpan(panel, 2);
             Grid.SetColumn(panel, 1);
             Grid.SetRow(panel, row);
 
