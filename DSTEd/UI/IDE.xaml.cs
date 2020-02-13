@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using DSTEd.Core;
 using DSTEd.Core.Contents;
@@ -23,6 +25,27 @@ namespace DSTEd.UI {
             this.dockManager.Theme = new Dark();
             this.Closing += this.IDE_Closing;
 		}
+
+        public void SetSteamProfile(Core.Steam.Workshop profile) {
+            string picture  = @"";
+            string name     = @"";
+
+            if(profile == null) {
+                picture = @"/DSTEd;component/Assets/Icons/warning.png";
+                name    = I18N.__("Guest");
+            } else {
+                picture = profile.GetPicture();
+                name    = profile.GetUsername();
+
+            }
+
+            Logger.Info("PICTURE: " + picture);
+
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() => {
+                PICTURE.Source  = new BitmapImage(new Uri(picture, UriKind.RelativeOrAbsolute));
+                STEAM.Header    = name;
+            }));
+        }
 
         public void UpdateWelcome(bool state) {
 			Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => VIEW_WELCOME.IsChecked = state)); 

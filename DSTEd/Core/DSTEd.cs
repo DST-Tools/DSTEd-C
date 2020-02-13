@@ -112,6 +112,5 @@ namespace DSTEd.Core {
 			IDE.Show();
 			this.Run();
 		}
-
 	}
 }
