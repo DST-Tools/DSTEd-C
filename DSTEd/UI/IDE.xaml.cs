@@ -100,7 +100,11 @@ namespace DSTEd.UI {
 				}
 				return true;
 			}
-			Dialog.Open(I18N.__("Save And close?"), "DSTEd", Dialog.Buttons.YesNoCancel, Dialog.Icon.Warning, savedialogfunc);
+
+            // Check if the document has changed.
+            if((e.Document.Title).Contains("*")) {
+                Dialog.Open(I18N.__("Save And close?"), "DSTEd", Dialog.Buttons.YesNoCancel, Dialog.Icon.Warning, savedialogfunc);
+            }
         }
 
         private void OnReloadManager(object sender, RoutedEventArgs e) {
