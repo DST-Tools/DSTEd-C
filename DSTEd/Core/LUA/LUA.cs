@@ -14,8 +14,8 @@ namespace DSTEd.Core.LUA {
             return this.parser;
         }
 
-        public ModInfo GetModInfo(string lua, Action<ParserException> callback) {
-            Script result = this.parser.Run(lua, false, callback);
+        public ModInfo GetModInfo(string lua, string file, Action<ParserException> callback) {
+            Script result = this.parser.Run(lua, file, false, callback);
 
             if (result == null) {
                 ModInfo info = new ModInfo(null);

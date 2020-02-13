@@ -9,32 +9,37 @@ namespace DSTEd.Core.LUA {
         private int line = -1;
         private string position = null;
         private string reference = null;
+        private string file = null;
 
-        public ParserException(ScriptRuntimeException e, string reference) {
+        public ParserException(ScriptRuntimeException e, string reference, string file) {
             this.message = "Error on Runtime";
             this.reference = reference;
             this.description = e.Message;
+            this.file = file;
             this.Parse(e.DecoratedMessage);
         }
 
-        public ParserException(SyntaxErrorException e, string reference) {
+        public ParserException(SyntaxErrorException e, string reference, string file) {
             this.message = "Error on Syntax";
             this.reference = reference;
             this.description = e.Message;
+            this.file = file;
             this.Parse(e.DecoratedMessage);
         }
 
-        public ParserException(InterpreterException e, string reference) {
+        public ParserException(InterpreterException e, string reference, string file) {
             this.message = "Error on Interpreter";
             this.reference = reference;
             this.description = e.Message;
+            this.file = file;
             this.Parse(e.DecoratedMessage);
         }
 
-        public ParserException(InternalErrorException e, string reference) {
+        public ParserException(InternalErrorException e, string reference, string file) {
             this.message = "Internal Error";
             this.reference = reference;
             this.description = e.Message;
+            this.file = file;
             this.Parse(e.DecoratedMessage);
         }
 
@@ -52,6 +57,10 @@ namespace DSTEd.Core.LUA {
 
         public string GetPosition() {
             return this.position;
+        }
+
+        public string GetFile() {
+            return this.file;
         }
 
         public string GetReference(Boolean extracted) {
@@ -91,7 +100,7 @@ namespace DSTEd.Core.LUA {
 
         public override string ToString() {
             if (this.GetLine() > 0) {
-                return string.Format("[LUA] {0}: {1} on Line {2} with Position {3}:\n\t{4}", this.GetMessage(), this.GetDescription(), this.GetLine(), this.GetPosition(), this.GetReference(true));
+                return string.Format("[LUA] {0}: {1} on Line {2} with Position {3} on File {4}:\n\t{5}", this.GetMessage(), this.GetDescription(), this.GetLine(), this.GetPosition(), this.GetFile(), this.GetReference(true));
             }
 
             return string.Format("[LUA] {0}: {1}", this.GetMessage(), this.GetDescription());

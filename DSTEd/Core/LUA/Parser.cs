@@ -56,9 +56,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, this.loader.GetPath() + "main.lua");
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, this.loader.GetPath() + "main.lua");
                 }
 
                 callback?.Invoke(exception);
@@ -67,9 +67,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, this.loader.GetPath() + "main.lua");
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, this.loader.GetPath() + "main.lua");
                 }
 
                 callback?.Invoke(exception);
@@ -78,9 +78,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, this.loader.GetPath() + "main.lua");
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, this.loader.GetPath() + "main.lua");
                 }
 
                 callback?.Invoke(exception);
@@ -89,9 +89,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, this.loader.GetPath() + "main.lua");
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, this.loader.GetPath() + "main.lua");
                 }
 
                 callback?.Invoke(exception);
@@ -100,7 +100,7 @@ namespace DSTEd.Core.LUA {
             return script;
         }
 
-        public Script Run(string lua, Boolean injector, Action<ParserException> callback) {
+        public Script Run(string lua, string file, Boolean injector, Action<ParserException> callback) {
             try {
                 Script script = new Script();
 
@@ -119,9 +119,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, file);
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, file);
                 }
 
                 callback?.Invoke(exception);
@@ -130,9 +130,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, file);
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, file);
                 }
 
                 callback?.Invoke(exception);
@@ -141,9 +141,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, file);
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, file);
                 }
 
                 callback?.Invoke(exception);
@@ -152,9 +152,9 @@ namespace DSTEd.Core.LUA {
                 ParserException exception;
 
                 if (this.lua == null) {
-                    exception = new ParserException(e, lua);
+                    exception = new ParserException(e, lua, file);
                 } else {
-                    exception = new ParserException(e, this.lua + "\n\n" + lua);
+                    exception = new ParserException(e, this.lua + "\n\n" + lua, file);
                 }
 
                 callback?.Invoke(exception);

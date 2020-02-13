@@ -99,7 +99,7 @@ namespace DSTEd.UI
 					modinfo = reader.ReadToEnd();
 				}
 			}
-			Core.Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(modinfo, delegate (ParserException e) {
+			Core.Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(modinfo, null, delegate (ParserException e) {
 				Logger.Info("[ProjectWizard ModInfo] " + e);
 			});
 
@@ -167,7 +167,7 @@ namespace DSTEd.UI
 				}
 			}
 
-			Core.Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(modinfo, delegate (ParserException e) {
+			Core.Klei.Data.ModInfo info = Boot.Core.LUA.GetModInfo(modinfo, null, delegate (ParserException e) {
 				Logger.Info("[ProjectWizard ModInfo] " + e);
 			});
 
