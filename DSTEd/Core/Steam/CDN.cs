@@ -16,7 +16,7 @@ namespace DSTEd.Core.Steam {
         private static CDN cdn = new CDN();
         private CDN()
         {
-            configuration = new Configuration();
+            configuration = Configuration.getConfiguration();
             cdns = new Dictionary<string, string>();
             cdns.Add("akamai", "https://steamcdn-a.akamaihd.net");
             cdns.Add("highwinds", "http://cdn.highwinds.steamstatic.com");

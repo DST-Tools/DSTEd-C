@@ -33,7 +33,7 @@ namespace DSTEd.Core {
 		{
 			Logger.Info("Start DSTEd v" + Version);
 
-			this.configuration = new Configuration();
+			this.configuration = Configuration.getConfiguration();
 
 			// Init Language
 			I18N.SetLanguage(this.Language);

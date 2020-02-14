@@ -4,15 +4,22 @@ using System.IO;
 using Newtonsoft.Json;
 
 namespace DSTEd.Core {
-    class Configuration {
+    //Singleten Pattern, Use Configuration.getConfiguration() instead of new Configuration();
+    public class Configuration {
         private string name = "config.json";
         private string path = null;
         private Dictionary<string, string> data;
+        private static Configuration config = new Configuration();
 
-        public Configuration() {
+        private Configuration() {
             this.path = AppDomain.CurrentDomain.BaseDirectory;
             this.data = new Dictionary<string, string>();
             this.Load();
+        }
+
+        public static Configuration getConfiguration()
+        {
+            return config;
         }
 
         public string GetFullPath() {
