@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using DSTEd.Core;
 using DSTEd.Core.Steam.BBCode;
+using DSTEd.Core.Steam;
 
 namespace DSTEd.UI.Components {
     class BBCodePanel : WrapPanel {
@@ -32,7 +33,7 @@ namespace DSTEd.UI.Components {
                     image.Height = Double.NaN;
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(this.ImageSrcRender(node.GetValue()), UriKind.Absolute);
+                    bitmap.UriSource = new Uri(CDN.getInstance().prase(node.GetValue()), UriKind.Absolute);
                     bitmap.EndInit();
                     image.Source = bitmap;
                     container.Children.Add(image);
@@ -117,10 +118,6 @@ namespace DSTEd.UI.Components {
                     Logger.Warn("Unimplemented BBCode: " + node.GetName());
                     break;
             }
-        }
-        public string ImageSrcRender(string src)
-        {
-            return src.Replace("{STEAM_CLAN_IMAGE}", "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/clans");
         }
     }
 }
