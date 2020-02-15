@@ -31,12 +31,10 @@ namespace DSTEd.UI
 			{
 				work();
 				Progress++;
-				Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
-						new Action(() =>
-						{
-							progress.Value = (Progress == task) ? 100 : (100 / task) * Progress;
-						})
-				);
+				this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() =>
+				{
+					progress.Value = (Progress == task) ? 100 : (100 / task) * Progress;
+				}));
 			});
 			Close();
 		}
