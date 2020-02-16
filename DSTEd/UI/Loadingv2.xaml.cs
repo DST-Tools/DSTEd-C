@@ -4,13 +4,13 @@ using System.Threading;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.ComponentModel;
+
 namespace DSTEd.UI
 {	
+	//loading will be jammed, this is caused by operating UI while loading.[Akarinnnnn(Fa_Ge)]
 	public partial class Loadingv2 : Window
 	{
-		private int task;
-		public int Progress = 0;
-
 		public Loadingv2()
 		{
 			InitializeComponent();
@@ -22,21 +22,33 @@ namespace DSTEd.UI
 				this.DragMove();
 			}
 		}
-		public void Start(params Action[] queue)
+		public void Start(BackgroundWorker work, double workerCount)
 		{
-			task = queue.Length;
+			progress.Maximum = workerCount;
 			Show();
-			Progress = 0;
-			Parallel.ForEach(queue, (Action work) =>
+			
 			{
-				work();
-				Progress++;
-				this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() =>
+				work.RunWorkerCompleted += (object _, RunWorkerCompletedEventArgs _1) => { 
+					Close();
+					Boot.Core.IDE.Show();
+				};
+				work.ProgressChanged += OnProgressChanged;
+				work.RunWorkerAsync();
+				/*progress.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() =>
 				{
-					progress.Value = (Progress == task) ? 100 : (100 / task) * Progress;
-				}));
-			});
-			Close();
+					progress.Value++;
+				}));*/
+			};
+			//Close();
+			/*new Thread(delegate () {
+					while (!work.IsCompleted)
+						Thread.Sleep(100);
+				}).Start();*/
+		}
+
+		private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
+		{
+			progress.Value++;
 		}
 	}
 }

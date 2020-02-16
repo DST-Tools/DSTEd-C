@@ -29,16 +29,16 @@ namespace DSTEd.UI {
         public void Init()//INIT not runs in main thread now.
 		{
             string path = Boot.Core.Steam.GetGame().GetPath();
-            WorkspaceTree mods = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), delegate (FileNode file)
+            WorkspaceTree mods = null, core = null;
+            Dispatcher.Invoke(delegate ()
             {
-                return new WorkshopItem(file);
+                mods = new WorkspaceTree(new FileSystem(path + "\\" + "mods"));
+                core = new WorkspaceTree(new FileSystem(path + "\\" + "data"));
             });
-            WorkspaceTree core = new WorkspaceTree(new FileSystem(path + "\\" + "data"), null);
 
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action( ()=>
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action( ()=>
 			{
                 this.workspace_mods.Content = mods;
-
                 this.workspace_core.Content = core;
 			})
 			);
