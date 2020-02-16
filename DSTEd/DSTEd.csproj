@@ -784,6 +784,7 @@
     <Resource Include="Assets\Icons\Item.png" />
     <Resource Include="Assets\Icons\Pet.png" />
     <Resource Include="Assets\Icons\Creature.png" />
+    <Resource Include="Assets\Icons\warning.png" />
     <Content Include="Librarys\MoonSharp.Interpreter.dll" />
     <Content Include="Librarys\NativeSquish_x64.dll" />
     <Content Include="Librarys\NativeSquish_x86.dll" />

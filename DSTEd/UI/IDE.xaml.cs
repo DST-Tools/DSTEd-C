@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using DSTEd.Core;
 using DSTEd.Core.Contents;
@@ -11,8 +14,9 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DSTEd.UI {
     public partial class IDE : Window {
-        private Menu menu = null;
-        private AvalonDocument lastactivedocument = null;
+        private Menu menu                           = null;
+        private static string CHANGED_CHARACTER     = "*";
+        private AvalonDocument lastactivedocument   = null;
 
         public IDE() {
             InitializeComponent();
@@ -22,12 +26,32 @@ namespace DSTEd.UI {
             this.Closing += this.IDE_Closing;
 		}
 
+        public void SetSteamProfile(Core.Steam.Workshop profile) {
+            string picture  = @"";
+            string name     = @"";
+
+            if(profile == null) {
+                picture = @"/DSTEd;component/Assets/Icons/warning.png";
+                name    = I18N.__("Guest");
+            } else {
+                picture = profile.GetPicture();
+                name    = profile.GetUsername();
+
+            }
+
+            Logger.Info("PICTURE: " + picture);
+
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() => {
+                PICTURE.Source  = new BitmapImage(new Uri(picture, UriKind.RelativeOrAbsolute));
+                STEAM.Header    = name;
+            }));
+        }
+
         public void UpdateWelcome(bool state) {
 			Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => VIEW_WELCOME.IsChecked = state)); 
         }
 
-        public void Init()//INIT not runs in main thread now.
-		{
+        public void Init() {
             string path = Boot.Core.Steam.GetGame().GetPath();
             WorkspaceTree mods = new WorkspaceTree(new FileSystem(path + "\\" + "mods"), delegate (FileNode file)
             {
@@ -40,8 +64,7 @@ namespace DSTEd.UI {
                 this.workspace_mods.Content = mods;
 
                 this.workspace_core.Content = core;
-			})
-			);
+			}));
 			menu.Init();
         }
 
@@ -64,58 +87,58 @@ namespace DSTEd.UI {
         private void OnLayoutRootPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             var activeContent = ((LayoutRoot) sender).ActiveContent;
 
-            if (this.IsMenuAvailable()) {
+            if(this.IsMenuAvailable()) {
                 this.GetMenu().Update();
             }
 
-            if (e.PropertyName == "ActiveContent") {
-                Logger.Info(string.Format("ActiveContent-> {0}", activeContent));
+            if(e.PropertyName == "ActiveContent") {
+                // Logger.Info(string.Format("ActiveContent-> {0}", activeContent));
             }
         }
 
-        private void OnLoadLayout(object sender, RoutedEventArgs e) {
+        private void OnLoadLayout(object sender, RoutedEventArgs e) {}
 
-        }
-
-        private void OnSaveLayout(object sender, RoutedEventArgs e) {
-
-        }
+        private void OnSaveLayout(object sender, RoutedEventArgs e) {}
 
         private void dockManager_DocumentClosing(object sender, DocumentClosingEventArgs e) {
-			bool savedialogfunc(Dialog.Result r)
-			{
-				switch (r)
-				{
+			bool savedialogfunc(Dialog.Result r) {
+				switch(r) {
                     case Dialog.Result.Cancel:
                         e.Cancel = true;
-                        break;
+                    break;
 					case Dialog.Result.No:
 						//not call SaveActiveDocument() and close
-						break;
+					break;
 					case Dialog.Result.Yes:
 						SaveActiveDocument();
 						//Boot.Core.Workspace.RemoveDocument(GetActiveDocument());
-						break;
+					break;
 					default:
 						e.Cancel = true;
-						break;
+					break;
 				}
+
 				return true;
 			}
-			Dialog.Open(I18N.__("Save And close?"), "DSTEd", Dialog.Buttons.YesNoCancel, Dialog.Icon.Warning, savedialogfunc);
+
+            // Check if the document has changed.
+            if((e.Document.Title).Contains(CHANGED_CHARACTER)) {
+                Dialog.Open(I18N.__("Save And close?"), "DSTEd", Dialog.Buttons.YesNoCancel, Dialog.Icon.Warning, savedialogfunc);
+            } else {
+                e.Cancel = true;
+            }
         }
 
-        private void OnReloadManager(object sender, RoutedEventArgs e) {
-        }
+        private void OnReloadManager(object sender, RoutedEventArgs e) {}
 
         private void OnUnloadManager(object sender, RoutedEventArgs e) {
-            if (layoutRoot.Children.Contains(dockManager)) {
+            if(layoutRoot.Children.Contains(dockManager)) {
                 layoutRoot.Children.Remove(dockManager);
             }
         }
 
         private void OnLoadManager(object sender, RoutedEventArgs e) {
-            if (!layoutRoot.Children.Contains(dockManager)) {
+            if(!layoutRoot.Children.Contains(dockManager)) {
                 layoutRoot.Children.Add(dockManager);
             }
         }
@@ -124,7 +147,7 @@ namespace DSTEd.UI {
             Dialog.Open("Are you sure you want to close this tool?", "DSTEd", Dialog.Buttons.YesNo, Dialog.Icon.Warning, delegate (Dialog.Result result) {
                 this.GetMenu().Update();
 
-                if (result == Dialog.Result.Yes) {
+                if(result == Dialog.Result.Yes) {
                     return true;
                 }
 
@@ -133,14 +156,12 @@ namespace DSTEd.UI {
             });
         }
 
-        private void OnShowHeader(object sender, RoutedEventArgs e) {
-
-        }
+        private void OnShowHeader(object sender, RoutedEventArgs e) {}
 
         private void OnMenu(object sender, RoutedEventArgs e) {
             var item = sender as System.Windows.Controls.MenuItem;
 
-            if (item != null) {
+            if(item != null) {
                 this.menu.Handle(item.Name, item);
             }
         }
@@ -154,47 +175,60 @@ namespace DSTEd.UI {
         }
 
         public void SetActiveDocument(Document document) {
-            foreach (LayoutDocument entry in this.editors.Children) {
-                if (entry.GetType() == typeof(AvalonDocument)) {
+            foreach(LayoutDocument entry in this.editors.Children) {
+                if(entry.GetType() == typeof(AvalonDocument)) {
                     AvalonDocument doc = (AvalonDocument) entry;
-                    if(doc.GetDocument().Equals(document))
-                    {
-                        doc.IsActive = true;
-                        lastactivedocument = doc;
+
+                    if(doc.GetDocument().Equals(document)){
+                        doc.IsActive        = true;
+                        lastactivedocument  = doc;
                         return;
                     }
+
                     doc.IsActive = false;
                 }
             }
-            var newdoc = new AvalonDocument(document);
-            newdoc.IsActive = true;
-            lastactivedocument = newdoc;
+
+            var newdoc          = new AvalonDocument(document);
+            newdoc.IsActive     = true;
+            lastactivedocument  = newdoc;
             editors.Children.Add(newdoc);
         }
 
-        public void SaveActiveDocument()
-		{
-            //GetActiveDocument().ChangeContent(GetEditors().SelectedContent.)
+        public void CloseActiveDocument(){
+            GetActiveDocument().Close();
+        }
+
+        public void CloseAllDocuments() {
+            List<AvalonDocument> closeable = new List<AvalonDocument>();
+
+            foreach(LayoutDocument child in editors.Children) {
+                if(child.GetType() == typeof(AvalonDocument)) {
+                    closeable.Add((AvalonDocument)child);
+                }
+            }
+
+            foreach(var document in closeable) {
+                document.Close();
+            }
+        }
+
+        public void SaveActiveDocument() {
             var doc = GetActiveDocument();
             doc.GetDocument().SaveDocument();
-            doc.Title = doc.Title.TrimEnd("*".ToCharArray());
+            doc.Title = doc.Title.TrimEnd(CHANGED_CHARACTER.ToCharArray());
 
         }
 
-		public void SaveAllDocument()
-		{
-			foreach (LayoutDocument child in editors.Children)
-			{
-				if(child.GetType() == typeof(AvalonDocument))
-				{
-					AvalonDocument avalondoc = (AvalonDocument)child;
-					avalondoc.GetDocument().SaveDocument();
+		public void SaveAllDocument() {
+			foreach(LayoutDocument child in editors.Children) {
+				if(child.GetType() == typeof(AvalonDocument)) {
+					((AvalonDocument) child).GetDocument().SaveDocument();
 				}
 			}
 		}
 
-        private AvalonDocument GetActiveDocument()
-		{
+        private AvalonDocument GetActiveDocument() {
             return lastactivedocument;
 		}
 
@@ -203,27 +237,26 @@ namespace DSTEd.UI {
 
             switch (state) {
                 case Document.State.CREATED:
-                    AvalonDocument d = new AvalonDocument(document);
-                    this.editors.Children.Add(d);
+                    this.editors.Children.Add(new AvalonDocument(document));
                     this.SetActiveDocument(document);
-                    break;
+                break;
                 case Document.State.CHANGED:
-                    foreach (LayoutDocument entry in this.editors.Children) {
-                        if (entry.GetType() == typeof(AvalonDocument)) {
+                    foreach(LayoutDocument entry in this.editors.Children) {
+                        if(entry.GetType() == typeof(AvalonDocument)) {
                             AvalonDocument doc = (AvalonDocument) entry;
 
-                            if (doc.GetDocument() == document) {
-                                doc.Title = document.GetName() + "*";
+                            if(doc.GetDocument() == document) {
+                                doc.Title = document.GetName() + CHANGED_CHARACTER;
                             }
                         }
                     }
-                    break;
+                break;
                 case Document.State.REMOVED:
-                    foreach (LayoutDocument entry in this.editors.Children) {
-                        if (entry.GetType() == typeof(AvalonDocument)) {
+                    foreach(LayoutDocument entry in this.editors.Children) {
+                        if(entry.GetType() == typeof(AvalonDocument)) {
                             AvalonDocument doc = (AvalonDocument) entry;
 
-                            if (doc.GetDocument() == document) {
+                            if(doc.GetDocument() == document) {
                                 //Boot.Core.Workspace.RemoveDocument( ? doc.GetDocument() : null);
                                 this.editors.Children.Remove(doc);
                                 this.GetMenu().Update();
@@ -232,7 +265,7 @@ namespace DSTEd.UI {
                             }
                         }
                     }
-                    break;
+                break;
             }
 
             this.GetMenu().Update();
@@ -242,13 +275,12 @@ namespace DSTEd.UI {
             Environment.Exit(0);
         }
 
-		private void SaveExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-		{
+		private void SaveExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) {
 			SaveActiveDocument();
 			menu.Update();
 		}
-		private void SaveAllExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-		{
+        
+        private void SaveAllExecuted(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) {
 			SaveAllDocument();
 			menu.Update();
 		}

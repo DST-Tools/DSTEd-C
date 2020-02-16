@@ -118,6 +118,9 @@
                 <MenuItem Name="HELP_ABOUT" Header="{Core:I18N_XAML About}" Click="OnMenu" />
             </MenuItem>
             <MenuItem Name="STEAM" Header="{Core:I18N_XAML Guest}" Grid.Column="8" Click="OnMenu" HorizontalAlignment="Right">
+                <MenuItem.Icon>
+                    <Image Name="PICTURE" Width="{StaticResource IconSize}" Height="{StaticResource IconSize}" />
+                </MenuItem.Icon>
                 <MenuItem Name="STEAM_LOGIN" Header="{Core:I18N_XAML Login}" Click="OnMenu" />
                 <Separator/>
                 <MenuItem Name="STEAM_SETTINGS" Header="{Core:I18N_XAML Settings}" Click="OnMenu" />

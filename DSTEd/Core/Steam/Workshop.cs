@@ -73,6 +73,34 @@ namespace DSTEd.Core.Steam {
             return SteamUser.GetSteamID();
         }
 
+        string GetSteamImageAsTexture2D(int iImage)
+        {
+            uint ImageWidth;
+            uint ImageHeight;
+            bool bIsValid = SteamUtils.GetImageSize(iImage, out ImageWidth, out ImageHeight);
+
+            if (bIsValid)
+            {
+                byte[] Image = new byte[ImageWidth * ImageHeight * 4];
+
+                bIsValid = SteamUtils.GetImageRGBA(iImage, Image, (int)(ImageWidth * ImageHeight * 4));
+                if (bIsValid)
+                {
+                    string result = Convert.ToBase64String(Image);
+                    return "data:image/jpeg;base64," + result;
+                }
+            }
+
+            return null;
+        }
+
+        public string GetPicture()
+        {
+            // @ToDo wont work, get the avatar of profile
+            int test = SteamFriends.GetSmallFriendAvatar(this.GetSteamID());
+           return this.GetSteamImageAsTexture2D(test);
+        }
+
         public string GetUsername() {
             return SteamFriends.GetPersonaName();
         }
@@ -82,8 +110,13 @@ namespace DSTEd.Core.Steam {
         }
 
         public void Init() {
-            if (!SteamAPI.Init() && !this.initalized) {
+            if (!SteamAPI.Init() && !this.initalized)
+            {
                 Logger.Info("Steam-INIT FAILED! Retry in 5 Seconds...");
+                if (Boot.Core.IDE != null)
+                {
+                    Boot.Core.IDE.SetSteamProfile(null);
+                }
                 return;
             }
 
@@ -108,6 +141,10 @@ namespace DSTEd.Core.Steam {
                 });
 
                 Logger.Info("ID: " + this.GetSteamID() + ", Name: " + this.GetUsername() + ", Account: " + this.GetAccountID());
+                if (Boot.Core.IDE != null)
+                {
+                    Boot.Core.IDE.SetSteamProfile(this);
+                }
             }
         }
 
