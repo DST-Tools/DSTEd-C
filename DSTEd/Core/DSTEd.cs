@@ -7,7 +7,6 @@ using DSTEd.UI;
 
 namespace DSTEd.Core {
     public class DSTEd : System.Windows.Application {
-		private Loadingv2 loaderv2 = new Loadingv2();//UI
 		private Configuration configuration = null;
 		public DebugCLICore DBGCLI;
 		public IDE IDE { get; private set; } = null;
@@ -82,20 +81,26 @@ namespace DSTEd.Core {
 				});
 			});
 
+			var loaderv2 = new Loadingv2();
+
 			#region Define workers
-			void gameloading()
+			var work = new BackgroundWorker();
+
+			void gameloading(object sender,DoWorkEventArgs args)
 			{
 				Steam.LoadGame(new DSTC());//CL
 				Steam.LoadGame(new DSTM());//MT
 				Steam.LoadGame(new DSTS());//SV
 				LUA = new LUA.LUA();
 				IDE.Init();
+				work.ReportProgress(1);
 			}
-			void modsloading()
+			void modsloading(object sender,DoWorkEventArgs args)
 			{
 				//do nothing now
+				work.ReportProgress(1);
 			}
-			void workshoploading()
+			void workshoploading(object sender,DoWorkEventArgs args)
 			{
 				Steam.GetWorkShop().GetPublishedMods(322330, delegate (WorkshopItem[] items) {
 					Logger.Info("You have " + items.Length + " published Mods on the Steam-Workshop!");
@@ -105,11 +110,20 @@ namespace DSTEd.Core {
 						Logger.Info(items[index].ToString());
 					}
 				});
+				work.ReportProgress(1);
 			}
+
+			work.DoWork += gameloading;
+			work.DoWork += modsloading;
+			work.DoWork += workshoploading;
+			work.WorkerReportsProgress = true;
+
 			#endregion
-			Action[] q2 = { gameloading, modsloading, workshoploading };
-			loaderv2.Start(q2);
-			IDE.Show();
+
+
+
+			Dispatcher.BeginInvoke((Action)(() => loaderv2.Start(
+				work,3)));
 			this.Run();
 		}
 	}

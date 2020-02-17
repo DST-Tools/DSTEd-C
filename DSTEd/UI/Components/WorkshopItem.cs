@@ -19,13 +19,13 @@ namespace DSTEd.UI.Components {
         private void LoadModInfo() {
             string content = null;
 
-            if (!File.Exists(this.file.GetPath() + "/modinfo.lua")) {
-                Logger.Error("[WorkshopItem] ModInfo not exists: " + this.file.GetPath());
+            if (!File.Exists(this.file.Path + "/modinfo.lua")) {
+                Logger.Error("[WorkshopItem] ModInfo not exists: " + this.file.Path);
                 return;
             }
 
             try {
-                using (StreamReader reader = new StreamReader(this.file.GetPath() + "/modinfo.lua")) {
+                using (StreamReader reader = new StreamReader(this.file.Path + "/modinfo.lua")) {
                     content = reader.ReadToEnd();
                 }
             } catch (IOException) {
@@ -33,16 +33,16 @@ namespace DSTEd.UI.Components {
             }
 
             if (content == null) {
-                Logger.Error("[WorkshopItem] ModInfo is empty or had errors: " + this.file.GetPath());
+                Logger.Error("[WorkshopItem] ModInfo is empty or had errors: " + this.file.Path);
                 return;
             }
 
-            Logger.Info("[WorkshopItem] OK: " + this.file.GetName());
-            ModInfo info = Boot.Core.LUA.GetModInfo(content, this.file.GetPath() + "/modinfo.lua", delegate (ParserException e) {
+            Logger.Info("[WorkshopItem] OK: " + this.file.Name);
+            ModInfo info = Boot.Core.LUA.GetModInfo(content, this.file.Path + "/modinfo.lua", delegate (ParserException e) {
                 Logger.Error("[WorkshopItem] ModInfo is broken: " + e);
             });
 
-            info.SetID(UInt64.Parse(this.file.GetName().Replace("workshop-", "")));
+            info.SetID(UInt64.Parse(this.file.Name.Replace("workshop-", "")));
 
             if (info.IsBroken() && !info.HasName()) {
                 //this.Header = this.file.GetName(); //set at base constructs
