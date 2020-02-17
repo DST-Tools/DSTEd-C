@@ -8,28 +8,12 @@ namespace DSTEd.UI
 {	
 	public partial class Loadingv2 : Window
 	{
+		private int task;
+		public int Progress = 0;
+
 		public Loadingv2()
 		{
 			InitializeComponent();
-		}
-		private int p = 0;
-		private int cur = 0;
-		public int Progress//0 to 1
-		{
-			get
-			{
-				return cur;
-			}
-			set
-			{
-				Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render,
-						new Action(() =>
-						{
-							progress.Value = value != 0 ? (value / p) * 100 : 0;
-						})
-				);
-				cur++;
-			}
 		}
 		private void OnMove(object sender, MouseEventArgs e)
 		{
@@ -38,24 +22,20 @@ namespace DSTEd.UI
 				this.DragMove();
 			}
 		}
-		public void Start(params Action[][] queue)
+		public void Start(params Action[] queue)
 		{
-			Progress = 0;
-			foreach (var workers in queue)
-			{
-				p += workers.Length;
-			}
+			task = queue.Length;
 			Show();
-			foreach (Action[] workers in queue)
+			Progress = 0;
+			Parallel.ForEach(queue, (Action work) =>
 			{
-				Parallel.ForEach(workers,
-						(Action work) =>
-						{
-							work();
-							Progress++;
-						}
-					);
-			}
+				work();
+				Progress++;
+				this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() =>
+				{
+					progress.Value = (Progress == task) ? 100 : (100 / task) * Progress;
+				}));
+			});
 			Close();
 		}
 	}

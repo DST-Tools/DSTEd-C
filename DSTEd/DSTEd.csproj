@@ -126,6 +126,7 @@
     <Compile Include="Core\LUA\Parser.cs" />
     <Compile Include="Core\LUA\ParserException.cs" />
     <Compile Include="Core\Menu.cs" />
+    <Compile Include="Core\Steam\CDN.cs" />
     <Compile Include="Core\Steam\BBCode\Node.cs" />
     <Compile Include="Core\Steam\BBCode\NodeType.cs" />
     <Compile Include="Core\Steam\BBCode\State.cs" />

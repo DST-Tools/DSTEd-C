@@ -10,19 +10,17 @@ namespace DSTEd.Core.IO {
         private Boolean finished = false;
 
         public FileSystem(string path) {
-            Task.Run(async () => {
-                await this.Parse(new DirectoryInfo(path), delegate (FileNode node) {
-                    this.directories.Add(node);
-                    finished = true;
-                });
+            this.Parse(new DirectoryInfo(path), delegate (FileNode node) {
+                this.directories.Add(node);
+                finished = true;
             });
         }
 
-        private async Task Parse(DirectoryInfo directory, Action<FileNode> callback) {
+        private void Parse(DirectoryInfo directory, Action<FileNode> callback) {
             FileNode node = new FileNode(directory);
 
             foreach (DirectoryInfo dir in directory.GetDirectories()) {
-                await this.Parse(dir, delegate(FileNode subnode) {
+                 this.Parse(dir, delegate(FileNode subnode) {
                     node.AddSubdirectory(subnode);
                 });
             }
@@ -34,16 +32,8 @@ namespace DSTEd.Core.IO {
             callback(node);
         }
 
-        public void GetDirectories(Action<List<FileNode>> callback) {
-            Task.Run(() => {
-                do {
-                    if (finished) {
-                        break;
-                    }
-                } while (!finished);
-
-                callback(this.directories);
-            });
+        public List<FileNode> GetDirectories() {
+            return this.directories;
         }
 
         public void HasDirectories(Action<Boolean> callback) {
