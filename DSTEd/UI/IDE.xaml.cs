@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
+using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using DSTEd.Core;
@@ -40,9 +41,22 @@ namespace DSTEd.UI {
             }
 
             Logger.Info("PICTURE: " + picture);
-
+            BitmapImage image;
+            // base64
+            if (picture.StartsWith("data:image"))
+            {
+                String base64 = picture.Substring(picture.IndexOf(",") + 1);
+                byte[] arr = Convert.FromBase64String(base64);
+                image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = new MemoryStream(arr);
+                image.EndInit();
+            } else
+            {
+                image = new BitmapImage(new Uri(picture, UriKind.RelativeOrAbsolute));
+            }
             Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() => {
-                PICTURE.Source  = new BitmapImage(new Uri(picture, UriKind.RelativeOrAbsolute));
+                PICTURE.Source  = image;
                 STEAM.Header    = name;
             }));
         }
