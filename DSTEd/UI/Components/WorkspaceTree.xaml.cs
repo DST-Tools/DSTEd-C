@@ -14,13 +14,10 @@ using DSTEd.Core.IO;
 namespace DSTEd.UI.Components {
 	public partial class WorkspaceTree : UserControl
 	{
-		private Func<FileNode, TreeViewItem> callback = null;//maybe someday will use, keep
-
-		public WorkspaceTree(FileSystem files, Func<FileNode, TreeViewItem> callback)
-		{
+		public WorkspaceTree(FileSystem files)
+        {
 			InitializeComponent();
 
-			this.callback = callback;
 			this.tree.Items.Clear();
 
 			foreach (FileNode directory in files.GetDirectories())
@@ -34,7 +31,7 @@ namespace DSTEd.UI.Components {
 			WorkspaceFolderItem item;
 
 			//workshop mods
-			if(files.GetName().StartsWith("workshop-"))
+			if(files.Name.StartsWith("workshop-"))
 			{
 				item = new WorkshopItem(files);
 			}
@@ -46,10 +43,9 @@ namespace DSTEd.UI.Components {
 
 			if(files.HasSubdirectories())
 			{
-				foreach (FileNode dir in files.GetSubdirectories())
+				foreach (FileNode dir in files.Subdirectories)
 				{
-					WorkspaceFolderItem root = this.RenderV2(dir, null) as WorkspaceFolderItem;
-					if (root == null) continue;
+					if (!(this.RenderV2(dir, null) is WorkspaceFolderItem root)) continue;
 					root.FontWeight = FontWeights.Normal;
 
 					if (container != null)
@@ -66,7 +62,7 @@ namespace DSTEd.UI.Components {
 			if(files.HasFiles())
 			{
 				List<string> skiplist = new List<string>(20);
-				foreach (FileInfo file in files.GetFiles())
+				foreach (FileInfo file in files.Files)
 				{
 					/* skip these files which added into skiplist, include bundled ktex(2019/5/30)
 					 * put this first to avoid object construction
@@ -98,21 +94,23 @@ namespace DSTEd.UI.Components {
 							ktex_atlas.Load(file.FullName);
 
 							//read XML atlas to find out all the textures
-							foreach (XmlNode texture in ktex_atlas.SelectSingleNode("Atlas").SelectNodes("Texture"))
-							{
-								//iterate attributes to find an attribute named "filename"
-								foreach (XmlAttribute att in texture.Attributes)
+							var textures = ktex_atlas.SelectSingleNode("Atlas")?.SelectNodes("Texture");
+							if (textures != null) 
+								foreach (XmlNode texture in textures)
 								{
-									if (att.LocalName != "filename")
-										continue;
-									string ktex_path = Path.Combine(file.DirectoryName, att.Value);
-									//add it's path into skip list
-									skiplist.Add(ktex_path);
-									//build bundle, this is the texture step.
-									WorkspaceFileItem ktex = new WorkspaceFileItem(ktex_path) { Header = att.Value };
-									entry.Items.Add(ktex);
+									//iterate attributes to find an attribute named "filename"
+									foreach (XmlAttribute att in texture.Attributes)
+									{
+										if (att.LocalName != "filename")
+											continue;
+										string ktex_path = Path.Combine(file.DirectoryName, att.Value);
+										//add it's path into skip list
+										skiplist.Add(ktex_path);
+										//build bundle, this is the texture step.
+										WorkspaceFileItem ktex = new WorkspaceFileItem(ktex_path) { Header = att.Value };
+										entry.Items.Add(ktex);
+									}
 								}
-							}
 
 							//add XML itself into the bundle
 							{
@@ -187,7 +185,14 @@ namespace DSTEd.UI.Components {
 			return item;
 		}
 
-
+		public void NonRecursiveRender(FileNode node, TreeView container)
+		{
+			WorkspaceFolderItem ret;
+			if (node.Name.StartsWith("workshop-"))
+				ret = new WorkshopItem(node);
+			else
+				ret = new WorkspaceFolderItem(node);
+		}
 	}
 
     [ValueConversion(typeof(string), typeof(bool))]
@@ -195,9 +200,8 @@ namespace DSTEd.UI.Components {
         public static Iconizer Instance = new Iconizer();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            string name = "";
-
-            if ((value as string).EndsWith(".lua")) {
+			string name;
+			if ((value as string).EndsWith(".lua")) {
                 name = "LUA";
             } else if ((value as string).EndsWith(".tex")) {
                 name = "KTEX";

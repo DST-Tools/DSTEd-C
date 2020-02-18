@@ -13,10 +13,10 @@ namespace DSTEd.UI.Components
 	{
 		protected FileNode file = null;
 
-		public WorkspaceFolderItem(FileNode file) : base(file.GetPath())
+		public WorkspaceFolderItem(FileNode file) : base(file.Path)
 		{
 			this.file = file;
-			Header = file.GetName();
+			Header = file.Name;
 			FontWeight = FontWeights.Bold;
 		}
 	}
