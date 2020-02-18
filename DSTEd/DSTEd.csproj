@@ -190,13 +190,7 @@
     <Compile Include="Core\Steam\Account.cs" />
     <Compile Include="Core\Steam\Steam.cs" />
     <Compile Include="Core\Steam\Workshop.cs" />
-    <Resource Include="Languages\de_DE.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <EmbeddedResource Include="Core\Contents\Editors\Format\LUA.xshd" />
-    <Resource Include="Languages\zh_CN.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <None Include="packages.config" />
     <EmbeddedResource Include="Project Templates\BaseMod\modinfo.lua" />
     <None Include="Project Templates\BaseMod\modmain.lua" />
@@ -532,6 +526,10 @@
     <Page Include="UI\ProjectWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Theme\ScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Theme\Scrollbar.xaml">
       <Generator>MSBuild:Compile</Generator>
