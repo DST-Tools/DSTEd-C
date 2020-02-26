@@ -12,6 +12,7 @@ using DSTEd.UI.Components;
 using DSTEd.UI.Theme;
 using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Layout;
+using System.Windows.Media;
 
 namespace DSTEd.UI {
     public partial class IDE : Window {
@@ -47,10 +48,15 @@ namespace DSTEd.UI {
             {
                 String base64 = picture.Substring(picture.IndexOf(",") + 1);
                 byte[] arr = Convert.FromBase64String(base64);
-                image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = new MemoryStream(arr);
-                image.EndInit();
+                image = new BitmapImage(); 
+                using (MemoryStream ms = new MemoryStream(arr))
+                {
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = ms;
+                    image.EndInit();
+                    image.Freeze();
+                }
             } else
             {
                 image = new BitmapImage(new Uri(picture, UriKind.RelativeOrAbsolute));

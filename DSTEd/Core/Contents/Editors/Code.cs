@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Xml;
 using DSTEd.Core.LUA;
 using ICSharpCode.AvalonEdit;
@@ -17,6 +18,7 @@ namespace DSTEd.Core.Contents.Editors {
     class Code : TextEditor, DocumentHandler {
         private Document document;
 		private CompletionWindow completion;
+		private Configuration config = Configuration.getConfiguration();
 		private static List<KeywordCompleteion> keywords = new List<KeywordCompleteion>();
 		private List<FunctionCompleteion> funclist = new List<FunctionCompleteion>();
 		private List<VariableCompletion> varlist = new List<VariableCompletion>();
@@ -25,8 +27,13 @@ namespace DSTEd.Core.Contents.Editors {
 
 		public Code(Document document) {
             this.document = document;
-            this.ShowLineNumbers = true;
-            this.SyntaxHighlighting = LoadSyntax(Path.GetExtension(this.document.GetFile()));
+			this.ShowLineNumbers = config.GetBool("Editor_ShowLineNumbers", true);
+			this.FontFamily = new FontFamily(config.Get("Editor_FontFamily", "Consolas"));
+			this.FontSize = config.GetDouble("Editor_FontSize", 14);
+			this.Background = new SolidColorBrush(config.GetColor("Editor_Background", Color.FromRgb(37, 37, 38)));
+			this.Foreground = new SolidColorBrush(config.GetColor("Editor_Foreground", Color.FromRgb(248, 248, 242)));
+
+			this.SyntaxHighlighting = LoadSyntax(Path.GetExtension(this.document.GetFile()));
             this.Text = document.GetFileContent();
             this.Document.UpdateFinished += new EventHandler(OnChange);
             this.TextArea.TextEntering += OnEnter;
@@ -117,7 +124,7 @@ namespace DSTEd.Core.Contents.Editors {
 
         private IHighlightingDefinition LoadSyntax(string extension) {
             if (extension == ".lua") {
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DSTEd.Core.Contents.Editors.Format.LUA.xshd")) {
+                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DSTEd.Core.Contents.Editors.Format.lua_dark.xshd")) {
                     using (XmlTextReader reader = new XmlTextReader(stream)) {
                         return HighlightingLoader.Load(reader, HighlightingManager.Instance);
                     }

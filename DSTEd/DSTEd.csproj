@@ -190,7 +190,8 @@
     <Compile Include="Core\Steam\Account.cs" />
     <Compile Include="Core\Steam\Steam.cs" />
     <Compile Include="Core\Steam\Workshop.cs" />
-    <EmbeddedResource Include="Core\Contents\Editors\Format\LUA.xshd" />
+    <EmbeddedResource Include="Core\Contents\Editors\Format\lua_bright.xshd" />
+    <EmbeddedResource Include="Core\Contents\Editors\Format\lua_dark.xshd" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Project Templates\BaseMod\modinfo.lua" />
     <None Include="Project Templates\BaseMod\modmain.lua" />
