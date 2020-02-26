@@ -1,7 +1,7 @@
 ﻿using Xceed.Wpf.AvalonDock.Layout;
 
 namespace DSTEd.Core.Contents {
-    class AvalonDocument : LayoutDocument {
+    public class AvalonDocument : LayoutDocument {
         private Document document = null;
 
         public AvalonDocument(Document document) {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Media;
 using Newtonsoft.Json;
 
 namespace DSTEd.Core {
@@ -49,20 +50,45 @@ namespace DSTEd.Core {
             this.data.Add(name, value);
         }
 
+        // GetString
         public string Get(string name, string defaults) {
             if (!this.data.ContainsKey(name)) {
                 return defaults;
             }
-
             string value = null;
-
             this.data.TryGetValue(name, out value);
-
             if (value == null) {
                 return defaults;
             }
-
             return value;
+        }
+
+        public double GetDouble(string name, double defaults)
+        {
+            string s = Get(name, defaults.ToString());
+            return Double.Parse(s);
+        }
+
+        public int GetInt(string name, int defaults) {
+            string s = Get(name, defaults.ToString());
+            return Int32.Parse(s);
+        }
+
+        public bool GetBool(string name, bool defaults) {
+            string s = Get(name, defaults.ToString());
+            return Boolean.Parse(s);
+        }
+
+        public Color GetColor(string name, Color defaults) {
+            string s = Get(name, "");
+            if (!s.Equals(""))
+            {
+                string[] c = s.Split(',');
+                return Color.FromRgb(byte.Parse(c[0]), byte.Parse(c[1]), byte.Parse(c[2]));
+            } else
+            {
+                return defaults;
+            }
         }
 
         public string GetPath() {

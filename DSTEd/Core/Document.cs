@@ -75,6 +75,10 @@ namespace DSTEd.Core {
             return this.title;
         }
 
+        public Editor GetEditorType() {
+            return this.type;
+        }
+
         public void Load(string file) {
             this.SetTitle(Path.GetFileName(file));
             this.file = file;
@@ -146,24 +150,31 @@ namespace DSTEd.Core {
 		}
 
         internal object GetContent() {
-            switch (this.type) {
-                case Editor.NONE:
-                    this.content = new Welcome(this);
-                    break;
-                case Editor.CODE:
-                    this.content = new Contents.Editors.Code(this);
-                    break;
-                case Editor.TEXTURE:
-                    this.content = new Contents.Editors.TEX(this);
-                    break;
-                case Editor.MODINFO:
-                    this.content = new Contents.Editors.ModInfo(this);
-                    break;
+            if (this.content == null)
+            {
+                switch (this.type)
+                {
+                    case Editor.NONE:
+                        this.content = new Welcome(this);
+                        break;
+                    case Editor.CODE:
+                        this.content = new Contents.Editors.Code(this);
+                        break;
+                    case Editor.TEXTURE:
+                        this.content = new Contents.Editors.TEX(this);
+                        break;
+                    case Editor.MODINFO:
+                        this.content = new Contents.Editors.ModInfo(this);
+                        break;
+                }
+
+                this.is_content_created = true;
+
+                return content;
+            } else
+            {
+                return this.content;
             }
-
-            this.is_content_created = true;
-
-            return content;
         }
     }
 }

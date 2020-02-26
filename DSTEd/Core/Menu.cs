@@ -9,7 +9,10 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DSTEd.Core {
     public class Menu {
-        public Menu() {}
+        private IDE ide;
+        public Menu(IDE ide) {
+            this.ide = ide;
+        }
 
         public void Init() {
             this.Update();
@@ -80,12 +83,42 @@ namespace DSTEd.Core {
                         return true;
                     });
                     break;
-                //case "EDIT_UNDO":
-                //case "EDIT_REDO":
-                //case "EDIT_CUT":
-                //case "EDIT_COPY":
-                //case "EDIT_PASTE":
-                //case "EDIT_SELECT_ALL":
+                case "EDIT_UNDO":
+                    if (ide.GetActiveDocument().GetDocument().GetEditorType() == Document.Editor.CODE)
+                    {
+                        ((Contents.Editors.Code)ide.GetActiveDocument().GetDocument().GetContent()).Undo();
+                    }
+                    break;
+                case "EDIT_REDO":
+                    if (ide.GetActiveDocument().GetDocument().GetEditorType() == Document.Editor.CODE)
+                    {
+                        ((Contents.Editors.Code)ide.GetActiveDocument().GetDocument().GetContent()).Redo();
+                    }
+                    break;
+                case "EDIT_CUT":
+                    if (ide.GetActiveDocument().GetDocument().GetEditorType() == Document.Editor.CODE)
+                    {
+                        ((Contents.Editors.Code)ide.GetActiveDocument().GetDocument().GetContent()).Cut();
+                    }
+                    break;
+                case "EDIT_COPY":
+                    if(ide.GetActiveDocument().GetDocument().GetEditorType() == Document.Editor.CODE)
+                    {
+                        ((Contents.Editors.Code)ide.GetActiveDocument().GetDocument().GetContent()).Copy();
+                    }
+                    break;
+                case "EDIT_PASTE":
+                    if (ide.GetActiveDocument().GetDocument().GetEditorType() == Document.Editor.CODE)
+                    {
+                        ((Contents.Editors.Code)ide.GetActiveDocument().GetDocument().GetContent()).Paste();
+                    }
+                    break;
+                case "EDIT_SELECT_ALL":
+                    if (ide.GetActiveDocument().GetDocument().GetEditorType() == Document.Editor.CODE)
+                    {
+                        ((Contents.Editors.Code)ide.GetActiveDocument().GetDocument().GetContent()).SelectAll();
+                    }
+                    break;
                 //case "SEARCH_FIND":
                 //case "SEARCH_FIND_NEXT":
                 case "VIEW_WELCOME":
