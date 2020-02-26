@@ -23,7 +23,7 @@ namespace DSTEd.UI {
         public IDE() {
             InitializeComponent();
             
-            this.menu = new Menu();
+            this.menu = new Menu(this);
             this.dockManager.Theme = new Dark();
             this.Closing += this.IDE_Closing;
 		}
@@ -248,7 +248,7 @@ namespace DSTEd.UI {
 			}
 		}
 
-        private AvalonDocument GetActiveDocument() {
+        public AvalonDocument GetActiveDocument() {
             return lastactivedocument;
 		}
 

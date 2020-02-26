@@ -86,13 +86,13 @@
                 <MenuItem Name="FILE_EXIT" Header="{Core:I18N_XAML Exit}" Click="OnMenu" />
             </MenuItem>
             <MenuItem Header="{Core:I18N_XAML Edit}" Grid.Column="1">
-                <MenuItem Name="EDIT_UNDO" Header="{Core:I18N_XAML Undo}" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_REDO" Header="{Core:I18N_XAML Redo}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_UNDO" Header="{Core:I18N_XAML Undo}" Click="OnMenu" />
+                <MenuItem Name="EDIT_REDO" Header="{Core:I18N_XAML Redo}" Click="OnMenu" />
                 <Separator/>
-                <MenuItem Name="EDIT_CUT" Header="{Core:I18N_XAML Cut}" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_COPY" Header="{Core:I18N_XAML Copy}" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_PASTE" Header="{Core:I18N_XAML Paste}" IsEnabled="False" Click="OnMenu" />
-                <MenuItem Name="EDIT_SELECT_ALL" Header="{Core:I18N_XAML Select All}" IsEnabled="False" Click="OnMenu" />
+                <MenuItem Name="EDIT_CUT" Header="{Core:I18N_XAML Cut}" Click="OnMenu" />
+                <MenuItem Name="EDIT_COPY" Header="{Core:I18N_XAML Copy}" Click="OnMenu" />
+                <MenuItem Name="EDIT_PASTE" Header="{Core:I18N_XAML Paste}" Click="OnMenu" />
+                <MenuItem Name="EDIT_SELECT_ALL" Header="{Core:I18N_XAML Select All}" Click="OnMenu" />
             </MenuItem>
             <MenuItem Header="{Core:I18N_XAML Search}" Grid.Column="2">
                 <MenuItem Name="SEARCH_FIND" Header="{Core:I18N_XAML Find...}" IsEnabled="False" Click="OnMenu" />

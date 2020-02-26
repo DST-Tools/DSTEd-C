@@ -33,6 +33,12 @@ namespace DSTEd.Core.Contents.Editors {
 			this.Background = new SolidColorBrush(config.GetColor("Editor_Background", Color.FromRgb(37, 37, 38)));
 			this.Foreground = new SolidColorBrush(config.GetColor("Editor_Foreground", Color.FromRgb(248, 248, 242)));
 
+			TextEditorOptions options = new TextEditorOptions();
+			options.AllowScrollBelowDocument = true;
+			options.HighlightCurrentLine = true;
+			this.Options = options;
+
+
 			this.SyntaxHighlighting = LoadSyntax(Path.GetExtension(this.document.GetFile()));
             this.Text = document.GetFileContent();
             this.Document.UpdateFinished += new EventHandler(OnChange);
