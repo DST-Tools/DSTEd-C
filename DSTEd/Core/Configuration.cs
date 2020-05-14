@@ -84,7 +84,7 @@ namespace DSTEd.Core {
             if (!s.Equals(""))
             {
                 string[] c = s.Split(',');
-                return Color.FromRgb(byte.Parse(c[0]), byte.Parse(c[1]), byte.Parse(c[2]));
+                return Color.FromArgb(byte.Parse(c[0]), byte.Parse(c[1]), byte.Parse(c[2]), byte.Parse(c[3]));
             } else
             {
                 return defaults;
