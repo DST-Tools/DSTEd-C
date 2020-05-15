@@ -30,8 +30,8 @@ namespace DSTEd.Core.Contents.Editors {
 			this.ShowLineNumbers = config.GetBool("Editor_ShowLineNumbers", true);
 			this.FontFamily = new FontFamily(config.Get("Editor_FontFamily", "Consolas"));
 			this.FontSize = config.GetDouble("Editor_FontSize", 14);
-			this.Background = new SolidColorBrush(config.GetColor("Editor_Background", Color.FromRgb(37, 37, 38)));
-			this.Foreground = new SolidColorBrush(config.GetColor("Editor_Foreground", Color.FromRgb(248, 248, 242)));
+			this.Background = new SolidColorBrush(config.GetColor("Editor_Background", Color.FromArgb(255, 34, 34, 35)));
+			this.Foreground = new SolidColorBrush(config.GetColor("Editor_Foreground", Color.FromArgb(255, 248, 248, 242)));
 
 			TextEditorOptions options = new TextEditorOptions();
 			options.AllowScrollBelowDocument = true;
@@ -46,6 +46,8 @@ namespace DSTEd.Core.Contents.Editors {
             this.TextArea.TextEntered += OnEntered;
 			completion = new CompletionWindow(this.TextArea);
 			OnInit();
+
+			this.TextArea.IndentationStrategy = new ICSharpCode.AvalonEdit.Indentation.CSharp.CSharpIndentationStrategy();
             new XmlFoldingStrategy().UpdateFoldings(FoldingManager.Install(this.TextArea), this.Document);
         }
 		static Code()//run once,to initialize basic completions
