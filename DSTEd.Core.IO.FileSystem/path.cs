@@ -59,7 +59,7 @@ namespace DSTEd.Core.IO.EnumerableFileSystem
 				FileName = parts.Last();
 
 				//pt is point.
-				System.Index pt_index = FileName.Length - 1;
+				int pt_index = FileName.Length == 0 ? 0 : FileName.Length - 1;
 				for (; pt_index > 0; pt_index--)
 				{
 					if (FileName[pt_index] == '.')

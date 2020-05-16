@@ -37,8 +37,8 @@ namespace DSTEd.Test.IO.EnumerableFileSystem
 		{
 			Assert.AreEqual("\\parent", new Path(p1_file).Parent, "p1 file");
 			Assert.AreEqual("\\parent", new Path(p1_empty).Parent, "p1 empty");
-			Assert.AreEqual("\\paremt1\\parent2", p1_p2_file_hid_ext.Parent, "2parent hidfile ext");
-			Assert.AreEqual(string.Empty, new Path(hid), "no parent");
+			Assert.AreEqual("\\parent1\\parent2", p1_p2_file_hid_ext.Parent, "2parent hidfile ext");
+			Assert.AreEqual(string.Empty, new Path(hid).Parent, "no parent");
 		}
 	}
 }
