@@ -46,7 +46,14 @@ namespace DSTEd.Test.IO.EnumerableFileSystem
 				new FileInfo(@".\FileSystemCopyTest\Directory1\.DotFolderTest\File1.txt"),
 				new FileInfo(@".\FileSystemCopyTest\Directory1\.DotFolderTest\File2.txt")
 			};
-			Directory.Delete(@".\FileSystemCopyTest", true);
+			try
+			{
+				Directory.Delete(@".\FileSystemCopyTest", true);
+			}
+			catch (System.IO.DirectoryNotFoundException)
+			{
+				Console.WriteLine("copy target not found, pass");
+			}
 			RecursiveDirectoryIterator actual = FSUtil.CopyDirectory(new DirectoryInfo(@".\FileSystemTest\"),
 				new DirectoryInfo(@".\FileSystemCopyTest\"));
 

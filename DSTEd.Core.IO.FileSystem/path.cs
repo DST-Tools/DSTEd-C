@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace DSTEd.Core.IO.EnumerableFileSystem
 		/// Initalize an instance of path class by a source path string
 		/// </summary>
 		/// <param name="source">Path string</param>
-		/// <exception cref="ArgumentException">source is an empty string or null</exception>
+		/// <exception cref="ArgumentNullException">source is null</exception>
 		public Path(string source)
 		{
 			Initialize(source);
@@ -48,20 +49,37 @@ namespace DSTEd.Core.IO.EnumerableFileSystem
 
 		private void Initialize(string source)
 		{
-			if (source == null || source == string.Empty)
-				throw new ArgumentException(source, nameof(source));
+			if (source == null)
+				throw new ArgumentNullException(source, nameof(source));
 			original = source.Replace('/', '\\');
-			string[] parts = original.Split('\\');
-			FileName = parts.Last();
 			//extension
+			if (original != string.Empty) 
 			{
-				int pt_index = FileName.Length - 1;
+				string[] parts = original.Split('\\');
+				FileName = parts.Last();
+
+				//pt is point.
+				int pt_index = FileName.Length == 0 ? 0 : FileName.Length - 1;
 				for (; pt_index > 0; pt_index--)
 				{
 					if (FileName[pt_index] == '.')
 						break;
 				}
 				Extension = FileName.Substring(pt_index);
+
+				{
+					int parent_len = 0;
+					for (int i = 0; i < original.Length; i++)
+						if (original[i] == '\\')
+							parent_len = i;
+					Parent = original.Substring(0, parent_len);
+				}
+			}
+			else
+			{
+				Extension = string.Empty;
+				FileName = string.Empty;
+				Parent = string.Empty;
 			}
 		}
 
